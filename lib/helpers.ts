@@ -1,0 +1,29 @@
+import { WalletType } from "./types";
+
+export const eclipseAddress = (address: string): string => {
+  return (
+    address.substring(0, 6) +
+    "..." +
+    address.substring(address.length - 4, address.length)
+  );
+};
+
+export const hex = "0x";
+
+export const IS_SERVER = typeof window === "undefined";
+
+export const walletType: WalletType = {
+  "injected": "MetaMask",
+  "walletConnect": "WalletConnect",
+  "coinbaseWallet": "Coinbase",
+  "google": "Google",
+  "facebook": "Facebook",
+  "twitter": "Twitter",
+  "discord": "Discord",
+  "twitch": "Twitch",
+  "github": "GitHub"
+}
+
+export const isIos = !IS_SERVER && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+export const signDataMessage = 'Verify your wallet ownership to create an Operator account';

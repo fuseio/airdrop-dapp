@@ -8,10 +8,21 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      screens: {
+        "4xl": { max: "2699px" },
+        "3xl": { max: "1750px" },
+        "2xl": { max: "1535px" },
+        xl: { max: "1279px" },
+        lg: { max: "1023px" },
+        md: { max: "767px" },
+        sm: { max: "639px" },
+      },
+      colors: {
+        primary: "#A3F5AA",
+        secondary: "#333333",
+      },
+      fontFamily: {
+        mona: ["var(--font-mona-sans)"],
       },
     },
   },
