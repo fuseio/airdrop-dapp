@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import '@/styles/globals.css'
+import { Providers } from '@/components/providers';
 
 const monaSans = localFont({
   src: './MonaSans.woff2',
@@ -20,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={monaSans.className}>{children}</body>
+      <body className={monaSans.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

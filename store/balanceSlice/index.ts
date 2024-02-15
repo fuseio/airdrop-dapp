@@ -38,17 +38,17 @@ const balanceSlice = createSlice({
   name: "BALANCE_STATE",
   initialState: INIT_STATE,
   reducers: {},
-  extraReducers: {
-    [fetchUsdPrice.pending.type]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(fetchUsdPrice.pending, (state) => {
       state.isUsdPriceLoading = true;
-    },
-    [fetchUsdPrice.fulfilled.type]: (state, action) => {
+    })
+    .addCase(fetchUsdPrice.fulfilled, (state, action) => {
       state.price = action.payload;
       state.isUsdPriceLoading = false;
-    },
-    [fetchUsdPrice.rejected.type]: (state, action) => {
+    })
+    .addCase(fetchUsdPrice.rejected, (state) => {
       state.isUsdPriceLoading = false;
-    },
+    })
   },
 });
 
