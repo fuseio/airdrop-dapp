@@ -20,7 +20,9 @@ const config: Config = {
       colors: {
         primary: "#A3F5AA",
         secondary: "#333333",
-        tertiary: "#474747"
+        tertiary: "#474747",
+        "carbon-gray": "#5A5A5A",
+        "gray-cloud": "#B6B6B6"
       },
       fontFamily: {
         mona: ["var(--font-mona-sans)"],
