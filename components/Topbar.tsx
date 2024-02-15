@@ -5,6 +5,7 @@ import NavButton from "./NavButton";
 import { useAppSelector } from "@/store/store";
 import { selectNavbarSlice } from "@/store/navbarSlice";
 import Image from "next/image";
+import { selectUserSlice } from "@/store/userSlice";
 
 const menuItems = [
   {
@@ -24,17 +25,18 @@ const menuItems = [
 const Topbar = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const { selected } = useAppSelector(selectNavbarSlice);
+  const { isActivated } = useAppSelector(selectUserSlice);
 
   return (
-    <nav className="w-full h-20 sticky top-0 bg-light-gray/60 backdrop-blur-xl flex justify-center py-7 md:h-[32px] md:mt-2 border-b-[0.5px] border-pastel-gray">
+    <nav className={`w-full h-20 sticky top-0 flex justify-center py-7 md:h-[32px] md:mt-2 ${isActivated ? "border-b-[0.5px] border-pastel-gray" : ""}`}>
       <div className="flex justify-between h-full items-center w-8/9 md:w-9/10 max-w-7xl relative">
         <span>
           <a href="/">
             <Image
               src={fuseLogo}
               alt="Fuse logo"
-              width={86}
-              height={24}
+              width={186}
+              height={28}
               className="z-50"
             />
           </a>
