@@ -18,7 +18,7 @@ const menuItems = [
   },
   {
     title: "Bridge",
-    link: "/bridge",
+    link: "https://console.fuse.io/bridge",
   },
 ]
 
