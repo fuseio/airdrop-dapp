@@ -2,13 +2,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
 
 export interface UserStateType {
-  isActivated: boolean;
+  isAuthenticated: boolean;
   currentComponent: string;
   currentSignupStep: string;
 }
 
 const INIT_STATE: UserStateType = {
-  isActivated: false,
+  isAuthenticated: false,
   currentComponent: "landing",
   currentSignupStep: "invite",
 };
@@ -17,8 +17,8 @@ const userSlice = createSlice({
   name: "USER_STATE",
   initialState: INIT_STATE,
   reducers: {
-    setIsActivated: (state, action: PayloadAction<boolean>) => {
-      state.isActivated = action.payload
+    setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
+      state.isAuthenticated = action.payload
     },
     setCurrentComponent: (state, action: PayloadAction<string>) => {
       state.currentComponent = action.payload
@@ -32,7 +32,7 @@ const userSlice = createSlice({
 export const selectUserSlice = (state: AppState): UserStateType => state.user;
 
 export const {
-  setIsActivated,
+  setIsAuthenticated,
   setCurrentComponent,
   setCurrentSignupStep
 } = userSlice.actions;

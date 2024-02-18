@@ -5,6 +5,7 @@ import Image, { StaticImageData } from "next/image";
 import { motion, Variants } from "framer-motion";
 import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
 import down from "@/assets/down-arrow.svg";
+import downWhite from "@/assets/down-arrow-white.svg";
 import {
   useAccount,
   useBalance,
@@ -95,7 +96,7 @@ const ConnectWallet = ({
   const [isAccountsOpen, setIsAccountsOpen] = React.useState(false);
   const [isWrongNetwoksOpen, setIsWrongNetwoksOpen] = React.useState(false);
   const [isQrCodeOpen, setIsQrCodeOpen] = React.useState(false);
-  const { address, connector, isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
   const { chain, chains } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
   const { disconnect } = useDisconnect();
@@ -104,7 +105,6 @@ const ConnectWallet = ({
     watch: true,
   });
   const matches = useMediaQuery(`(min-width: ${screenMediumWidth}px)`);
-  const controller = new AbortController();
   const balanceSlice = useAppSelector(selectBalanceSlice);
   const pathname = usePathname();
 
@@ -131,6 +131,7 @@ const ConnectWallet = ({
   };
 
   useEffect(() => {
+    const controller = new AbortController();
     dispatch(
       fetchUsdPrice({
         tokenId: usdTokens[chain?.id ?? fuse.id],
@@ -141,7 +142,7 @@ const ConnectWallet = ({
     return () => {
       controller.abort();
     };
-  }, [isConnected, chain]);
+  }, [isConnected, chain, dispatch]);
 
   return !isConnected ? (
     <div className={"flex justify-end " + containerClassName}>
@@ -161,7 +162,7 @@ const ConnectWallet = ({
       ref={chainRef}
     >
       <div
-        className="flex bg-lightest-gray px-4 py-3 md:py-3.5 rounded-full cursor-pointer items-center relative text-base/4 md:text-[8px]/[25px] font-normal ml-2 md:ml-1"
+        className="flex bg-tertiary px-4 py-3 md:py-3.5 rounded-full cursor-pointer items-center relative text-base/4 md:text-[8px]/[25px] font-normal ml-2 md:ml-1"
         onClick={() => setIsChainOpen(!isChainOpen)}
       >
         <Image
@@ -170,11 +171,11 @@ const ConnectWallet = ({
           width={25}
           height={25}
         />
-        <p className="ms-[8.52px]">
+        <p className="ms-[8.52px] text-white">
           {eclipseAddress(String(address))}
         </p>
         <Image
-          src={down.src}
+          src={downWhite}
           alt="down"
           className={`ms-[15px] ${isChainOpen && "rotate-180"} md:ms-1`}
           width={10}
@@ -238,7 +239,7 @@ const ConnectWallet = ({
   ) : checkCorrectNetwork() ? (
     <div className="flex justify-end md:justify-center relative w-[410px] md:w-[90%] h-9 md:h-7">
       <div
-        className="flex bg-lightest-gray px-4 py-3 md:py-3.5 rounded-full cursor-pointer items-center relative text-base/4 md:text-[8px]/[25px] font-normal ml-2 md:ml-1"
+        className="flex bg-tertiary px-4 py-3 md:py-3.5 rounded-full cursor-pointer items-center relative text-base/4 md:text-[8px]/[25px] font-normal ml-2 md:ml-1"
         ref={accountsRef}
       >
         <div
@@ -251,11 +252,11 @@ const ConnectWallet = ({
             width={25}
             height={25}
           />
-          <p className="ms-[8.52px]">
+          <p className="ms-[8.52px] text-white">
             {eclipseAddress(String(address))}
           </p>
           <Image
-            src={down.src}
+            src={downWhite}
             alt="down"
             className={`ms-[15px] ${isAccountsOpen && "rotate-180"} md:ms-1`}
             width={10}
