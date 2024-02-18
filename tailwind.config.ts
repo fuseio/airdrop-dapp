@@ -21,8 +21,12 @@ const config: Config = {
         primary: "#A3F5AA",
         secondary: "#333333",
         tertiary: "#474747",
+        success: "#B4F9BA",
+        "fuse-black": "#1A1A1A",
         "carbon-gray": "#5A5A5A",
-        "gray-cloud": "#B6B6B6"
+        "gray-cloud": "#B6B6B6",
+        "pale-slate": "#BFBFBF",
+        "storm-dust": "#636363"
       },
       fontFamily: {
         mona: ["var(--font-mona-sans)"],
@@ -35,6 +39,9 @@ const config: Config = {
         "1/10": "10%",
         "9/10": "90%",
       },
+      fontSize: {
+        "5xl": "2.5rem",
+      }
     },
   },
   plugins: [],

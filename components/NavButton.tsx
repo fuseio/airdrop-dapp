@@ -9,12 +9,12 @@ type NavButtonProps = {
 }
 
 const NavButton = ({ isOpen, setOpen }: NavButtonProps) => {
-  const { isActivated } = useAppSelector(selectUserSlice);
+  const { isAuthenticated } = useAppSelector(selectUserSlice);
 
   return (
     <div className="flex order-2 min-w-[150px] md:w-[93%] justify-end items-center">
-      {isActivated && <ConnectWallet containerClassName="ml-auto" className="transition ease-in-out hover:bg-success hover:text-black" />}
-      {!isActivated &&
+      {isAuthenticated && <ConnectWallet containerClassName="ml-auto" className="transition ease-in-out hover:bg-success hover:text-black" />}
+      {!isAuthenticated &&
         <a
           href="https://www.fuse.io"
           target="_blank"
@@ -35,6 +35,7 @@ const NavButton = ({ isOpen, setOpen }: NavButtonProps) => {
           isOpen={isOpen}
           height={18}
           strokeWidth={3}
+          color="#fff"
         />
       </button>
     </div>
