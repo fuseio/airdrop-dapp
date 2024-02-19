@@ -32,14 +32,14 @@ const WalletModal = (): JSX.Element => {
   useEffect(() => {
     window.addEventListener("click", (e) => {
       if ((e.target as HTMLElement).id === "modal-bg") {
-        toggleModal(false);
+        dispatch(setIsWalletModalOpen(false));
       }
     });
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (isConnected) {
-      toggleModal(false);
+      dispatch(setIsWalletModalOpen(false));
     }
 
     if (address && connector) {
@@ -52,7 +52,7 @@ const WalletModal = (): JSX.Element => {
         walletAddress: address
       });
     }
-  }, [isConnected])
+  }, [address, connector, dispatch, isConnected])
 
   const connectionEvent = (id: string) => {
     ReactGA.event({
@@ -66,10 +66,6 @@ const WalletModal = (): JSX.Element => {
     connectionEvent(id);
     setConnectingWalletId(id);
     connect({ connector: connectors.find((connector) => connector.id === id) });
-  }
-
-  const toggleModal = (isModal: boolean) => {
-    dispatch(setIsWalletModalOpen(isModal));
   }
 
   return (
@@ -100,7 +96,7 @@ const WalletModal = (): JSX.Element => {
                 alt="close"
                 className="cursor-pointer w-6 absolute top-[15px] right-5"
                 onClick={() => {
-                  toggleModal(false);
+                  dispatch(setIsWalletModalOpen(false));
                 }}
               />
             </span>

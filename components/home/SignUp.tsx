@@ -4,6 +4,7 @@ import intoTheFuse from "@/assets/into-the-fuse.svg";
 import SignUpInvite from "./SignUpInvite";
 import SignUpTwitter from "./SignUpTwittter";
 import SignUpWallet from "./SignUpWallet";
+import SignUpVerify from "./SignUpVerify";
 
 const SignUp = () => {
   return (
@@ -26,6 +27,7 @@ const SignUp = () => {
         <SignUpInvite />
         <SignUpTwitter />
         <SignUpWallet />
+        <SignUpVerify />
       </div>
     </motion.div>
   )

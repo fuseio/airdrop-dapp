@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { selectUserSlice, setCurrentSignupStep } from "@/store/userSlice";
+import { selectUserSlice, setCurrentSignupStep, setInviteCode } from "@/store/userSlice";
 import { useRef } from "react";
 
 const SignUpInvite = () => {
@@ -12,6 +12,7 @@ const SignUpInvite = () => {
       return;
     }
 
+    dispatch(setInviteCode(referralCodeRef.current.value));
     dispatch(setCurrentSignupStep("twitter"));
   }
 

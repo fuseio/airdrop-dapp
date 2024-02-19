@@ -8,13 +8,13 @@ import Dashboard from "@/components/home/Dashboard";
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const { currentComponent, isAuthenticated } = useAppSelector(selectUserSlice);
+  const { currentComponent, isUser } = useAppSelector(selectUserSlice);
 
   useEffect(() => {
-    if(isAuthenticated) {
+    if(isUser) {
       dispatch(setCurrentComponent("dashboard"))
     }
-  }, [dispatch, isAuthenticated])
+  }, [dispatch, isUser])
 
   return (
     <div className="w-full flex flex-col items-center">

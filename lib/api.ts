@@ -1,5 +1,6 @@
 import axios from "axios";
-import { NEXT_PUBLIC_COIN_GECKO_API_KEY } from './config'
+import { NEXT_PUBLIC_AIRDROP_API_BASE_URL, NEXT_PUBLIC_COIN_GECKO_API_KEY } from './config'
+import { CreateUser, SignData, User } from "./types";
 
 export const fetchTokenPrice = async (tokenId: string) => {
   const response = await axios.get(
@@ -12,3 +13,25 @@ export const fetchTokenPrice = async (tokenId: string) => {
   );
   return response.data[`${tokenId}`].usd as number;
 };
+
+
+export const postAuthenticateUser = async (signData: SignData): Promise<{ jwt: string }> => {
+  const response = await axios.post(
+    `${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/auth`,
+    signData
+  )
+  return response.data
+}
+
+export const postCreateUser = async (createUserDetail: CreateUser, token: string): Promise<User> => {
+  const response = await axios.post(
+    `${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/user`,
+    createUserDetail,
+    {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+  )
+  return response.data
+}
