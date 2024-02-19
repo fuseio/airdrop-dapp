@@ -5,23 +5,49 @@ import { setSelectedNavbar } from "@/store/navbarSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { useEffect } from "react";
 import Home from "./Home";
-import { selectUserSlice } from "@/store/userSlice";
+import { selectUserSlice, setCurrentComponent, setHydrate, setInviteCode, setLogout } from "@/store/userSlice";
 import Footer from "@/components/Footer";
+import { useSearchParams } from "next/navigation";
+import { useAccount } from "wagmi";
 
 export default function Airdrop() {
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector(selectUserSlice);
+  const { isUser } = useAppSelector(selectUserSlice);
+  const { isDisconnected } = useAccount();
+  const searchParams = useSearchParams();
+  const referralCode = searchParams.get('ref');
 
   useEffect(() => {
-    dispatch(setSelectedNavbar("airdrop"));
+    dispatch(setHydrate());
+    dispatch(setSelectedNavbar("airdrop"));    
   }, [dispatch])
+
+  useEffect(() => {
+    if(referralCode) {
+      dispatch(setInviteCode(referralCode));
+    }
+  }, [referralCode, dispatch])
+
+  useEffect(() => {
+    if(isUser) {
+      dispatch(setCurrentComponent("dashboard"));
+    } else {
+      dispatch(setCurrentComponent("landing"));
+    }
+  }, [dispatch, isUser])
+
+  useEffect(() => {
+    if (isDisconnected) {
+      dispatch(setLogout());
+    }
+  }, [isDisconnected, dispatch])
 
   return (
     <div className="w-full font-mona justify-end min-h-screen">
       <div className="flex-col flex items-center bg-secondary min-h-screen bg-[url('/vectors/mesh-lines.svg')] bg-cover bg-no-repeat bg-top">
         <Topbar />
         <Home />
-        {isAuthenticated && <Footer />}
+        {isUser && <Footer />}
       </div>
     </div>
   );

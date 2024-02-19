@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { selectUserSlice, setCurrentSignupStep } from "@/store/userSlice";
+import { selectUserSlice, setCurrentSignupStep, setTwitterAccountId } from "@/store/userSlice";
 
 const SignUpTwitter = () => {
   const dispatch = useAppDispatch();
   const { currentSignupStep } = useAppSelector(selectUserSlice);
+  const twitterAccountId = "exampleTwitterAccountId";
 
   return (
     <div className={`transition-all ease-in-out bg-tertiary rounded-[20px] flex flex-row md:flex-col md:gap-4 justify-between items-center md:text-center w-[849px] md:w-screen md:max-w-9/10 md:m-auto h-[113px] md:h-auto px-10 md:px-4 md:py-6 ${currentSignupStep === "twitter" ? "opacity-100" : "opacity-50"}`}>
@@ -18,7 +19,10 @@ const SignUpTwitter = () => {
       <button
         className={`transition ease-in-out bg-primary rounded-full w-[233px] text-xl leading-none font-semibold py-[15px] ${currentSignupStep === "twitter" ? "hover:bg-white" : ""}`}
         disabled={currentSignupStep !== "twitter"}
-        onClick={() => dispatch(setCurrentSignupStep("wallet"))}
+        onClick={() => {
+          dispatch(setTwitterAccountId(twitterAccountId));
+          dispatch(setCurrentSignupStep("wallet"));
+        }}
       >
         Connect Twitter/X
       </button>

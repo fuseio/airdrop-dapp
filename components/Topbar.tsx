@@ -25,10 +25,10 @@ const menuItems = [
 const Topbar = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const { selected } = useAppSelector(selectNavbarSlice);
-  const { isAuthenticated } = useAppSelector(selectUserSlice);
+  const { isUser } = useAppSelector(selectUserSlice);
 
   return (
-    <nav className={`w-full h-20 sticky top-0 flex justify-center py-7 md:h-[32px] md:mt-2 z-[60] ${isAuthenticated ? "border-b-[0.5px] border-pastel-gray" : ""}`}>
+    <nav className={`w-full h-20 sticky top-0 flex justify-center py-7 md:h-[32px] md:mt-2 z-[60] ${isUser ? "border-b-[0.5px] border-pastel-gray" : ""}`}>
       <div className="flex justify-between h-full items-center w-8/9 md:w-9/10 max-w-7xl relative">
         <span>
           <a href="/">

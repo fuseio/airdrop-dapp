@@ -6,6 +6,8 @@ import Link from "next/link";
 import { IS_SERVER, eclipseAddress, path } from "@/lib/helpers";
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
+import { useAppSelector } from "@/store/store";
+import { selectUserSlice } from "@/store/userSlice";
 
 const initialRanks = [
   {
@@ -31,16 +33,15 @@ const initialRanks = [
 ]
 
 const Dashboard = () => {
-  const points = 15;
   const tvl = 0;
-  const referralCode = "WkjWjl";
   const position = 130653;
   const { address } = useAccount();
   const [ranks, setRanks] = useState(initialRanks);
+  const { user } = useAppSelector(selectUserSlice);
 
   function referralLink() {
     const origin = !IS_SERVER ? window?.location?.origin : ""
-    return `${origin}/ref?=${referralCode}`
+    return `${origin}?ref=${user.referralCode}`
   }
 
   useEffect(() => {
@@ -88,7 +89,7 @@ const Dashboard = () => {
             </Info>
           </div>
           <p className="text-5xl md:text-4xl text-success font-bold">
-            {points} pts
+            {user.points} pts
           </p>
         </div>
         <div className="flex flex-col gap-[18px]">
@@ -115,11 +116,11 @@ const Dashboard = () => {
           </div>
           <div className="flex items-center gap-5">
             <p className="text-5xl md:text-4xl text-white font-bold">
-              {referralCode}
+              {user.referralCode}
             </p>
             <Copy
               src={copyIcon}
-              text={referralCode}
+              text={user.referralCode}
               tooltipText="Referral code copied"
               className="transition ease-in-out cursor-pointer hover:opacity-60"
             />
@@ -232,7 +233,7 @@ const Dashboard = () => {
               Pts
             </p>
             <p className="text-5xl md:text-4xl text-white font-bold">
-              {points}
+              {user.points}
             </p>
           </div>
         </div>
