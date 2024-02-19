@@ -1,20 +1,27 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { selectUserSlice, setCurrentSignupStep, setInviteCode } from "@/store/userSlice";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const SignUpInvite = () => {
   const dispatch = useAppDispatch();
-  const { currentSignupStep } = useAppSelector(selectUserSlice);
+  const { currentSignupStep, inviteCode } = useAppSelector(selectUserSlice);
   const referralCodeRef = useRef<HTMLInputElement>(null);
 
   function submitReferralCode() {
     if (!referralCodeRef.current || !referralCodeRef.current.value.length) {
       return;
     }
-
     dispatch(setInviteCode(referralCodeRef.current.value));
-    dispatch(setCurrentSignupStep("twitter"));
   }
+
+  useEffect(() => {
+    if (
+      currentSignupStep === "invite" &&
+      inviteCode
+    ) {
+      dispatch(setCurrentSignupStep("twitter"));
+    }
+  }, [currentSignupStep, inviteCode, dispatch])
 
   return (
     <div className={`transition-all ease-in-out bg-tertiary rounded-[20px] flex flex-row md:flex-col md:gap-4 justify-between items-center md:text-center w-[849px] md:w-screen md:max-w-9/10 md:m-auto md:h-auto px-10 md:px-4 md:py-6 ${currentSignupStep === "invite" ? "h-[170px] opacity-100" : "h-[113px] opacity-50"}`}>
@@ -60,7 +67,7 @@ const SignUpInvite = () => {
           <input
             type="text"
             name="referral-code"
-            placeholder="Your Code"
+            placeholder={inviteCode ?? "Your Code"}
             ref={referralCodeRef}
             required
             className="transition-all ease-in-out bg-transparent rounded-full w-[233px] border border-white px-5 py-[15px] text-white placeholder:text-white placeholder:font-semibold"

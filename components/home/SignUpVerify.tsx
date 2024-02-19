@@ -1,13 +1,13 @@
 import { signDataMessage } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { authenticate, create, selectUserSlice } from "@/store/userSlice";
+import { authenticate, create, selectUserSlice, setCurrentSignupStep } from "@/store/userSlice";
 import { useEffect } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 import Spinner from "../ui/Spinner";
 
 const SignUpVerify = () => {
   const dispatch = useAppDispatch();
-  const { currentSignupStep, inviteCode, twitterAccountId, isAuthenticating, isAuthenticated, isCreating } = useAppSelector(selectUserSlice);
+  const { currentSignupStep, inviteCode, twitterAccountId, isAuthenticating, isAuthenticated, isCreating, isUser } = useAppSelector(selectUserSlice);
   const { address } = useAccount();
   const { isLoading, signMessage } = useSignMessage({
     message: signDataMessage,
@@ -42,6 +42,15 @@ const SignUpVerify = () => {
       }));
     }
   }, [currentSignupStep, isAuthenticated, address, inviteCode, twitterAccountId, dispatch])
+
+  useEffect(() => {
+    if(
+      currentSignupStep === "verify" &&
+      isUser
+    ) {
+      dispatch(setCurrentSignupStep("complete"));
+    }
+  }, [currentSignupStep, isUser, dispatch])
 
   return (
     <div className={`transition-all ease-in-out bg-tertiary rounded-[20px] flex flex-row md:flex-col md:gap-4 justify-between items-center md:text-center w-[849px] md:w-screen md:max-w-9/10 md:m-auto h-[113px] md:h-auto px-10 md:px-4 md:py-6 ${currentSignupStep === "verify" ? "opacity-100" : "opacity-50"}`}>

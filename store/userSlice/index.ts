@@ -115,12 +115,10 @@ const userSlice = createSlice({
       localStorage.setItem("airdrop-twitterAccountId", action.payload);
     },
     setLogout: (state) => {
-      state.inviteCode = "";
       state.twitterAccountId = "";
       state.accessToken = "";
       state.isUser = false;
       state.user = initUser;
-      localStorage.removeItem("airdrop-inviteCode");
       localStorage.removeItem("airdrop-twitterAccountId");
       localStorage.removeItem("airdrop-accessToken");
       localStorage.removeItem("airdrop-isUser");
