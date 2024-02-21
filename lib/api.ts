@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NEXT_PUBLIC_AIRDROP_API_BASE_URL, NEXT_PUBLIC_COIN_GECKO_API_KEY } from './config'
-import { CreateUser, SignData, User } from "./types";
+import { CreateUser, Leaderboard, SignData, User } from "./types";
 
 export const fetchTokenPrice = async (tokenId: string) => {
   const response = await axios.get(
@@ -27,6 +27,36 @@ export const postCreateUser = async (createUserDetail: CreateUser, token: string
   const response = await axios.post(
     `${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/user`,
     createUserDetail,
+    {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+  )
+  return response.data
+}
+
+export const fetchUser = async (token: string): Promise<User> => {
+  const response = await axios.get(
+    `${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/user`,
+    {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+  )
+  return response.data
+}
+
+
+export const fetchLeaderboard = async (queryParams: Record<string, string>, token: string): Promise<Leaderboard> => {
+  const url = new URL(`${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/leaderboard`);
+  const searchParams = new URLSearchParams(queryParams);
+  url.search = searchParams.toString();
+  const endpointUrl = url.toString();
+
+  const response = await axios.get(
+    endpointUrl,
     {
       headers: {
         "Authorization": `Bearer ${token}`

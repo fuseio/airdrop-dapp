@@ -1,72 +1,24 @@
-import { motion, Reorder } from "framer-motion";
+import { motion } from "framer-motion";
 import Info from "../ui/Info";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
 import { IS_SERVER, eclipseAddress, path } from "@/lib/helpers";
 import { useAccount } from "wagmi";
-import { useEffect, useState } from "react";
 import { useAppSelector } from "@/store/store";
 import { selectUserSlice } from "@/store/userSlice";
-
-const initialRanks = [
-  {
-    participant: "0x3f1Ba4305A07cEd2bB5e42224D71aBE0BC3C3f26",
-    point: 4837369
-  },
-  {
-    participant: "0xc21Ba4305A07cEd2bB5e42224D71aBE0BC3C3f33",
-    point: 5945292
-  },
-  {
-    participant: "0x1E1Ba4305A07cEd2bB5e42224D71aBE0BC3C3f47",
-    point: 1733670
-  },
-  {
-    participant: "0xa61Ba4305A07cEd2bB5e42224D71aBE0BC3C3f84",
-    point: 7287874
-  },
-  {
-    participant: "0x8j1Ba4305A07cEd2bB5e42224D71aBE0BC3C3f59",
-    point: 5424723
-  },
-]
+import Leaderboard from "./Leaderboard";
 
 const Dashboard = () => {
   const tvl = 0;
   const position = 130653;
   const { address } = useAccount();
-  const [ranks, setRanks] = useState(initialRanks);
   const { user } = useAppSelector(selectUserSlice);
 
   function referralLink() {
     const origin = !IS_SERVER ? window?.location?.origin : ""
     return `${origin}?ref=${user.referralCode}`
   }
-
-  useEffect(() => {
-    const threeSecondinMillisecond = 3000;
-
-    const intervalId = setInterval(() => {
-      const randomRankIndexBetween0and4 = Math.floor(Math.random() * 4);
-      const randomPointBetween0and10000000 = Math.floor(Math.random() * 10000000);
-
-      const slicedRanks = ranks.slice();
-
-      slicedRanks[randomRankIndexBetween0and4] = {
-        participant: ranks[randomRankIndexBetween0and4].participant,
-        point: randomPointBetween0and10000000
-      }
-
-      const sortedRanks = slicedRanks.sort((a, b) => b.point - a.point);
-
-      setRanks(sortedRanks)
-    }, threeSecondinMillisecond)
-
-    return () => {
-      clearInterval(intervalId);
-    }
-  }, [ranks])
 
   return (
     <motion.div
@@ -242,36 +194,7 @@ const Dashboard = () => {
         <p className="text-3xl text-white font-semibold mb-[31px]">
           Leaderboard
         </p>
-        <Reorder.Group
-          axis="y"
-          values={ranks}
-          onReorder={setRanks}
-          layoutScroll
-          className="overflow-y-auto h-[450px]"
-        >
-          <table className="table-auto text-left divide-y divide-tertiary w-full">
-            <thead>
-              <tr>
-                <th className="text-pale-slate font-medium py-[22px] pl-[22px]">#</th>
-                <th className="text-pale-slate font-medium py-[22px]">Participant</th>
-                <th className="text-pale-slate font-medium py-[22px] pr-[22px]">Pts</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-tertiary">
-              {ranks.map((rank, index) =>
-                <Reorder.Item
-                  as="tr"
-                  key={rank.point}
-                  value={rank.point}
-                >
-                  <td className="text-white font-medium py-[22px] pl-[22px] w-2/12">{index + 1}</td>
-                  <td className="text-white font-medium py-[22px] w-8/12">{eclipseAddress(rank.participant)}</td>
-                  <td className="text-white font-medium py-[22px] pr-[22px] w-2/12">{rank.point}</td>
-                </Reorder.Item>
-              )}
-            </tbody>
-          </table>
-        </Reorder.Group>
+        <Leaderboard />
       </div>
     </motion.div>
   )

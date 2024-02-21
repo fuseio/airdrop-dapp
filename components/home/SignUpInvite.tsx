@@ -67,7 +67,7 @@ const SignUpInvite = () => {
           <input
             type="text"
             name="referral-code"
-            placeholder={inviteCode ?? "Your Code"}
+            placeholder={inviteCode || "Your Code"}
             ref={referralCodeRef}
             required
             className="transition-all ease-in-out bg-transparent rounded-full w-[233px] border border-white px-5 py-[15px] text-white placeholder:text-white placeholder:font-semibold"
