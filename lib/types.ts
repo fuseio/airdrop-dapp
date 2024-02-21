@@ -30,3 +30,17 @@ export interface User {
   points: string,
   referralCode: string
 }
+
+export interface LeaderboardUser {
+  id: string;
+  walletAddress: string;
+  twitterAccountId: string;
+  points: string;
+  referralCode: string;
+}
+
+export type LeaderboardUsers = LeaderboardUser[];
+
+export interface Leaderboard {
+  users: LeaderboardUser[];
+}

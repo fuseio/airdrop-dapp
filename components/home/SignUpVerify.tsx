@@ -7,7 +7,7 @@ import Spinner from "../ui/Spinner";
 
 const SignUpVerify = () => {
   const dispatch = useAppDispatch();
-  const { currentSignupStep, inviteCode, twitterAccountId, isAuthenticating, isAuthenticated, isCreating, isUser } = useAppSelector(selectUserSlice);
+  const { currentSignupStep, inviteCode, twitterAccountId, isAuthenticating, isAuthenticated, isCreating, isRetrieving, isUser } = useAppSelector(selectUserSlice);
   const { address } = useAccount();
   const { isLoading, signMessage } = useSignMessage({
     message: signDataMessage,
@@ -68,7 +68,7 @@ const SignUpVerify = () => {
         onClick={() => signMessage()}
       >
         Sign Message
-        {(isLoading || isAuthenticating || isCreating) &&
+        {(isLoading || isAuthenticating || isCreating || isRetrieving) &&
           <Spinner />
         }
       </button>

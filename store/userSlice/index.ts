@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
-import { CreateUser, SignData, User } from "@/lib/types";
-import { postAuthenticateUser, postCreateUser } from "@/lib/api";
+import { CreateUser, LeaderboardUsers, SignData, User } from "@/lib/types";
+import { fetchLeaderboard, fetchUser, postAuthenticateUser, postCreateUser } from "@/lib/api";
 import { RootState } from "../store";
 
 const initUser: User = {
@@ -16,6 +16,8 @@ export interface UserStateType {
   isAuthenticating: boolean;
   isAuthenticated: boolean;
   isCreating: boolean;
+  isRetrieving: boolean;
+  isLeaderboardUsersLoading: boolean;
   isUser: boolean;
   isHydrated: boolean;
   currentComponent: string;
@@ -24,12 +26,17 @@ export interface UserStateType {
   twitterAccountId: string;
   accessToken: string;
   user: User;
+  leaderboardUsers: LeaderboardUsers;
+  lastLeaderboardUserId: string;
+  isLeaderboardUsersFinished: boolean;
 }
 
 const INIT_STATE: UserStateType = {
   isAuthenticating: false,
   isAuthenticated: false,
   isCreating: false,
+  isRetrieving: false,
+  isLeaderboardUsersLoading: false,
   isUser: false,
   isHydrated: false,
   currentComponent: "landing",
@@ -37,7 +44,10 @@ const INIT_STATE: UserStateType = {
   inviteCode: "",
   twitterAccountId: "",
   accessToken: "",
-  user: initUser
+  user: initUser,
+  leaderboardUsers: [],
+  lastLeaderboardUserId: "",
+  isLeaderboardUsersFinished: false
 };
 
 export const authenticate = createAsyncThunk(
@@ -88,6 +98,66 @@ export const create = createAsyncThunk<
         } else {
           reject();
         }
+      } catch (error: any) {
+        if (error?.response?.status === 400) {
+          thunkAPI.dispatch(retrieve());
+        }
+        console.error(error);
+        reject();
+      }
+    });
+  }
+);
+
+export const retrieve = createAsyncThunk<
+  any,
+  undefined,
+  { state: RootState }
+>(
+  "OPERATOR/RETRIEVE",
+  async (
+    _,
+    thunkAPI
+  ) => {
+    return new Promise<any>(async (resolve, reject) => {
+      try {
+        const state = thunkAPI.getState();
+        const userState: UserStateType = state.user;
+        const fetchedUser = await fetchUser(userState.accessToken);
+        if (fetchedUser?.id) {
+          resolve(fetchedUser);
+        } else {
+          reject();
+        }
+      } catch (error) {
+        console.error(error);
+        reject();
+      }
+    });
+  }
+);
+
+export const fetchLeaderboardUsers = createAsyncThunk<
+  any,
+  {
+    queryParams: Record<string, string>;
+  },
+  { state: RootState }
+>(
+  "OPERATOR/FETCH_LEADERBOARD_USERS",
+  async ({
+    queryParams,
+  }: {
+    queryParams: Record<string, string>;
+  },
+    thunkAPI
+  ) => {
+    return new Promise<any>(async (resolve, reject) => {
+      try {
+        const state = thunkAPI.getState();
+        const userState: UserStateType = state.user;
+        const leaderboard = await fetchLeaderboard(queryParams, userState.accessToken);
+        resolve(leaderboard.users);
       } catch (error) {
         console.error(error);
         reject();
@@ -114,15 +184,25 @@ const userSlice = createSlice({
       state.twitterAccountId = action.payload
       localStorage.setItem("airdrop-twitterAccountId", action.payload);
     },
+    setLeaderboardUsers: (state, action: PayloadAction<LeaderboardUsers>) => {
+      state.leaderboardUsers = action.payload
+      localStorage.setItem("airdrop-leaderboardUsers", JSON.stringify(action.payload));
+    },
     setLogout: (state) => {
       state.twitterAccountId = "";
       state.accessToken = "";
       state.isUser = false;
       state.user = initUser;
+      state.leaderboardUsers = [];
+      state.lastLeaderboardUserId = "";
+      state.isLeaderboardUsersFinished = false;
       localStorage.removeItem("airdrop-twitterAccountId");
       localStorage.removeItem("airdrop-accessToken");
       localStorage.removeItem("airdrop-isUser");
       localStorage.removeItem("airdrop-user");
+      localStorage.removeItem("airdrop-leaderboardUsers");
+      localStorage.removeItem("airdrop-lastLeaderboardUserId");
+      localStorage.removeItem("airdrop-isLeaderboardUsersFinished");
     },
     setHydrate: (state) => {
       const inviteCode = localStorage.getItem("airdrop-inviteCode");
@@ -130,11 +210,17 @@ const userSlice = createSlice({
       const accessToken = localStorage.getItem("airdrop-accessToken");
       const isUser = localStorage.getItem("airdrop-isUser");
       const user = localStorage.getItem("airdrop-user");
+      const leaderboardUsers = localStorage.getItem("airdrop-leaderboardUsers");
+      const lastLeaderboardUserId = localStorage.getItem("airdrop-lastLeaderboardUserId");
+      const isLeaderboardUsersFinished = localStorage.getItem("airdrop-isLeaderboardUsersFinished");
       state.inviteCode = inviteCode ?? "";
       state.twitterAccountId = twitterAccountId ?? "";
       state.accessToken = accessToken ?? "";
       state.isUser = isUser ? JSON.parse(isUser) : false;
       state.user = user ? JSON.parse(user) : initUser;
+      state.leaderboardUsers = leaderboardUsers ? JSON.parse(leaderboardUsers) : [];
+      state.lastLeaderboardUserId = lastLeaderboardUserId ?? "";
+      state.isLeaderboardUsersFinished = isLeaderboardUsersFinished ? JSON.parse(isLeaderboardUsersFinished) : false;
       state.isHydrated = true;
     }
   },
@@ -165,6 +251,41 @@ const userSlice = createSlice({
       .addCase(create.rejected, (state) => {
         state.isCreating = false;
       })
+      .addCase(retrieve.pending, (state) => {
+        state.isRetrieving = true;
+      })
+      .addCase(retrieve.fulfilled, (state, action) => {
+        state.isRetrieving = false;
+        state.isUser = true;
+        state.user = action.payload;
+        localStorage.setItem("airdrop-isUser", "true");
+        localStorage.setItem("airdrop-user", JSON.stringify(action.payload));
+      })
+      .addCase(retrieve.rejected, (state) => {
+        state.isRetrieving = false;
+      })
+      .addCase(fetchLeaderboardUsers.pending, (state) => {
+        state.isLeaderboardUsersLoading = true;
+      })
+      .addCase(fetchLeaderboardUsers.fulfilled, (state, action) => {
+        state.isLeaderboardUsersLoading = false;
+        if (action.payload.length) {
+          const leaderboardUsers = [...state.leaderboardUsers, ...action.payload];
+          const lastLeaderboardUserId = action.payload[action.payload.length - 1].id
+
+          state.leaderboardUsers = leaderboardUsers
+          state.lastLeaderboardUserId = lastLeaderboardUserId;
+
+          localStorage.setItem("airdrop-leaderboardUsers", JSON.stringify(leaderboardUsers));
+          localStorage.setItem("airdrop-lastLeaderboardUserId", lastLeaderboardUserId);
+        } else {
+          state.isLeaderboardUsersFinished = true;
+          localStorage.setItem("airdrop-isLeaderboardUsersFinished", "true");
+        }
+      })
+      .addCase(fetchLeaderboardUsers.rejected, (state) => {
+        state.isLeaderboardUsersLoading = false;
+      })
   },
 });
 
@@ -175,6 +296,7 @@ export const {
   setCurrentSignupStep,
   setInviteCode,
   setTwitterAccountId,
+  setLeaderboardUsers,
   setLogout,
   setHydrate
 } = userSlice.actions;
