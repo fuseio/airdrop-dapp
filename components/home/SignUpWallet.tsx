@@ -2,7 +2,7 @@ import { selectNavbarSlice, setIsWalletModalOpen } from "@/store/navbarSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { selectUserSlice, setCurrentSignupStep } from "@/store/userSlice";
 import { useEffect } from "react";
-import { useAccount, useConnect } from "wagmi";
+import { useAccount } from "wagmi";
 import Spinner from "../ui/Spinner";
 
 const SignUpWallet = () => {
@@ -10,7 +10,6 @@ const SignUpWallet = () => {
   const { currentSignupStep } = useAppSelector(selectUserSlice);
   const { isWalletModalOpen } = useAppSelector(selectNavbarSlice);
   const { isConnected, isConnecting } = useAccount();
-  const { isLoading } = useConnect();
 
   useEffect(() => {
     if (
@@ -37,7 +36,7 @@ const SignUpWallet = () => {
         onClick={() => dispatch(setIsWalletModalOpen(true))}
       >
         Connect Wallet
-        {(isWalletModalOpen || isConnecting || isLoading) &&
+        {(isWalletModalOpen || isConnecting) &&
           <Spinner />
         }
       </button>

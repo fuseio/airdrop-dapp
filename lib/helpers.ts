@@ -33,3 +33,5 @@ export const path = {
   ABOUT: "/about",
   BRIDGE: "https://console.fuse.io/bridge"
 }
+
+export const evmDecimals = 18;

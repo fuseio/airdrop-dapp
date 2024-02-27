@@ -65,7 +65,11 @@ const WalletModal = (): JSX.Element => {
   const connectWallet = (id: string) => {
     connectionEvent(id);
     setConnectingWalletId(id);
-    connect({ connector: connectors.find((connector) => connector.id === id) });
+    const selectedConnector = connectors.find((connector) => connector.id === id);
+    if (selectedConnector) {
+      localStorage.setItem("Fuse-selectedConnectorId", selectedConnector.id);
+      connect({ connector: selectedConnector });
+    }
   }
 
   return (
