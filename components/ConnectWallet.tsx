@@ -9,12 +9,13 @@ import downWhite from "@/assets/down-arrow-white.svg";
 import {
   useAccount,
   useBalance,
+  useBlockNumber,
+  useConfig,
   useDisconnect,
-  useNetwork,
-  useSwitchNetwork,
+  useSwitchChain,
 } from "wagmi";
 import { setIsWalletModalOpen } from "@/store/navbarSlice";
-import { eclipseAddress } from "@/lib/helpers";
+import { eclipseAddress, evmDecimals } from "@/lib/helpers";
 import { arbitrum, polygon, fuse, optimism, bsc, mainnet } from "wagmi/chains";
 import fuseIcon from "@/assets/fuse-icon.svg";
 import polygonIcon from "@/assets/polygon-icon.svg";
@@ -31,6 +32,7 @@ import QRCode from "react-qr-code";
 import { usePathname } from "next/navigation";
 import switchNetworkIcon from "@/assets/switch-network.svg";
 import Copy from "./ui/Copy";
+import { formatUnits } from "viem";
 
 const screenMediumWidth = 768;
 const menu: Variants = {
@@ -96,13 +98,13 @@ const ConnectWallet = ({
   const [isAccountsOpen, setIsAccountsOpen] = React.useState(false);
   const [isWrongNetwoksOpen, setIsWrongNetwoksOpen] = React.useState(false);
   const [isQrCodeOpen, setIsQrCodeOpen] = React.useState(false);
-  const { address, isConnected } = useAccount();
-  const { chain, chains } = useNetwork();
-  const { switchNetwork } = useSwitchNetwork();
+  const { address, isConnected, chain } = useAccount();
+  const { chains } = useConfig();
+  const { switchChain } = useSwitchChain();
   const { disconnect } = useDisconnect();
-  const balance = useBalance({
+  const { data: blockNumber } = useBlockNumber({ watch: true });
+  const { data: balance, refetch } = useBalance({
     address,
-    watch: true,
   });
   const matches = useMediaQuery(`(min-width: ${screenMediumWidth}px)`);
   const balanceSlice = useAppSelector(selectBalanceSlice);
@@ -143,6 +145,10 @@ const ConnectWallet = ({
       controller.abort();
     };
   }, [isConnected, chain, dispatch]);
+
+  useEffect(() => {
+    refetch();
+  }, [blockNumber])
 
   return !isConnected ? (
     <div className={"flex justify-end " + containerClassName}>
@@ -203,7 +209,7 @@ const ConnectWallet = ({
                   : "cursor-pointer hover:opacity-70")
               }
               onClick={() => {
-                switchNetwork && switchNetwork(c.id);
+                switchChain({ chainId: c.id });
               }}
               key={c.id}
             >
@@ -312,12 +318,12 @@ const ConnectWallet = ({
                 <div className="flex flex-col justify-between gap-[3.68px]">
                   <p>{chain?.name} Token</p>
                   <p className="text-xs text-text-dark-gray">
-                    {balance.data?.symbol}
+                    {balance?.symbol}
                   </p>
                 </div>
               </div>
               <div className="flex flex-col justify-between gap-[3.68px] h-10">
-                <p>{parseFloat(balance.data?.formatted || "0").toFixed(4)}</p>
+                <p>{parseFloat(formatUnits(balance?.value ?? BigInt(0), balance?.decimals ?? evmDecimals) || "0").toFixed(4)}</p>
                 {balanceSlice.isUsdPriceLoading ? (
                   <span className="px-10 py-2 ml-2 rounded-md animate-pulse bg-white/80"></span>
                 ) : (
@@ -327,7 +333,7 @@ const ConnectWallet = ({
                       ? new Intl.NumberFormat().format(
                         parseFloat(
                           (
-                            parseFloat(balance.data?.formatted ?? "0") *
+                            parseFloat(formatUnits(balance?.value ?? BigInt(0), balance?.decimals ?? evmDecimals) ?? "0") *
                             balanceSlice.price
                           ).toString()
                         )
@@ -435,7 +441,7 @@ const ConnectWallet = ({
             <div
               className="flex items-center gap-3 cursor-pointer"
               onClick={() => {
-                switchNetwork && switchNetwork(c.id);
+                switchChain({ chainId: c.id });
               }}
               key={c.id}
             >

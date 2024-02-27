@@ -9,19 +9,20 @@ const SignUpVerify = () => {
   const dispatch = useAppDispatch();
   const { currentSignupStep, inviteCode, twitterAccountId, isAuthenticating, isAuthenticated, isCreating, isRetrieving, isUser } = useAppSelector(selectUserSlice);
   const { address } = useAccount();
-  const { isLoading, signMessage } = useSignMessage({
-    message: signDataMessage,
-    onSuccess(data) {
-      if (!address) {
-        return;
+  const { isPending, signMessage } = useSignMessage({
+    mutation: {
+      onSuccess(data) {
+        if (!address) {
+          return;
+        }
+        dispatch(authenticate({
+          signData: {
+            message: signDataMessage,
+            signature: data,
+            eoaAddress: address
+          },
+        }));
       }
-      dispatch(authenticate({
-        signData: {
-          message: signDataMessage,
-          signature: data,
-          eoaAddress: address
-        },
-      }));
     }
   });
 
@@ -44,7 +45,7 @@ const SignUpVerify = () => {
   }, [currentSignupStep, isAuthenticated, address, inviteCode, twitterAccountId, dispatch])
 
   useEffect(() => {
-    if(
+    if (
       currentSignupStep === "verify" &&
       isUser
     ) {
@@ -65,10 +66,10 @@ const SignUpVerify = () => {
       <button
         className={`transition ease-in-out flex justify-center items-center gap-2 bg-primary rounded-full w-[233px] text-xl leading-none font-semibold py-[15px] ${currentSignupStep === "verify" ? "hover:bg-white" : ""}`}
         disabled={currentSignupStep !== "verify"}
-        onClick={() => signMessage()}
+        onClick={() => signMessage({ message: signDataMessage })}
       >
         Sign Message
-        {(isLoading || isAuthenticating || isCreating || isRetrieving) &&
+        {(isPending || isAuthenticating || isCreating || isRetrieving) &&
           <Spinner />
         }
       </button>
