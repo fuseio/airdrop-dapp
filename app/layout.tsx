@@ -9,6 +9,12 @@ const monaSans = localFont({
   variable: '--font-mona-sans',
 })
 
+const pixeloidSans = localFont({
+  src: './PixeloidSans.ttf',
+  display: 'swap',
+  variable: '--font-pixeloid-sans',
+})
+
 export const metadata: Metadata = {
   title: "Fuse Airdrop",
   description: "Join the Fuse Airdrop program",
@@ -21,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={monaSans.className}>
+      <body className={`${monaSans.variable} ${pixeloidSans.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

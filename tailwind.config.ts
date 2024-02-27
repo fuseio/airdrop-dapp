@@ -24,12 +24,14 @@ const config: Config = {
         success: "#B4F9BA",
         "fuse-black": "#1A1A1A",
         "carbon-gray": "#5A5A5A",
+        "oslo-gray": "#8E8E8E",
         "gray-cloud": "#B6B6B6",
         "pale-slate": "#BFBFBF",
         "storm-dust": "#636363"
       },
       fontFamily: {
         mona: ["var(--font-mona-sans)"],
+        pixeloid: ["var(--font-pixeloid-sans)"],
       },
       spacing: {
         0.5: "0.125rem",
@@ -41,7 +43,17 @@ const config: Config = {
       },
       fontSize: {
         "5xl": "2.5rem",
-      }
+      },
+      keyframes: {
+        blink: {
+          '0%': { 'border-color': 'rgba(255, 255, 255, 1)' },
+          '50%': { 'border-color': 'rgba(255, 255, 255, 0.5)' },
+          '100%': { 'border-color': 'rgba(255, 255, 255, 1)' },
+        }
+      },
+      animation: {
+        'blink-underline': 'blink 1s linear infinite',
+      },
     },
   },
   plugins: [],

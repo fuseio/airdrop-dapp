@@ -1,39 +1,104 @@
 import { useAppDispatch } from "@/store/store";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import intoTheFuse from "@/assets/into-the-fuse.svg";
 import rightArrow from "@/assets/right-arrow.svg";
-import { setCurrentComponent } from "@/store/userSlice";
+import { setCurrentComponent, setInviteCode } from "@/store/userSlice";
 import { path } from "@/lib/helpers";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import OTPInput from "react-otp-input";
+import { useSearchParams } from "next/navigation";
+
+const defaultReferralCode = "FUSER";
 
 const Landing = () => {
   const dispatch = useAppDispatch();
+  const [invite, setInvite] = useState('');
+  const searchParams = useSearchParams();
+  const referralCode = searchParams.get('ref');
+
+  useEffect(() => {
+    const threeHundredMillisecond = 300;
+
+    const intervalId = setInterval(() => {
+      if (referralCode) {
+        clearInterval(intervalId);
+        setInvite(referralCode);
+        return;
+      }
+      setInvite(prevInvite => {
+        const prevInviteLength = prevInvite.length;
+        const defaultReferralCodeLength = defaultReferralCode.length;
+        if (prevInviteLength < defaultReferralCodeLength) {
+          return prevInvite + defaultReferralCode[prevInviteLength];
+        } else {
+          clearInterval(intervalId);
+          return prevInvite;
+        }
+      })
+    }, threeHundredMillisecond)
+
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, [dispatch, referralCode])
 
   return (
     <motion.div
-      className="w-8/9 flex flex-col items-center mt-[225px] mb-[187px] md:w-9/10 max-w-7xl"
+      className="w-8/9 flex flex-col items-center text-center mt-[163px] mb-[187px] md:w-9/10 max-w-7xl"
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}
     >
-      <Image
-        src={intoTheFuse}
-        alt="into the Fuse"
-      />
+      <div className="flex items-center gap-2 border-[1px] border-primary rounded-full px-4 py-2.5">
+        <span className="relative flex h-3.5 w-3.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gradient-to-br from-green-200 to-green-500 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-br from-green-200 to-green-500"></span>
+        </span>
+        <p className="text-lg leading-none text-white font-bold">
+          Airdrop Live
+        </p>
+      </div>
+      <h1 className="text-[6.875rem] md:text-4xl leading-none text-white font-semibold max-w-[980.05px] mt-9">
+        Welcome to the fuse airdrop
+      </h1>
       <p className="text-xl text-white max-w-[626.14px] mt-7 mb-16">
         Join the Fuse Airdrop! Get into the Fuse, connect your wallet and earn Rewards with ease:
         Join the Explosive Airdrop Campaign
       </p>
-      <button
-        className="transition ease-in-out bg-primary rounded-full text-xl leading-none font-semibold px-[52px] py-4 hover:bg-white"
-        onClick={() => dispatch(setCurrentComponent("signup"))}
+      <p className="text-xl text-white font-bold mb-5">
+        Enter invite code
+      </p>
+      <form
+        className="flex items-center gap-5"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (invite.length !== defaultReferralCode.length) {
+            return;
+          }
+          dispatch(setInviteCode(invite));
+          dispatch(setCurrentComponent("signup"));
+        }}
       >
-        Get your Airdrop
-      </button>
+        <OTPInput
+          value={invite}
+          onChange={setInvite}
+          numInputs={5}
+          renderInput={(props, index) => <input {...props} className={`${props.className} ${invite.length === index ? "animate-blink-underline" : "border-white/50"}`} />}
+          containerStyle={"gap-2 bg-oslo-gray/30 rounded-full px-[30px] py-3.5"}
+          inputStyle="font-pixeloid bg-transparent border-b text-center text-xl leading-none text-white text-bold w-9 focus:outline-none"
+          skipDefaultStyles
+        />
+        <button
+          type="submit"
+          className="transition ease-in-out bg-primary rounded-full text-xl leading-none font-semibold px-12 py-4 hover:bg-white"
+        >
+          Continue
+        </button>
+      </form>
       <Link
         href={path.ABOUT}
-        className="group flex items-center gap-2 mt-12"
+        className="group flex items-center gap-2 mt-24"
       >
         <p className="text-xl text-white font-bold">
           Learn about the Airdrop
