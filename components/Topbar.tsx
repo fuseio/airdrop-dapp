@@ -17,8 +17,8 @@ const menuItems = [
     link: "/about",
   },
   {
-    title: "Bridge",
-    link: "https://console.fuse.io/bridge",
+    title: "Fuse Home",
+    link: "https://www.fuse.io",
   },
 ]
 
@@ -41,7 +41,7 @@ const Topbar = () => {
             />
           </a>
         </span>
-        <NavMenu menuItems={menuItems} isOpen={isOpen} selected={selected} />
+        <NavMenu menuItems={menuItems} isOpen={isOpen} selected={selected} liClassName="w-fit whitespace-nowrap px-4 py-2.5" />
         <NavButton isOpen={isOpen} setOpen={setOpen} />
       </div>
     </nav>

@@ -44,3 +44,7 @@ export type LeaderboardUsers = LeaderboardUser[];
 export interface Leaderboard {
   users: LeaderboardUser[];
 }
+
+export type SignupStepCompleted = {
+  [key: number]: boolean;
+}

@@ -1,13 +1,16 @@
 import { signDataMessage } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { authenticate, create, selectUserSlice, setCurrentSignupStep } from "@/store/userSlice";
+import { authenticate, selectUserSlice, setSignupStepCompleted, setTotalSignupStepCompleted } from "@/store/userSlice";
 import { useEffect } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 import Spinner from "../ui/Spinner";
+import Image from "next/image";
+import check from "@/assets/check.svg";
 
 const SignUpVerify = () => {
   const dispatch = useAppDispatch();
-  const { currentSignupStep, inviteCode, twitterAccountId, isAuthenticating, isAuthenticated, isCreating, isRetrieving, isUser } = useAppSelector(selectUserSlice);
+  const { signupStepCompleted, isAuthenticating, isAuthenticated } = useAppSelector(selectUserSlice);
+  const STEP_POSITION = 2;
   const { address } = useAccount();
   const { isPending, signMessage } = useSignMessage({
     mutation: {
@@ -28,48 +31,40 @@ const SignUpVerify = () => {
 
   useEffect(() => {
     if (
-      currentSignupStep === "verify" &&
-      isAuthenticated &&
-      address &&
-      inviteCode &&
-      twitterAccountId
+      !signupStepCompleted[STEP_POSITION] &&
+      isAuthenticated
     ) {
-      dispatch(create({
-        createUserDetail: {
-          walletAddress: address,
-          twitterAccountId: twitterAccountId,
-          referralCode: inviteCode
-        },
-      }));
+      dispatch(setSignupStepCompleted({ key: STEP_POSITION, value: true }));
+      dispatch(setTotalSignupStepCompleted());
     }
-  }, [currentSignupStep, isAuthenticated, address, inviteCode, twitterAccountId, dispatch])
-
-  useEffect(() => {
-    if (
-      currentSignupStep === "verify" &&
-      isUser
-    ) {
-      dispatch(setCurrentSignupStep("complete"));
-    }
-  }, [currentSignupStep, isUser, dispatch])
+  }, [signupStepCompleted, dispatch, isAuthenticated])
 
   return (
-    <div className={`transition-all ease-in-out bg-tertiary rounded-[20px] flex flex-row md:flex-col md:gap-4 justify-between items-center md:text-center w-[849px] md:w-screen md:max-w-9/10 md:m-auto h-[113px] md:h-auto px-10 md:px-4 md:py-6 ${currentSignupStep === "verify" ? "opacity-100" : "opacity-50"}`}>
+    <div className="bg-tertiary rounded-[20px] flex flex-row md:flex-col md:gap-4 justify-between items-center md:text-center w-[849px] md:w-screen md:max-w-9/10 md:m-auto h-[113px] md:h-auto px-10 md:px-4 md:py-6">
       <div className="flex flex-row md:flex-col md:gap-2 items-center gap-6">
-        <p className="bg-carbon-gray rounded-full flex justify-center items-center w-[45px] h-[45px] text-2xl leading-none text-white font-bold">
-          4
-        </p>
+        <div className={`transition-all ease-in-out duration-300 relative border-dashed border rounded-full flex justify-center items-center w-[45px] h-[45px] text-2xl leading-none text-white font-bold overflow-hidden ${signupStepCompleted[STEP_POSITION] ? "border-primary" : "border-white"}`}>
+          <p className={`transition-all ease-in-out duration-300 absolute left-1/2 ${signupStepCompleted[STEP_POSITION] ? "translate-x-12" : "-translate-x-1/2"}`}>
+            {STEP_POSITION}
+          </p>
+          <Image
+            src={check}
+            alt="check"
+            width={21}
+            height={15}
+            className={`transition-all ease-in-out duration-300 absolute left-1/2 ${signupStepCompleted[STEP_POSITION] ? "-translate-x-1/2" : "-translate-x-12"}`}
+          />
+        </div>
         <p className="text-2xl text-white font-bold">
           Verify your wallet ownership
         </p>
       </div>
       <button
-        className={`transition ease-in-out flex justify-center items-center gap-2 bg-primary rounded-full w-[233px] text-xl leading-none font-semibold py-[15px] ${currentSignupStep === "verify" ? "hover:bg-white" : ""}`}
-        disabled={currentSignupStep !== "verify"}
+        className={`transition ease-in-out flex justify-center items-center gap-2 bg-primary rounded-full w-[163px] text-xl leading-none font-semibold py-[15px] ${signupStepCompleted[STEP_POSITION - 1] && !signupStepCompleted[STEP_POSITION] ? "opacity-100 hover:bg-white" : "opacity-30"}`}
+        disabled={signupStepCompleted[STEP_POSITION - 1] && !signupStepCompleted[STEP_POSITION] ? false : true}
         onClick={() => signMessage({ message: signDataMessage })}
       >
-        Sign Message
-        {(isPending || isAuthenticating || isCreating || isRetrieving) &&
+        Verify
+        {(isPending || isAuthenticating) &&
           <Spinner />
         }
       </button>
