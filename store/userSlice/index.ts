@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
-import { CreateUser, LeaderboardUsers, SignData, User } from "@/lib/types";
+import { CreateUser, LeaderboardUsers, SignData, SignupStepCompleted, User } from "@/lib/types";
 import { fetchLeaderboard, fetchUser, postAuthenticateUser, postCreateUser } from "@/lib/api";
 import { RootState } from "../store";
 
@@ -12,16 +12,24 @@ const initUser: User = {
   referralCode: ""
 }
 
+const initSignupStepCompleted: SignupStepCompleted = {
+  1: false,
+  2: false,
+  3: false,
+  4: false,
+}
+
 export interface UserStateType {
   isAuthenticating: boolean;
   isAuthenticated: boolean;
   isCreating: boolean;
   isRetrieving: boolean;
   isLeaderboardUsersLoading: boolean;
+  totalSignupStepCompleted: number;
   isUser: boolean;
   isHydrated: boolean;
   currentComponent: string;
-  currentSignupStep: string;
+  signupStepCompleted: SignupStepCompleted;
   inviteCode: string;
   twitterAccountId: string;
   accessToken: string;
@@ -38,9 +46,10 @@ const INIT_STATE: UserStateType = {
   isRetrieving: false,
   isLeaderboardUsersLoading: false,
   isUser: false,
+  totalSignupStepCompleted: 0,
   isHydrated: false,
   currentComponent: "landing",
-  currentSignupStep: "invite",
+  signupStepCompleted: initSignupStepCompleted,
   inviteCode: "",
   twitterAccountId: "",
   accessToken: "",
@@ -173,8 +182,8 @@ const userSlice = createSlice({
     setCurrentComponent: (state, action: PayloadAction<string>) => {
       state.currentComponent = action.payload
     },
-    setCurrentSignupStep: (state, action: PayloadAction<string>) => {
-      state.currentSignupStep = action.payload
+    setSignupStepCompleted: (state, action: PayloadAction<{key: number, value: boolean}>) => {
+      state.signupStepCompleted[action.payload.key] = action.payload.value
     },
     setInviteCode: (state, action: PayloadAction<string>) => {
       state.inviteCode = action.payload
@@ -183,6 +192,9 @@ const userSlice = createSlice({
     setTwitterAccountId: (state, action: PayloadAction<string>) => {
       state.twitterAccountId = action.payload
       localStorage.setItem("airdrop-twitterAccountId", action.payload);
+    },
+    setTotalSignupStepCompleted: (state) => {
+      state.totalSignupStepCompleted = state.totalSignupStepCompleted + 1
     },
     setLeaderboardUsers: (state, action: PayloadAction<LeaderboardUsers>) => {
       state.leaderboardUsers = action.payload
@@ -293,9 +305,10 @@ export const selectUserSlice = (state: AppState): UserStateType => state.user;
 
 export const {
   setCurrentComponent,
-  setCurrentSignupStep,
+  setSignupStepCompleted,
   setInviteCode,
   setTwitterAccountId,
+  setTotalSignupStepCompleted,
   setLeaderboardUsers,
   setLogout,
   setHydrate

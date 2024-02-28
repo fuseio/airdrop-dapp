@@ -35,3 +35,10 @@ export const path = {
 }
 
 export const evmDecimals = 18;
+
+export const exampleTwitterAccountId = "exampleTwitterAccountId";
+
+export const TOTAL_STEPS = 4;
+
+export const MANDATORY_STEP_POSITION = 2;
+

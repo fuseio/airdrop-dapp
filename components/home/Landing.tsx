@@ -70,7 +70,7 @@ const Landing = () => {
         Enter invite code
       </p>
       <form
-        className="flex items-center gap-5"
+        className="flex flex-row md:flex-col items-center gap-5 md:gap-3"
         onSubmit={(e) => {
           e.preventDefault();
           if (invite.length !== defaultReferralCode.length) {

@@ -25,6 +25,8 @@ const config: Config = {
         "fuse-black": "#1A1A1A",
         "carbon-gray": "#5A5A5A",
         "oslo-gray": "#8E8E8E",
+        "ironside-gray": "#606060",
+        "smokey-gray": "#6F6F6F",
         "gray-cloud": "#B6B6B6",
         "pale-slate": "#BFBFBF",
         "storm-dust": "#636363"

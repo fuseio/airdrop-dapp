@@ -14,7 +14,6 @@ export default function Airdrop() {
   const { isUser } = useAppSelector(selectUserSlice);
   const { isDisconnected } = useAccount();
 
-
   useEffect(() => {
     dispatch(setHydrate());
     dispatch(setSelectedNavbar("airdrop"));    

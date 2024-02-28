@@ -154,7 +154,7 @@ const ConnectWallet = ({
     <div className={"flex justify-end " + containerClassName}>
       <button
         className={
-          "bg-fuse-black text-white px-4 py-2 rounded-full font-medium md:text-sm " +
+          "border border-white text-white px-4 py-2 rounded-full font-medium md:text-sm " +
           className
         }
         onClick={() => dispatch(setIsWalletModalOpen(true))}
