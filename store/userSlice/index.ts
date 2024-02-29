@@ -9,7 +9,8 @@ const initUser: User = {
   walletAddress: "",
   twitterAccountId: "",
   points: "0",
-  referralCode: ""
+  referralCode: "",
+  leaderboardPosition: "0"
 }
 
 const initSignupStepCompleted: SignupStepCompleted = {

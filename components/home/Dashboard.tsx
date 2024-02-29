@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import Info from "../ui/Info";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
@@ -8,17 +7,81 @@ import { useAccount } from "wagmi";
 import { useAppSelector } from "@/store/store";
 import { selectUserSlice } from "@/store/userSlice";
 import Leaderboard from "./Leaderboard";
+import renameIcon from "@/assets/rename.svg";
+import Image from "next/image";
+import { useState } from "react";
+import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
+import AirdropLive from "./AirdropLive";
+import Jazzicon from "react-jazzicon/dist/Jazzicon";
+import { jsNumberForAddress } from "react-jazzicon";
+import star from "@/assets/star.svg";
+import rightCaret from "@/assets/right-caret.svg";
+import airdrop from "@/assets/airdrop.svg";
+import bridgeFuse from "@/assets/bridge-fuse.svg";
+import voltage from "@/assets/voltage.svg";
+import logx from "@/assets/logx.svg";
+import bitazza from "@/assets/bitazza.svg";
+import lynx from "@/assets/lynx.svg";
+import zneakrz from "@/assets/zneakrz.svg";
+import meridian from "@/assets/meridian.svg";
+
+const apps = [
+  {
+    name: "Voltage",
+    description: "Trade, invest, and earn with just a few clicks",
+    image: voltage,
+    background: "/vectors/voltage-gradient.svg"
+  },
+  {
+    name: "Logx",
+    description: "Trade, invest, and earn with just a few clicks",
+    image: logx,
+    background: "/vectors/logx-gradient.svg"
+  },
+  {
+    name: "Bitazza",
+    description: "Trade, invest, and earn with just a few clicks",
+    image: bitazza,
+    background: "/vectors/bitazza-gradient.svg"
+  },
+  {
+    name: "Lynx",
+    description: "Trade, invest, and earn with just a few clicks",
+    image: lynx,
+    background: "/vectors/lynx-gradient.svg"
+  },
+  {
+    name: "Zneakrz",
+    description: "Trade, invest, and earn with just a few clicks",
+    image: zneakrz,
+    background: "/vectors/zneakrz-gradient.svg"
+  },
+  {
+    name: "Meridian",
+    description: "Trade, invest, and earn with just a few clicks",
+    image: meridian,
+    background: "/vectors/meridian-gradient.svg"
+  },
+]
 
 const Dashboard = () => {
-  const tvl = 0;
-  const position = 130653;
+  const lastUpdate = "12:00 UTC";
   const { address } = useAccount();
   const { user } = useAppSelector(selectUserSlice);
+  const [rename, setRename] = useState(user.walletAddress);
+  const [isRename, setIsRename] = useState(false);
+  const MAX_RENAME_CHARACTER = 15;
 
   function referralLink() {
     const origin = !IS_SERVER ? window?.location?.origin : ""
     return `${origin}?ref=${user.referralCode}`
   }
+
+  const renameRef = useOutsideClick<HTMLInputElement>(() => {
+    if (isRename) {
+      setIsRename(false);
+    }
+  });
 
   return (
     <motion.div
@@ -27,170 +90,200 @@ const Dashboard = () => {
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}
     >
-      <h1 className="text-5xl md:text-4xl text-white font-semibold">
-        My Airdrop
-      </h1>
-      <div className="flex flex-row md:flex-col justify-between md:gap-8 bg-tertiary rounded-[20px] mt-[65px] mb-[70px] px-28 py-12 md:p-4">
-        <div className="flex flex-col gap-[18px]">
-          <div className="flex items-center gap-2 text-lg text-pale-slate font-medium">
-            Total points
-            <Info>
-              <p>
-                Total points
-              </p>
-            </Info>
-          </div>
-          <p className="text-5xl md:text-4xl text-success font-bold">
-            {user.points} pts
-          </p>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-9">
+          <h1 className="flex items-center gap-2 text-5xl md:text-4xl text-white font-semibold">
+            Hey, {isRename ?
+              <input
+                type="text"
+                name="rename"
+                ref={renameRef}
+                value={rename}
+                className="bg-transparent focus:outline-none"
+                onChange={(event) => {
+                  if (event.target.value.length > MAX_RENAME_CHARACTER) {
+                    return;
+                  }
+                  setRename(event.target.value);
+                }}
+              /> :
+              user.walletAddress === rename ? eclipseAddress(rename) : rename
+            }
+          </h1>
+          <Image
+            src={renameIcon}
+            alt="rename"
+            width={31}
+            height={28}
+            className={`transition-all ease-in-out duration-300 hover:opacity-50 ${isRename ? "hidden" : ""}`}
+            onClick={() => setIsRename(true)}
+          />
         </div>
-        <div className="flex flex-col gap-[18px]">
-          <div className="flex items-center gap-2 text-lg text-pale-slate font-medium">
-            Total Bridged TVL
-            <Info>
-              <p>
-                Total Bridged TVL
+        <AirdropLive />
+      </div>
+      <div className="flex flex-row md:flex-col justify-between items-center md:gap-8 bg-tertiary rounded-[20px] mt-[54px] mb-[100px] p-[42px] md:p-4">
+        <div className="flex flex-row md:flex-col justify-between items-center md:gap-8 w-1/2">
+          <div className="flex flex-row md:flex-col items-center gap-10">
+            <Jazzicon diameter={95} seed={jsNumberForAddress(address as string)} />
+            <div>
+              <p className="text-lg leading-none text-pale-slate font-medium">
+                Your points
               </p>
-            </Info>
-          </div>
-          <p className="text-5xl md:text-4xl text-white font-bold">
-            ${tvl}
-          </p>
-        </div>
-        <div className="flex flex-col gap-[18px]">
-          <div className="flex items-center gap-2 text-lg text-pale-slate font-medium">
-            My referral code
-            <Info>
-              <p>
-                My referral code
+              <div className="flex items-center gap-1.5 mt-6 mb-2">
+                <Image
+                  src={star}
+                  alt="star"
+                  width={30}
+                  height={30}
+                />
+                <p className="text-5xl md:text-4xl leading-none text-white font-bold">
+                  {user.points}
+                </p>
+              </div>
+              <p className="text-sm leading-none text-pale-slate font-medium">
+                Last update {lastUpdate}
               </p>
-            </Info>
+            </div>
           </div>
-          <div className="flex items-center gap-5">
-            <p className="text-5xl md:text-4xl text-white font-bold">
-              {user.referralCode}
+          <div>
+            <p className="text-lg leading-none text-pale-slate font-medium">
+              Your Rank
             </p>
-            <Copy
-              src={copyIcon}
-              text={user.referralCode}
-              tooltipText="Referral code copied"
-              className="transition ease-in-out cursor-pointer hover:opacity-60"
+            <p className="text-5xl md:text-4xl leading-none text-white font-bold mt-6 mb-2">
+              {user.leaderboardPosition}
+            </p>
+            <Link
+              href="#leaderboard"
+              className="group flex items-center gap-1 text-sm leading-none text-pale-slate font-medium"
+            >
+              View Leaderboard
+              <Image
+                src={rightCaret}
+                alt="right caret"
+                width={7}
+                height={13}
+                className="transition ease-in-out group-hover:translate-x-0.5"
+              />
+            </Link>
+          </div>
+        </div>
+        <div className="flex flex-row md:flex-col items-center gap-[42px]">
+          <Image
+            src={airdrop}
+            alt="airdrop"
+            width={94}
+            height={128}
+          />
+          <div className="flex flex-col justify-between items-start gap-4">
+            <p className="text-2xl leading-none text-white font-bold max-w-64">
+              Welcome to the Fuse Airdrop program
+            </p>
+            <Link
+              href={path.ABOUT}
+              className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 hover:bg-primary hover:text-black"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col gap-8">
+        <p className="text-3xl text-white font-semibold">
+          Start earning points
+        </p>
+        <div className="flex gap-[30px]">
+          <div className="bg-tertiary rounded-[20px] flex flex-col justify-between w-1/2 min-h-[283px] p-10 bg-[url('/vectors/globe.svg')] md:bg-none bg-no-repeat bg-right-bottom">
+            <div className="flex flex-col gap-4">
+              <p className="text-2xl text-primary font-bold">
+                Invite friends
+              </p>
+              <p className="text-lg text-pale-slate font-medium max-w-[243px]">
+                Get 10% of your friend&apos;s total points (Not including)
+              </p>
+            </div>
+            <div className="flex flex-col gap-2.5">
+              <p className="text-sm text-pale-slate font-medium">
+                Invite link
+              </p>
+              <div className="flex items-center gap-1.5">
+                <p className="text-xl text-white font-bold">
+                  {referralLink()}
+                </p>
+                <Copy
+                  src={copyIcon}
+                  text={referralLink()}
+                  tooltipText="Referral link copied"
+                  className="transition ease-in-out cursor-pointer hover:opacity-60"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="bg-tertiary rounded-[20px] flex justify-between w-1/2 min-h-[283px] p-10">
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-4">
+                <p className="text-2xl text-primary font-bold">
+                  Bridge FUSE
+                </p>
+                <p className="text-lg text-pale-slate font-medium max-w-[200px]">
+                  Get 1 point on every $100 you bridge
+                </p>
+              </div>
+              <div>
+                <button
+                  className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 hover:bg-primary hover:text-black"
+                  onClick={() => window.open(path.BRIDGE, "_blank")}
+                >
+                  Go to Bridge
+                </button>
+              </div>
+            </div>
+            <Image
+              src={bridgeFuse}
+              alt="bridge Fuse"
+              width={284}
+              height={209}
             />
           </div>
         </div>
       </div>
-      <div className="bg-success rounded-[20px] px-[68px] py-[62px] md:px-4 md:py-6 max-h-[327px] md:max-h-full bg-[url('/vectors/about-cube.svg')] md:bg-none bg-no-repeat bg-right">
-        <div className="flex flex-col items-start md:items-center md:text-center">
-          <p className="text-3xl text-fuse-black font-semibold">
-            About the Fuse airdrop
-          </p>
-          <p className="text-lg text-black opacity-60 max-w-[552px] mt-[26px] mb-[46px]">
-            Provide a seamless user experience without the hassle of dealing
-            with complex blockchain processes with the Fuse SDK.
-          </p>
-          <Link
-            href={path.ABOUT}
-            className="transition ease-in-out bg-fuse-black hover:bg-white text-white hover:text-fuse-black rounded-full text-lg leading-none font-semibold px-[44px] py-4"
-          >
-            Learn more about the airdrop
-          </Link>
-        </div>
-      </div>
-      <div className="flex flex-col mt-[65px] mb-[63px]">
-        <p className="text-3xl text-white font-semibold mb-[31px]">
-          How to earn more points
+      <div className="flex flex-col gap-8 mt-24">
+        <p className="text-3xl text-white font-semibold">
+          Check out our ecosystem apps Earn 2x Points
         </p>
-        <div className="flex flex-col gap-[30px]">
-          <div className="bg-tertiary rounded-[20px] flex flex-row md:flex-col md:gap-4 justify-between items-center md:text-center px-10 py-7 md:px-4 md:py-6">
-            <div className="flex flex-row md:flex-col md:gap-2 items-center gap-6">
-              <p className="bg-carbon-gray rounded-full flex justify-center items-center w-[45px] h-[45px] text-2xl leading-none text-white font-bold">
-                1
-              </p>
-              <p className="text-2xl text-white font-bold">
-                Invite friends
-              </p>
-            </div>
-            <div className="flex items-center gap-[18.5px]">
-              <p className="text-2xl md:text-base text-white">
-                {referralLink()}
-              </p>
-              <Copy
-                src={copyIcon}
-                text={referralLink()}
-                tooltipText="Referral link copied"
-                className="transition ease-in-out cursor-pointer hover:opacity-60"
+        <div className="grid grid-cols-2 gap-[30px]">
+          {apps.map((app, index) =>
+            <div
+              key={index}
+              className="relative bg-tertiary rounded-[20px] flex justify-between min-h-[249px] p-10"
+            >
+              <div className={`absolute inset-0 bg-[url('${app.background}')] md:bg-none bg-no-repeat bg-right-bottom`}></div>
+              <div className="flex flex-col justify-between z-10">
+                <div className="flex flex-col gap-4">
+                  <p className="text-2xl text-primary font-bold">
+                    {app.name}
+                  </p>
+                  <p className="text-lg text-pale-slate font-medium max-w-[278px]">
+                    {app.description}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3.5">
+                  <p className="text-lg text-pale-slate font-medium max-w-[200px]">
+                    Points Status
+                  </p>
+                  <div className="border-[0.5px] border-gray-goose rounded-full leading-none text-white font-semibold px-3 py-2">
+                    Coming Soon
+                  </div>
+                </div>
+              </div>
+              <Image
+                src={app.image}
+                alt={app.name}
               />
             </div>
-          </div>
-          <div className="bg-tertiary rounded-[20px] flex flex-row md:flex-col md:gap-4 justify-between items-center md:text-center px-10 py-7 md:px-4 md:py-6">
-            <div className="flex flex-row md:flex-col md:gap-2 items-center gap-6">
-              <p className="bg-carbon-gray rounded-full flex justify-center items-center w-[45px] h-[45px] text-2xl leading-none text-white font-bold">
-                2
-              </p>
-              <p className="text-2xl text-white font-bold">
-                Bridge FUSE to Earn Points
-              </p>
-            </div>
-            <a
-              href={path.BRIDGE}
-              target="_blank"
-              className="transition ease-in-out bg-success text-black hover:bg-white rounded-full text-lg leading-none font-semibold px-[53px] py-4"
-            >
-              Go to Bridge
-            </a>
-          </div>
-          <div className="bg-tertiary rounded-[20px] flex flex-col gap-[33px] md:gap-4 md:text-center px-10 py-7 md:px-4 md:py-6">
-            <div className="flex flex-row md:flex-col md:gap-2 items-center gap-6">
-              <p className="bg-carbon-gray rounded-full flex justify-center items-center w-[45px] h-[45px] text-2xl leading-none text-white font-bold">
-                3
-              </p>
-              <p className="text-2xl text-white font-bold">
-                Check out our Ecosystem and Earn 2x Points
-              </p>
-            </div>
-            <div className="grid grid-cols-3 md:grid-cols-1 gap-[35px] md:gap-3">
-              {new Array(6).fill(0).map((_, index) =>
-                <div
-                  key={index}
-                  className="bg-storm-dust h-[219px]"
-                ></div>
-              )}
-            </div>
-          </div>
+          )}
         </div>
       </div>
-      <div className="flex flex-col">
-        <p className="text-3xl text-white font-semibold mb-[31px]">
-          My Position
-        </p>
-        <div className="flex flex-row md:flex-col justify-between md:gap-8 bg-tertiary rounded-[20px] px-28 py-12 md:p-4">
-          <div className="flex flex-col gap-[18px]">
-            <p className="text-lg text-pale-slate font-medium">
-              Position
-            </p>
-            <p className="text-5xl md:text-4xl text-white font-bold">
-              {position}
-            </p>
-          </div>
-          <div className="flex flex-col gap-[18px]">
-            <p className="text-lg text-pale-slate font-medium">
-              Participant
-            </p>
-            <p className="text-5xl md:text-4xl text-white font-bold">
-              {eclipseAddress(String(address))}
-            </p>
-          </div>
-          <div className="flex flex-col gap-[18px]">
-            <p className="text-lg text-pale-slate font-medium">
-              Pts
-            </p>
-            <p className="text-5xl md:text-4xl text-white font-bold">
-              {user.points}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col mt-[78px]">
+      <div className="flex flex-col pt-[78px]" id="leaderboard">
         <p className="text-3xl text-white font-semibold mb-[31px]">
           Leaderboard
         </p>

@@ -28,7 +28,8 @@ export interface User {
   walletAddress: string,
   twitterAccountId: string,
   points: string,
-  referralCode: string
+  referralCode: string,
+  leaderboardPosition: string
 }
 
 export interface LeaderboardUser {
