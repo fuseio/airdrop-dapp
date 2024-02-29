@@ -30,37 +30,37 @@ const apps = [
     name: "Voltage",
     description: "Trade, invest, and earn with just a few clicks",
     image: voltage,
-    background: "/vectors/voltage-gradient.svg"
+    background: "absolute inset-0 bg-[url('/vectors/voltage-gradient.svg')] md:bg-none bg-no-repeat bg-right-bottom"
   },
   {
     name: "Logx",
     description: "Trade, invest, and earn with just a few clicks",
     image: logx,
-    background: "/vectors/logx-gradient.svg"
+    background: "absolute inset-0 bg-[url('/vectors/logx-gradient.svg')] md:bg-none bg-no-repeat bg-right-bottom"
   },
   {
     name: "Bitazza",
     description: "Trade, invest, and earn with just a few clicks",
     image: bitazza,
-    background: "/vectors/bitazza-gradient.svg"
+    background: "absolute inset-0 bg-[url('/vectors/bitazza-gradient.svg')] md:bg-none bg-no-repeat bg-right-bottom"
   },
   {
     name: "Lynx",
     description: "Trade, invest, and earn with just a few clicks",
     image: lynx,
-    background: "/vectors/lynx-gradient.svg"
+    background: "absolute inset-0 bg-[url('/vectors/lynx-gradient.svg')] md:bg-none bg-no-repeat bg-right-bottom"
   },
   {
     name: "Zneakrz",
     description: "Trade, invest, and earn with just a few clicks",
     image: zneakrz,
-    background: "/vectors/zneakrz-gradient.svg"
+    background: "absolute inset-0 bg-[url('/vectors/zneakrz-gradient.svg')] md:bg-none bg-no-repeat bg-right-bottom"
   },
   {
     name: "Meridian",
     description: "Trade, invest, and earn with just a few clicks",
     image: meridian,
-    background: "/vectors/meridian-gradient.svg"
+    background: "absolute inset-0 bg-[url('/vectors/meridian-gradient.svg')] md:bg-none bg-no-repeat bg-right-bottom"
   },
 ]
 
@@ -115,7 +115,7 @@ const Dashboard = () => {
             alt="rename"
             width={31}
             height={28}
-            className={`transition-all ease-in-out duration-300 hover:opacity-50 ${isRename ? "hidden" : ""}`}
+            className={`transition-all ease-in-out duration-300 cursor-pointer hover:opacity-50 ${isRename ? "hidden" : ""}`}
             onClick={() => setIsRename(true)}
           />
         </div>
@@ -256,7 +256,7 @@ const Dashboard = () => {
               key={index}
               className="relative bg-tertiary rounded-[20px] flex justify-between min-h-[249px] p-10"
             >
-              <div className={`absolute inset-0 bg-[url('${app.background}')] md:bg-none bg-no-repeat bg-right-bottom`}></div>
+              <div className={app.background}></div>
               <div className="flex flex-col justify-between z-10">
                 <div className="flex flex-col gap-4">
                   <p className="text-2xl text-primary font-bold">
