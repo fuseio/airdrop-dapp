@@ -28,6 +28,7 @@ const config: Config = {
         "ironside-gray": "#606060",
         "smokey-gray": "#6F6F6F",
         "gray-cloud": "#B6B6B6",
+        "gray-goose": "#D0D0D0",
         "pale-slate": "#BFBFBF",
         "storm-dust": "#636363"
       },
