@@ -280,7 +280,7 @@ const Dashboard = () => {
               <Image
                 src={app.image}
                 alt={app.name}
-                className="order-first"
+                className="md:order-first"
               />
             </div>
           )}
