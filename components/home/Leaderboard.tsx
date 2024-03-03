@@ -20,7 +20,7 @@ type PositionStars = {
 
 const PAGE_SIZE = "30";
 
-const tr = {
+const leaderboardVariants = {
   hidden: {
     opacity: 0,
     y: 50,
@@ -59,7 +59,7 @@ const Leaderboard = () => {
         Your Ranking
       </p>
       <motion.div
-        variants={tr}
+        variants={leaderboardVariants}
         initial="hidden"
         animate="show"
         className="bg-tertiary rounded-[20px] flex items-center gap-2.5 text-white text-lg font-medium px-2.5 py-[22px]"
@@ -102,7 +102,7 @@ const Leaderboard = () => {
             <Reorder.Item
               key={leaderboardUser.id}
               value={leaderboardUser.points}
-              variants={tr}
+              variants={leaderboardVariants}
               initial="hidden"
               animate="show"
               className="bg-tertiary rounded-[20px] flex items-center gap-2.5 text-white text-lg font-medium px-2.5 py-[22px]"
@@ -116,7 +116,7 @@ const Leaderboard = () => {
                     height={36}
                   />
                 }
-                <p className="absolute top-1/2 -translate-y-1/2 leading-none">
+                <p className="absolute top-[55%] -translate-y-1/2 leading-none">
                   {new Intl.NumberFormat().format(index + 1)}
                 </p>
               </div>
