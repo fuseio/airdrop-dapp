@@ -73,8 +73,8 @@ const Dashboard = () => {
   const MAX_RENAME_CHARACTER = 15;
 
   function referralLink() {
-    const origin = !IS_SERVER ? window?.location?.origin : ""
-    return `${origin}?ref=${user.referralCode}`
+    const host = !IS_SERVER ? window?.location?.host : ""
+    return `${host}?ref=${user.referralCode}`
   }
 
   const renameRef = useOutsideClick<HTMLInputElement>(() => {
@@ -90,16 +90,16 @@ const Dashboard = () => {
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}
     >
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-9">
-          <h1 className="flex items-center gap-2 text-5xl md:text-4xl text-white font-semibold">
+      <div className="flex flex-row md:flex-col justify-between items-center md:gap-2">
+        <div className="flex flex-row md:flex-col items-center gap-9 md:gap-2">
+          <h1 className="flex flex-row md:flex-col items-center gap-2 text-5xl md:text-4xl text-white font-semibold md:break-all">
             Hey, {isRename ?
               <input
                 type="text"
                 name="rename"
                 ref={renameRef}
                 value={rename}
-                className="bg-transparent focus:outline-none"
+                className="bg-transparent focus:outline-none md:w-8/12"
                 onChange={(event) => {
                   if (event.target.value.length > MAX_RENAME_CHARACTER) {
                     return;
@@ -121,7 +121,7 @@ const Dashboard = () => {
         </div>
         <AirdropLive />
       </div>
-      <div className="flex flex-row md:flex-col justify-between items-center md:gap-8 bg-tertiary rounded-[20px] mt-[54px] mb-[100px] p-[42px] md:p-4">
+      <div className="flex flex-row md:flex-col justify-between items-center md:gap-8 md:text-center bg-tertiary rounded-[20px] mt-[54px] mb-[100px] p-[42px] md:p-4">
         <div className="flex flex-row md:flex-col justify-between items-center md:gap-8 w-1/2">
           <div className="flex flex-row md:flex-col items-center gap-10">
             <Jazzicon diameter={95} seed={jsNumberForAddress(address as string)} />
@@ -129,7 +129,7 @@ const Dashboard = () => {
               <p className="text-lg leading-none text-pale-slate font-medium">
                 Your points
               </p>
-              <div className="flex items-center gap-1.5 mt-6 mb-2">
+              <div className="flex items-center md:justify-center gap-1.5 mt-6 mb-2">
                 <Image
                   src={star}
                   alt="star"
@@ -173,8 +173,9 @@ const Dashboard = () => {
             alt="airdrop"
             width={94}
             height={128}
+            className="md:hidden"
           />
-          <div className="flex flex-col justify-between items-start gap-4">
+          <div className="flex flex-col justify-between items-start md:items-center gap-4">
             <p className="text-2xl leading-none text-white font-bold max-w-64">
               Welcome to the Fuse Airdrop program
             </p>
@@ -191,8 +192,8 @@ const Dashboard = () => {
         <p className="text-3xl text-white font-semibold">
           Start earning points
         </p>
-        <div className="flex gap-[30px]">
-          <div className="bg-tertiary rounded-[20px] flex flex-col justify-between w-1/2 min-h-[283px] p-10 bg-[url('/vectors/globe.svg')] md:bg-none bg-no-repeat bg-right-bottom">
+        <div className="flex flex-row md:flex-col gap-[30px]">
+          <div className="bg-tertiary rounded-[20px] flex flex-col justify-between w-1/2 md:w-auto min-h-[283px] p-10 bg-[url('/vectors/globe.svg')] md:bg-none bg-no-repeat bg-right-bottom">
             <div className="flex flex-col gap-4">
               <p className="text-2xl text-primary font-bold">
                 Invite friends
@@ -218,13 +219,13 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="bg-tertiary rounded-[20px] flex justify-between w-1/2 min-h-[283px] p-10">
-            <div className="flex flex-col justify-between">
-              <div className="flex flex-col gap-4">
+          <div className="bg-tertiary rounded-[20px] flex flex-row md:flex-col justify-between md:items-center md:text-center w-1/2 md:w-auto min-h-[283px] p-10">
+            <div className="flex flex-col justify-between md:gap-2">
+              <div className="flex flex-col gap-4 md:gap-2">
                 <p className="text-2xl text-primary font-bold">
                   Bridge FUSE
                 </p>
-                <p className="text-lg text-pale-slate font-medium max-w-[200px]">
+                <p className="text-lg text-pale-slate font-medium max-w-[200px] md:max-w-full">
                   Get 1 point on every $100 you bridge
                 </p>
               </div>
@@ -242,6 +243,7 @@ const Dashboard = () => {
               alt="bridge Fuse"
               width={284}
               height={209}
+              className="md:order-first"
             />
           </div>
         </div>
@@ -250,11 +252,11 @@ const Dashboard = () => {
         <p className="text-3xl text-white font-semibold">
           Check out our ecosystem apps Earn 2x Points
         </p>
-        <div className="grid grid-cols-2 gap-[30px]">
+        <div className="grid grid-cols-2 md:grid-cols-1 gap-[30px]">
           {apps.map((app, index) =>
             <div
               key={index}
-              className="relative bg-tertiary rounded-[20px] flex justify-between min-h-[249px] p-10"
+              className="relative bg-tertiary rounded-[20px] flex flex-row md:flex-col justify-between min-h-[249px] p-10"
             >
               <div className={app.background}></div>
               <div className="flex flex-col justify-between z-10">
@@ -278,6 +280,7 @@ const Dashboard = () => {
               <Image
                 src={app.image}
                 alt={app.name}
+                className="order-first"
               />
             </div>
           )}
