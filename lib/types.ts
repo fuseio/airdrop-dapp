@@ -27,16 +27,16 @@ export interface User {
   id: string,
   walletAddress: string,
   twitterAccountId: string,
-  points: string,
+  points: number,
   referralCode: string,
-  leaderboardPosition: string
+  leaderboardPosition: number
 }
 
 export interface LeaderboardUser {
   id: string;
   walletAddress: string;
   twitterAccountId: string;
-  points: string;
+  points: number;
   referralCode: string;
 }
 
