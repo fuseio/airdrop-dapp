@@ -1,4 +1,6 @@
 import { WalletType } from "./types";
+import { ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export const eclipseAddress = (address: string): string => {
   return (
@@ -45,3 +47,7 @@ export const signUpSteps = {
 }
 
 export const screenMediumWidth = 768;
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}

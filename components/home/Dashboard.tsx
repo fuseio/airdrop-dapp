@@ -25,8 +25,10 @@ import lynx from "@/assets/lynx.svg";
 import zneakrz from "@/assets/zneakrz.svg";
 import meridian from "@/assets/meridian.svg";
 import { useMediaQuery } from "usehooks-ts";
+import EcosystemApp from "./EcosystemApp";
+import { EcosystemApps } from "@/lib/types";
 
-const apps = [
+const apps: EcosystemApps = [
   {
     name: "Voltage",
     description: "Trade, invest, and earn with just a few clicks",
@@ -216,7 +218,7 @@ const Dashboard = () => {
           Start earning points
         </p>
         <div className="flex flex-row md:flex-col gap-[30px] md:gap-5">
-          <div className="bg-tertiary rounded-[20px] flex flex-col justify-between md:justify-start md:gap-12 w-1/2 md:w-auto min-h-[283px] md:min-h-[430px] p-10 md:p-[30px] bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom">
+          <div className="transition-all ease-in-out duration-300 bg-tertiary rounded-[20px] flex flex-col justify-between md:justify-start md:gap-12 w-1/2 md:w-auto min-h-[283px] md:min-h-[430px] p-10 md:p-[30px] border border-tertiary hover:border-success bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom">
             <div className="flex flex-col gap-4">
               <p className="text-2xl text-primary font-bold">
                 Invite friends
@@ -242,7 +244,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="bg-tertiary rounded-[20px] flex flex-row md:flex-col justify-between md:gap-4 w-1/2 md:w-auto min-h-[283px] p-10 md:p-[30px]">
+          <div className="bg-tertiary rounded-[20px] flex flex-row md:flex-col justify-between md:gap-4 w-1/2 md:w-auto min-h-[283px] p-10 md:p-[30px] border border-tertiary hover:border-success">
             <div className="flex flex-col justify-between md:gap-2">
               <div className="flex flex-col gap-4 md:gap-2">
                 <p className="text-2xl text-primary font-bold">
@@ -277,35 +279,7 @@ const Dashboard = () => {
         </p>
         <div className="grid grid-cols-2 md:grid-cols-1 gap-[30px] md:gap-5">
           {apps.map((app, index) =>
-            <div
-              key={index}
-              className="relative bg-tertiary rounded-[20px] flex flex-row md:flex-col justify-between min-h-[249px] p-10"
-            >
-              <div className={app.background}></div>
-              <div className="flex flex-col justify-between md:gap-6 z-10 md:mb-16">
-                <div className="flex flex-col gap-4 md:gap-5">
-                  <p className="text-2xl text-primary font-bold">
-                    {app.name}
-                  </p>
-                  <p className="text-lg text-pale-slate font-medium max-w-[278px]">
-                    {app.description}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3.5">
-                  <p className="text-lg text-pale-slate font-medium max-w-[200px]">
-                    Points Status
-                  </p>
-                  <div className="border-[0.5px] border-gray-goose rounded-full leading-none text-white font-semibold px-3 py-2">
-                    Coming Soon
-                  </div>
-                </div>
-              </div>
-              <Image
-                src={app.image}
-                alt={app.name}
-                className="md:m-auto"
-              />
-            </div>
+            <EcosystemApp key={index} app={app} />
           )}
         </div>
       </div>
@@ -316,7 +290,7 @@ const Dashboard = () => {
           </p>
           <div className="flex gap-2">
             {leaderboardTimeRanges.map((leaderboardTimeRange, index) =>
-              leaderboardTimeRange.mobile && (
+              (!matches && !leaderboardTimeRange.mobile ? false : true) && (
                 <motion.p
                   key={index}
                   className={`transition-all ease-in-out duration-300 text-lg font-semibold ${selectedLeaderboardTimeRange === leaderboardTimeRange.name ? "text-white" : "text-monsoon cursor-pointer"}`}
