@@ -16,11 +16,11 @@ export default function Airdrop() {
 
   useEffect(() => {
     dispatch(setHydrate());
-    dispatch(setSelectedNavbar("airdrop"));    
+    dispatch(setSelectedNavbar("airdrop"));
   }, [dispatch])
 
   useEffect(() => {
-    if(isUser) {
+    if (isUser) {
       dispatch(setCurrentComponent("dashboard"));
     } else {
       dispatch(setCurrentComponent("landing"));
@@ -34,8 +34,8 @@ export default function Airdrop() {
   }, [isDisconnected, dispatch])
 
   return (
-    <div className="w-full font-mona justify-end min-h-screen">
-      <div className={`flex-col flex items-center bg-secondary bg-gradient-to-t from-green-200/10 min-h-screen ${isUser ? "bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top" : ""}`}>
+    <div className="w-full font-mona justify-end min-h-screen bg-secondary bg-gradient-to-t from-green-200/10">
+      <div className={`flex-col flex items-center min-h-screen ${isUser ? "bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top" : ""}`}>
         <Topbar />
         <Home />
         {isUser && <Footer />}

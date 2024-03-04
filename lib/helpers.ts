@@ -43,3 +43,5 @@ export const signUpSteps = {
   TOTAL: 3,
   MANDATORY: 1
 }
+
+export const screenMediumWidth = 768;

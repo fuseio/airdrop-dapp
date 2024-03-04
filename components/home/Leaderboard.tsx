@@ -7,7 +7,9 @@ import star from "@/assets/star.svg";
 import starGold from "@/assets/star-gold.svg";
 import starSilver from "@/assets/star-silver.svg";
 import starBronze from "@/assets/star-bronze.svg";
-import { eclipseAddress } from "@/lib/helpers";
+import { eclipseAddress, hex } from "@/lib/helpers";
+import Jazzicon from "react-jazzicon/dist/Jazzicon";
+import { jsNumberForAddress } from "react-jazzicon";
 
 type PositionStar = {
   name: string;
@@ -65,6 +67,9 @@ const Leaderboard = () => {
         className="bg-tertiary rounded-[20px] flex items-center gap-2.5 text-white text-lg font-medium px-2.5 py-[22px]"
       >
         <div className="w-[87px] flex justify-center bg-white/10 rounded-full leading-none px-2.5 py-[6.5px]">{new Intl.NumberFormat().format(user.leaderboardPosition)}</div>
+        <div className="flex items-center pl-2.5 pr-7 md:pl-2 md:pr-4">
+          <Jazzicon diameter={40} seed={jsNumberForAddress((user.walletAddress ?? hex) as string)} />
+        </div>
         <div className="grow md:w-8/12">
           <p className="hidden md:block">
             {eclipseAddress(user.walletAddress)}
@@ -119,6 +124,9 @@ const Leaderboard = () => {
                 <p className="absolute top-[55%] -translate-y-1/2 leading-none">
                   {new Intl.NumberFormat().format(index + 1)}
                 </p>
+              </div>
+              <div className="flex items-center pl-2.5 pr-7 md:pl-2 md:pr-4">
+                <Jazzicon diameter={40} seed={jsNumberForAddress((leaderboardUser.walletAddress ?? hex) as string)} />
               </div>
               <div className="grow flex flex-row items-center gap-9 md:gap-4 md:w-8/12">
                 <p className="md:hidden">
