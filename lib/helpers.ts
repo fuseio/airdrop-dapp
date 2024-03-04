@@ -26,8 +26,6 @@ export const walletType: WalletType = {
 
 export const isIos = !IS_SERVER && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-export const signDataMessage = 'Verify your wallet ownership to create an account';
-
 export const path = {
   HOME: "/",
   ABOUT: "/about",
@@ -38,7 +36,10 @@ export const evmDecimals = 18;
 
 export const exampleTwitterAccountId = "exampleTwitterAccountId";
 
-export const TOTAL_STEPS = 4;
-
-export const MANDATORY_STEP_POSITION = 2;
-
+export const signUpSteps = {
+  WALLET: 1,
+  TWITTER: 2,
+  DISCORD: 3,
+  TOTAL: 3,
+  MANDATORY: 1
+}
