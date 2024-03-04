@@ -303,7 +303,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex flex-col pt-[78px]" id="leaderboard">
-        <div className="flex flex-row md:flex-col justify-between items-end gap-2 mb-[31px]">
+        <div className="flex flex-row md:flex-col justify-between items-end md:items-start gap-2 mb-[31px]">
           <p className="text-3xl text-white font-semibold">
             Leaderboard
           </p>
