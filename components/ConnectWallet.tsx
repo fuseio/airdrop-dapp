@@ -15,7 +15,7 @@ import {
   useSwitchChain,
 } from "wagmi";
 import { setIsWalletModalOpen } from "@/store/navbarSlice";
-import { eclipseAddress, evmDecimals } from "@/lib/helpers";
+import { eclipseAddress, evmDecimals, screenMediumWidth } from "@/lib/helpers";
 import { arbitrum, polygon, fuse, optimism, bsc, mainnet } from "wagmi/chains";
 import fuseIcon from "@/assets/fuse-icon.svg";
 import polygonIcon from "@/assets/polygon-icon.svg";
@@ -34,7 +34,6 @@ import switchNetworkIcon from "@/assets/switch-network.svg";
 import Copy from "./ui/Copy";
 import { formatUnits } from "viem";
 
-const screenMediumWidth = 768;
 const menu: Variants = {
   closed: (isCenter) => ({
     opacity: 0,
@@ -154,7 +153,7 @@ const ConnectWallet = ({
     <div className={"flex justify-end " + containerClassName}>
       <button
         className={
-          "border border-white text-white px-4 py-2 rounded-full font-medium md:text-sm " +
+          "border border-white text-white px-4 py-2 rounded-full font-medium " +
           className
         }
         onClick={() => dispatch(setIsWalletModalOpen(true))}
@@ -164,11 +163,11 @@ const ConnectWallet = ({
     </div>
   ) : checkCorrectNetwork() && isChainOpen ? (
     <div
-      className="flex relative justify-end md:me-2 text-base/4 md:text-[8px] h-9 md:h-7"
+      className="flex relative justify-end md:me-2.5 text-base/4 h-9"
       ref={chainRef}
     >
       <div
-        className="flex bg-tertiary px-4 py-3 md:py-3.5 rounded-full cursor-pointer items-center relative text-base/4 md:text-[8px]/[25px] font-normal ml-2 md:ml-1"
+        className="flex bg-tertiary px-4 py-3 md:py-3.5 rounded-full cursor-pointer items-center relative text-base/4 font-normal ml-2"
         onClick={() => setIsChainOpen(!isChainOpen)}
       >
         <Image
@@ -183,7 +182,7 @@ const ConnectWallet = ({
         <Image
           src={downWhite}
           alt="down"
-          className={`ms-[15px] ${isChainOpen && "rotate-180"} md:ms-1`}
+          className={`ms-[15px] ${isChainOpen && "rotate-180"}`}
           width={10}
           height={10}
         />
@@ -243,9 +242,9 @@ const ConnectWallet = ({
       </motion.div>
     </div>
   ) : checkCorrectNetwork() ? (
-    <div className="flex justify-end md:justify-center relative w-[410px] md:w-[90%] h-9 md:h-7">
+    <div className="flex justify-end md:justify-center relative md:me-2.5 h-9">
       <div
-        className="flex bg-tertiary px-4 py-3 md:py-3.5 rounded-full cursor-pointer items-center relative text-base/4 md:text-[8px]/[25px] font-normal ml-2 md:ml-1"
+        className="flex bg-tertiary px-4 py-3 md:py-3.5 rounded-full cursor-pointer items-center relative text-base/4 font-normal ml-2"
         ref={accountsRef}
       >
         <div
@@ -264,7 +263,7 @@ const ConnectWallet = ({
           <Image
             src={downWhite}
             alt="down"
-            className={`ms-[15px] ${isAccountsOpen && "rotate-180"} md:ms-1`}
+            className={`ms-[15px] ${isAccountsOpen && "rotate-180"}`}
             width={10}
             height={10}
           />
@@ -278,7 +277,7 @@ const ConnectWallet = ({
           className={`absolute top-[120%] right-0 bg-white rounded-[20px] cursor-auto shadow-xl py-[25.5px] z-50 w-[268.22px] ${pathname === "/dashboard" ? "md:left-1/2" : ""}`}
         >
           <div className="flex flex-col gap-[8.35px] px-[22px]">
-            <p className="text-xs/[11.6px] md:text-[8px] text-text-dark-gray font-medium">
+            <p className="text-xs/[11.6px] text-text-dark-gray font-medium">
               Connected account
             </p>
             <div className="flex justify-between">
@@ -303,7 +302,7 @@ const ConnectWallet = ({
           </div>
           <hr className="border-border-dark-gray mt-[25.62px] mb-[18.5px]" />
           <div className="flex flex-col gap-[8.35px] pl-[22.2px] pr-[17.42px] font-medium">
-            <p className="text-xs/[11.6px] md:text-[8px] text-text-dark-gray">
+            <p className="text-xs/[11.6px] text-text-dark-gray">
               Wallet
             </p>
             <div className="flex justify-between items-center">
@@ -406,11 +405,11 @@ const ConnectWallet = ({
     </div>
   ) : (
     <div
-      className="flex relative justify-end md:me-2 text-base/4 md:text-[8px]"
+      className="flex relative justify-end md:me-2.5 text-base/4"
       ref={wrongNetworkRef}
     >
       <div
-        className="flex bg-[#FACBCB] px-[18.3px] py-3 md:py-1 md:px-2 rounded-full cursor-pointer items-center relative justify-center"
+        className="flex bg-[#FACBCB] px-[18.3px] py-3 rounded-full cursor-pointer items-center relative justify-center"
         onClick={() => setIsWrongNetwoksOpen(!isWrongNetwoksOpen)}
       >
         <p>Wrong Network</p>
@@ -431,7 +430,7 @@ const ConnectWallet = ({
       >
         <div className="flex flex-col gap-3.5 px-[22px]">
           <p className="font-bold">Switch Network</p>
-          <p className="text-xs/[11.6px] md:text-[8px] text-text-dark-gray">
+          <p className="text-xs/[11.6px] text-text-dark-gray">
             Wrong network detected, switch or disconnect to continue
           </p>
         </div>
