@@ -43,3 +43,12 @@ export interface Leaderboard {
 export type SignupStepCompleted = {
   [key: number]: boolean;
 }
+
+export type EcosystemApp = {
+  name: string;
+  description: string;
+  image: string;
+  background: string;
+}
+
+export type EcosystemApps = EcosystemApp[];
