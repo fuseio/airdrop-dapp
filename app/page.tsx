@@ -35,7 +35,7 @@ export default function Airdrop() {
 
   return (
     <div className="w-full font-mona justify-end min-h-screen">
-      <div className="flex-col flex items-center bg-secondary bg-gradient-to-t from-green-200/10 min-h-screen">
+      <div className={`flex-col flex items-center bg-secondary bg-gradient-to-t from-green-200/10 min-h-screen ${isUser ? "bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top" : ""}`}>
         <Topbar />
         <Home />
         {isUser && <Footer />}
