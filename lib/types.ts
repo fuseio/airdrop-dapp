@@ -11,12 +11,6 @@ export type WalletType = {
   [k: string]: string;
 }
 
-export interface SignData {
-  message: string;
-  signature: string;
-  eoaAddress: Address;
-}
-
 export type CreateUser = {
   walletAddress: Address,
   twitterAccountId: string,

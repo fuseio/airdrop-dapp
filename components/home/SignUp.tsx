@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
 import SignUpTwitter from "./SignUpTwitter";
 import SignUpWallet from "./SignUpWallet";
-import SignUpVerify from "./SignUpVerify";
 import SignUpSkip from "./SignUpSkip";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { create, selectUserSlice, setTwitterAccountId } from "@/store/userSlice";
 import { useAccount } from "wagmi";
-import { MANDATORY_STEP_POSITION, TOTAL_STEPS, exampleTwitterAccountId } from "@/lib/helpers";
+import { exampleTwitterAccountId, signUpSteps } from "@/lib/helpers";
 import { useEffect } from "react";
 import SignUpDiscord from "./SignUpDiscord";
 
@@ -21,7 +20,7 @@ const SignUp = () => {
     }
 
     if (
-      totalSignupStepCompleted === TOTAL_STEPS &&
+      totalSignupStepCompleted === signUpSteps.TOTAL &&
       isAuthenticated &&
       address &&
       inviteCode &&
@@ -49,11 +48,10 @@ const SignUp = () => {
       </h1>
       <div className="flex flex-col gap-5 mb-11">
         <SignUpWallet />
-        <SignUpVerify />
         <SignUpTwitter />
         <SignUpDiscord />
       </div>
-      {signupStepCompleted[MANDATORY_STEP_POSITION] && <SignUpSkip />}
+      {signupStepCompleted[signUpSteps.MANDATORY] && <SignUpSkip />}
     </motion.div>
   )
 }

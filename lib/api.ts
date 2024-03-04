@@ -1,6 +1,7 @@
 import axios from "axios";
 import { NEXT_PUBLIC_AIRDROP_API_BASE_URL, NEXT_PUBLIC_COIN_GECKO_API_KEY } from './config'
-import { CreateUser, Leaderboard, SignData, User } from "./types";
+import { CreateUser, Leaderboard, User } from "./types";
+import { Address } from "viem";
 
 export const fetchTokenPrice = async (tokenId: string) => {
   const response = await axios.get(
@@ -15,10 +16,12 @@ export const fetchTokenPrice = async (tokenId: string) => {
 };
 
 
-export const postAuthenticateUser = async (signData: SignData): Promise<{ jwt: string }> => {
+export const postAuthenticateUser = async (eoaAddress: Address): Promise<{ jwt: string }> => {
   const response = await axios.post(
     `${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/auth`,
-    signData
+    {
+      eoaAddress
+    }
   )
   return response.data
 }

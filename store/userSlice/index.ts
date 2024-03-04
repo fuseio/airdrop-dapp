@@ -1,8 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
-import { CreateUser, LeaderboardUsers, SignData, SignupStepCompleted, User } from "@/lib/types";
+import { CreateUser, LeaderboardUsers, SignupStepCompleted, User } from "@/lib/types";
 import { fetchLeaderboard, fetchUser, postAuthenticateUser, postCreateUser } from "@/lib/api";
 import { RootState } from "../store";
+import { Address } from "viem";
 
 const initUser: User = {
   id: "",
@@ -17,7 +18,6 @@ const initSignupStepCompleted: SignupStepCompleted = {
   1: false,
   2: false,
   3: false,
-  4: false,
 }
 
 export interface UserStateType {
@@ -63,13 +63,13 @@ const INIT_STATE: UserStateType = {
 export const authenticate = createAsyncThunk(
   "OPERATOR/AUTHENTICATE",
   async ({
-    signData,
+    eoaAddress,
   }: {
-    signData: SignData;
+    eoaAddress: Address;
   }) => {
     return new Promise<any>(async (resolve, reject) => {
       try {
-        const authenticatedUser = await postAuthenticateUser(signData);
+        const authenticatedUser = await postAuthenticateUser(eoaAddress);
         if (authenticatedUser?.jwt) {
           resolve(authenticatedUser.jwt);
         } else {

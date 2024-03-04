@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { create, selectUserSlice, setTwitterAccountId } from "@/store/userSlice";
 import Spinner from "../ui/Spinner";
-import { TOTAL_STEPS, exampleTwitterAccountId } from "@/lib/helpers";
+import { exampleTwitterAccountId, signUpSteps } from "@/lib/helpers";
 import { useAccount } from "wagmi";
 
 const SignUpSkip = () => {
@@ -35,7 +35,7 @@ const SignUpSkip = () => {
       onClick={handleSkip}
       disabled={isCreating || isRetrieving}
     >
-      {totalSignupStepCompleted === TOTAL_STEPS ? "Redirecting" : "Skip for now"}
+      {totalSignupStepCompleted === signUpSteps.TOTAL ? "Redirecting" : "Skip for now"}
       {(isCreating || isRetrieving) &&
         <Spinner />
       }
