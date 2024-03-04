@@ -30,7 +30,8 @@ const config: Config = {
         "gray-cloud": "#B6B6B6",
         "gray-goose": "#D0D0D0",
         "pale-slate": "#BFBFBF",
-        "storm-dust": "#636363"
+        "storm-dust": "#636363",
+        "monsoon": "#868686"
       },
       fontFamily: {
         mona: ["var(--font-mona-sans)"],

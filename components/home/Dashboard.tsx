@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
-import { IS_SERVER, eclipseAddress, path } from "@/lib/helpers";
+import { IS_SERVER, eclipseAddress, hex, path } from "@/lib/helpers";
 import { useAccount } from "wagmi";
 import { useAppSelector } from "@/store/store";
 import { selectUserSlice } from "@/store/userSlice";
@@ -64,12 +64,28 @@ const apps = [
   },
 ]
 
+const leaderboardTimeRanges = [
+  {
+    name: "All-Time"
+  },
+  {
+    name: "Last 30 days"
+  },
+  {
+    name: "Last 7 days"
+  },
+  {
+    name: "Last 24 hrs"
+  },
+]
+
 const Dashboard = () => {
   const lastUpdate = "12:00 UTC";
   const { address } = useAccount();
   const { user } = useAppSelector(selectUserSlice);
   const [rename, setRename] = useState(user.walletAddress);
   const [isRename, setIsRename] = useState(false);
+  const [selectedLeaderboardTimeRange, setSelectedLeaderboardTimeRange] = useState(leaderboardTimeRanges[0].name);
   const MAX_RENAME_CHARACTER = 15;
 
   function referralLink() {
@@ -124,7 +140,7 @@ const Dashboard = () => {
       <div className="flex flex-row md:flex-col justify-between items-center md:gap-8 md:text-center bg-tertiary rounded-[20px] mt-[54px] mb-[100px] p-[42px] md:p-4">
         <div className="flex flex-row md:flex-col justify-between items-center md:gap-8 w-1/2">
           <div className="flex flex-row md:flex-col items-center gap-10">
-            <Jazzicon diameter={95} seed={jsNumberForAddress(address as string)} />
+            <Jazzicon diameter={95} seed={jsNumberForAddress((address ?? hex) as string)} />
             <div>
               <p className="text-lg leading-none text-pale-slate font-medium">
                 Your points
@@ -287,9 +303,22 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex flex-col pt-[78px]" id="leaderboard">
-        <p className="text-3xl text-white font-semibold mb-[31px]">
-          Leaderboard
-        </p>
+        <div className="flex flex-row md:flex-col justify-between items-end gap-2 mb-[31px]">
+          <p className="text-3xl text-white font-semibold">
+            Leaderboard
+          </p>
+          <div className="flex gap-2">
+            {leaderboardTimeRanges.map((leaderboardTimeRange, index) =>
+              <motion.p
+                key={index}
+                className={`transition-all ease-in-out duration-300 text-lg font-semibold ${selectedLeaderboardTimeRange === leaderboardTimeRange.name ? "text-white" : "text-monsoon cursor-pointer"}`}
+                onClick={() => setSelectedLeaderboardTimeRange(leaderboardTimeRange.name)}
+              >
+                {leaderboardTimeRange.name}
+              </motion.p>
+            )}
+          </div>
+        </div>
         <Leaderboard />
       </div>
     </motion.div>
