@@ -8,10 +8,11 @@ import Home from "./Home";
 import { selectUserSlice, setCurrentComponent, setHydrate, setLogout } from "@/store/userSlice";
 import Footer from "@/components/Footer";
 import { useAccount } from "wagmi";
+import Grid3D from "@/components/ui/Grid3D";
 
 export default function Airdrop() {
   const dispatch = useAppDispatch();
-  const { isUser } = useAppSelector(selectUserSlice);
+  const { currentComponent, isUser } = useAppSelector(selectUserSlice);
   const { isDisconnected } = useAccount();
 
   useEffect(() => {
@@ -35,9 +36,14 @@ export default function Airdrop() {
 
   return (
     <div className="w-full font-mona justify-end min-h-screen bg-secondary bg-gradient-to-t from-green-200/10">
-      <div className={`flex-col flex items-center min-h-screen ${isUser ? "bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top" : ""}`}>
+      <div className={`flex-col flex items-center min-h-screen ${isUser ? "bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top" : "relative"}`}>
         <Topbar />
         <Home />
+        {currentComponent === "landing" &&
+          <div className="absolute left-0 right-0 bottom-0 h-[500px]">
+            <Grid3D />
+          </div>
+        }
         {isUser && <Footer />}
       </div>
     </div>

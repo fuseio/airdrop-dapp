@@ -46,7 +46,7 @@ const Landing = () => {
 
   return (
     <motion.div
-      className="w-8/9 flex flex-col items-center text-center mt-[163px] mb-[187px] md:w-9/10 max-w-7xl"
+      className="relative w-8/9 flex flex-col items-center text-center mt-[163px] mb-[260px] md:w-9/10 max-w-7xl"
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}
@@ -63,7 +63,7 @@ const Landing = () => {
         Enter invite code
       </p>
       <form
-        className="flex flex-row md:flex-col items-center gap-5 md:gap-3"
+        className="flex flex-row md:flex-col items-center gap-5 md:gap-3 z-10"
         onSubmit={(e) => {
           e.preventDefault();
           if (invite.length !== defaultReferralCode.length) {
@@ -91,7 +91,7 @@ const Landing = () => {
       </form>
       <Link
         href={path.ABOUT}
-        className="group flex items-center gap-2 mt-24"
+        className="group flex items-center gap-2 mt-24 z-10"
       >
         <p className="text-xl text-white font-bold">
           Learn about the Airdrop
