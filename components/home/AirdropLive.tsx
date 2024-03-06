@@ -5,7 +5,7 @@ const AirdropLive = () => {
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gradient-to-br from-green-200 to-green-500 opacity-75"></span>
         <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-br from-green-200 to-green-500"></span>
       </span>
-      <p className="text-lg md:text-[15px] leading-none text-primary font-bold text-nowrap">
+      <p className="leading-none text-primary font-bold text-nowrap">
         Airdrop Live
       </p>
     </div>

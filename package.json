@@ -24,12 +24,12 @@
     "@web3auth/web3auth-wagmi-connector": "^6.0.0",
     "axios": "^1.6.7",
     "clsx": "^2.1.0",
+    "color-convert": "^2.0.1",
     "framer-motion": "^11.0.8",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-ga4": "^2.1.0",
-    "react-jazzicon": "^1.0.4",
     "react-otp-input": "^3.1.1",
     "react-qr-code": "^2.0.12",
     "react-redux": "^8.1.2",
@@ -42,6 +42,7 @@
     "wagmi": "^2.5.7"
   },
   "devDependencies": {
+    "@types/color-convert": "^2.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

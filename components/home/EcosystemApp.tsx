@@ -12,7 +12,7 @@ type EcosystemAppProps = {
 function EcosystemApp({ app }: EcosystemAppProps) {
   return (
     <CardContainer containerClassName="block p-0" className="block">
-      <CardBody className="relative bg-tertiary rounded-[20px] flex flex-row md:flex-col justify-between min-h-[249px] p-10 group/card w-auto h-auto">
+      <CardBody className="relative bg-tertiary rounded-[20px] flex flex-row md:flex-col justify-between min-h-[249px] p-10 w-auto h-auto">
         <div className={app.background}></div>
         <div className="flex flex-col justify-between md:gap-6 z-10 md:mb-16">
           <div className="flex flex-col gap-4 md:gap-5">

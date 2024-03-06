@@ -8,8 +8,7 @@ import starGold from "@/assets/star-gold.svg";
 import starSilver from "@/assets/star-silver.svg";
 import starBronze from "@/assets/star-bronze.svg";
 import { eclipseAddress, hex } from "@/lib/helpers";
-import Jazzicon from "react-jazzicon/dist/Jazzicon";
-import { jsNumberForAddress } from "react-jazzicon";
+import Avatar from "../ui/Avatar";
 
 type PositionStar = {
   name: string;
@@ -66,9 +65,13 @@ const Leaderboard = () => {
         animate="show"
         className="bg-tertiary rounded-[20px] flex items-center gap-2.5 text-white text-lg font-medium px-2.5 py-[22px]"
       >
-        <div className="w-[87px] flex justify-center bg-white/10 rounded-full leading-none px-2.5 py-[6.5px]">{new Intl.NumberFormat().format(user.leaderboardPosition)}</div>
+        <div className="w-[87px] flex justify-center">
+          <p className="bg-white/10 rounded-full leading-none px-2.5 py-[6.5px]">
+            {new Intl.NumberFormat().format(user.leaderboardPosition)}
+          </p>
+        </div>
         <div className="flex items-center pl-2.5 pr-7 md:pl-2 md:pr-4">
-          <Jazzicon diameter={40} seed={jsNumberForAddress((user.walletAddress ?? hex) as string)} />
+          <Avatar size={40} />
         </div>
         <div className="grow md:w-8/12">
           <p className="hidden md:block">
@@ -100,7 +103,7 @@ const Leaderboard = () => {
           dispatch(setLeaderboardUsers(newleaderboardUsers));
         }}
         layoutScroll
-        className="overflow-y-auto h-[450px]"
+        className="overflow-y-auto no-scrollbar h-[450px]"
       >
         <div className="flex flex-col gap-2.5">
           {leaderboardUsers.map((leaderboardUser, index) =>
@@ -126,7 +129,7 @@ const Leaderboard = () => {
                 </p>
               </div>
               <div className="flex items-center pl-2.5 pr-7 md:pl-2 md:pr-4">
-                <Jazzicon diameter={40} seed={jsNumberForAddress((leaderboardUser.walletAddress ?? hex) as string)} />
+                <Avatar size={40} />
               </div>
               <div className="grow flex flex-row items-center gap-9 md:gap-4 md:w-8/12">
                 <p className="md:hidden">

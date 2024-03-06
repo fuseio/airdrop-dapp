@@ -11,7 +11,8 @@ const initUser: User = {
   twitterAccountId: "",
   points: 0,
   referralCode: "",
-  leaderboardPosition: 0
+  leaderboardPosition: 0,
+  pointsLastUpdatedAt: ""
 }
 
 const initSignupStepCompleted: SignupStepCompleted = {

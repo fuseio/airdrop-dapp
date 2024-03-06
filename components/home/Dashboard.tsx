@@ -2,18 +2,16 @@ import { motion } from "framer-motion";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
-import { IS_SERVER, eclipseAddress, hex, path, screenMediumWidth } from "@/lib/helpers";
-import { useAccount } from "wagmi";
+import { IS_SERVER, convertTimestampToUTC, eclipseAddress, path, screenMediumWidth } from "@/lib/helpers";
 import { useAppSelector } from "@/store/store";
 import { selectUserSlice } from "@/store/userSlice";
 import Leaderboard from "./Leaderboard";
 import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
 import AirdropLive from "./AirdropLive";
-import Jazzicon from "react-jazzicon/dist/Jazzicon";
-import { jsNumberForAddress } from "react-jazzicon";
+import Avatar from "@/components/ui/Avatar";
 import star from "@/assets/star.svg";
 import rightCaret from "@/assets/right-caret.svg";
 import airdrop from "@/assets/airdrop.svg";
@@ -27,6 +25,7 @@ import meridian from "@/assets/meridian.svg";
 import { useMediaQuery } from "usehooks-ts";
 import EcosystemApp from "./EcosystemApp";
 import { EcosystemApps } from "@/lib/types";
+import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
 
 const apps: EcosystemApps = [
   {
@@ -87,12 +86,11 @@ const leaderboardTimeRanges = [
 ]
 
 const Dashboard = () => {
-  const lastUpdate = "12:00 UTC";
-  const { address } = useAccount();
   const { user } = useAppSelector(selectUserSlice);
   const [rename, setRename] = useState(user.walletAddress);
   const [isRename, setIsRename] = useState(false);
   const [selectedLeaderboardTimeRange, setSelectedLeaderboardTimeRange] = useState(leaderboardTimeRanges[0].name);
+  const [isPageLoad, setIsPageLoad] = useState(false);
   const matches = useMediaQuery(`(min-width: ${screenMediumWidth}px)`);
   const MAX_RENAME_CHARACTER = 15;
 
@@ -107,6 +105,10 @@ const Dashboard = () => {
     }
   });
 
+  useEffect(() => {
+    setIsPageLoad(true);
+  }, [])
+
   return (
     <motion.div
       className="w-8/9 flex flex-col mt-[65px] mb-[187px] md:w-9/10 max-w-7xl"
@@ -115,8 +117,8 @@ const Dashboard = () => {
       exit={{ x: -300, opacity: 0 }}
     >
       <div className="flex justify-between items-center">
-        <div className="group flex items-center gap-9 md:gap-2">
-          <h1 className="flex items-center gap-2 text-5xl md:text-3xl text-white font-semibold md:max-w-[198px] md:break-all md:truncate">
+        <div className={`group flex items-center gap-9 md:gap-2 md:w-auto ${isRename ? "w-full" : "w-auto"}`}>
+          <h1 className={`flex items-center gap-2 text-5xl md:text-3xl text-white font-semibold md:max-w-[198px] md:break-all md:truncate md:w-auto ${isRename ? "w-full" : "w-auto"}`}>
             Hey, {isRename ?
               <input
                 type="text"
@@ -124,7 +126,7 @@ const Dashboard = () => {
                 ref={renameRef}
                 value={rename}
                 autoFocus={isRename}
-                className="bg-transparent focus:outline-none md:w-8/12"
+                className={`bg-transparent focus:outline-none md:w-8/12 ${isRename ? "w-full" : "w-auto"}`}
                 onChange={(event) => {
                   if (event.target.value.length > MAX_RENAME_CHARACTER) {
                     return;
@@ -146,10 +148,10 @@ const Dashboard = () => {
         </div>
         <AirdropLive />
       </div>
-      <div className="flex flex-row md:flex-col justify-between items-center md:items-start md:gap-[74px] bg-tertiary rounded-[20px] mt-[54px] mb-[100px] md:mt-16 md:mb-16 p-[42px] md:p-9">
+      <div className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col justify-between items-center md:items-start md:gap-[74px] bg-tertiary rounded-[20px] mt-[54px] mb-[100px] md:mt-16 md:mb-16 p-[42px] md:p-9 ${isPageLoad ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
         <div className="flex flex-row justify-between items-center w-1/2 md:w-auto">
           <div className="flex flex-row items-center gap-10">
-            <Jazzicon diameter={matches ? 95 : 77} seed={jsNumberForAddress((address ?? hex) as string)} />
+            <Avatar size={matches ? 95 : 77} />
             <div>
               <p className="text-lg leading-none text-pale-slate font-medium">
                 Your points
@@ -167,7 +169,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <p className="text-sm leading-none text-pale-slate font-medium">
-                Last update {lastUpdate}
+                Last update {convertTimestampToUTC(user.pointsLastUpdatedAt)}
               </p>
             </div>
           </div>
@@ -218,59 +220,94 @@ const Dashboard = () => {
           Start earning points
         </p>
         <div className="flex flex-row md:flex-col gap-[30px] md:gap-5">
-          <div className="transition-all ease-in-out duration-300 bg-tertiary rounded-[20px] flex flex-col justify-between md:justify-start md:gap-12 w-1/2 md:w-auto min-h-[283px] md:min-h-[430px] p-10 md:p-[30px] border border-tertiary hover:border-success bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom">
-            <div className="flex flex-col gap-4">
-              <p className="text-2xl text-primary font-bold">
-                Invite friends
-              </p>
-              <p className="text-lg text-pale-slate font-medium max-w-[243px]">
-                Get 10% of your friend&apos;s total points (Not including)
-              </p>
-            </div>
-            <div className="flex flex-col gap-2.5">
-              <p className="text-sm text-pale-slate font-medium">
-                Invite link
-              </p>
-              <div className="flex items-center gap-1.5">
-                <p className="text-2xl text-white font-bold md:max-w-[243px]">
-                  {referralLink()}
-                </p>
-                <Copy
-                  src={copyIcon}
-                  text={referralLink()}
-                  tooltipText="Referral link copied"
-                  className="transition ease-in-out cursor-pointer hover:opacity-60"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="bg-tertiary rounded-[20px] flex flex-row md:flex-col justify-between md:gap-4 w-1/2 md:w-auto min-h-[283px] p-10 md:p-[30px] border border-tertiary hover:border-success">
-            <div className="flex flex-col justify-between md:gap-2">
-              <div className="flex flex-col gap-4 md:gap-2">
-                <p className="text-2xl text-primary font-bold">
-                  Bridge FUSE
-                </p>
-                <p className="text-lg text-pale-slate font-medium max-w-[200px] md:max-w-[243px]">
-                  Get 1 point on every $100 you bridge
-                </p>
-              </div>
-              <div>
-                <button
-                  className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 hover:bg-primary hover:text-black"
-                  onClick={() => window.open(path.BRIDGE, "_blank")}
+          <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] md:min-h-[430px]" className="block h-full md:min-h-[430px]">
+            <CardBody className="bg-tertiary rounded-[20px] flex flex-col justify-between md:justify-start md:gap-12 p-10 md:p-[30px] w-auto h-full md:min-h-[430px] bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom">
+              <div className="flex flex-col gap-4">
+                <CardItem
+                  as="p"
+                  translateZ="50"
+                  className="text-2xl text-primary font-bold"
                 >
-                  Go to Bridge
-                </button>
+                  Invite friends
+                </CardItem>
+                <CardItem
+                  as="p"
+                  translateZ="60"
+                  className="text-lg text-pale-slate font-medium max-w-[243px]"
+                >
+                  Get 10% of your friend&apos;s total points (Not including)
+                </CardItem>
               </div>
-            </div>
-            <Image
-              src={bridgeFuse}
-              alt="bridge Fuse"
-              width={284}
-              height={209}
-              className="md:m-auto"
-            />
-          </div>
+              <div className="flex flex-col gap-2.5">
+                <CardItem
+                  as="p"
+                  translateZ="40"
+                  className="text-sm text-pale-slate font-medium"
+                >
+                  Invite link
+                </CardItem>
+                <div className="flex items-center gap-1.5">
+                  <CardItem
+                    as="p"
+                    translateZ="70"
+                    className="text-2xl text-white font-bold md:max-w-[243px]"
+                  >
+                    {referralLink()}
+                  </CardItem>
+                  <CardItem translateZ="80">
+                    <Copy
+                      src={copyIcon}
+                      text={referralLink()}
+                      tooltipText="Referral link copied"
+                      className="transition ease-in-out cursor-pointer hover:opacity-60"
+                    />
+                  </CardItem>
+
+                </div>
+              </div>
+            </CardBody>
+          </CardContainer>
+          <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px]" className="block h-full">
+            <CardBody className="bg-tertiary rounded-[20px] flex md:flex-col justify-between md:gap-4 p-10 md:p-[30px] w-auto h-full">
+              <div className="flex flex-col justify-between md:gap-2">
+                <div className="flex flex-col gap-4 md:gap-2">
+                  <CardItem
+                    as="p"
+                    translateZ="50"
+                    className="text-2xl text-primary font-bold"
+                  >
+                    Bridge FUSE
+                  </CardItem>
+                  <CardItem
+                    as="p"
+                    translateZ="60"
+                    className="text-lg text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
+                  >
+                    Get 1 point on every $100 you bridge
+                  </CardItem>
+                </div>
+                <div>
+                  <CardItem translateZ="80">
+                    <button
+                      className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 hover:bg-primary hover:text-black"
+                      onClick={() => window.open(path.BRIDGE, "_blank")}
+                    >
+                      Go to Bridge
+                    </button>
+                  </CardItem>
+                </div>
+              </div>
+              <CardItem translateZ="40">
+                <Image
+                  src={bridgeFuse}
+                  alt="bridge Fuse"
+                  width={284}
+                  height={209}
+                  className="md:m-auto"
+                />
+              </CardItem>
+            </CardBody>
+          </CardContainer>
         </div>
       </div>
       <div className="flex flex-col gap-8 mt-24 md:mt-16">

@@ -35,7 +35,7 @@ export default function Airdrop() {
   }, [isDisconnected, dispatch])
 
   return (
-    <div className="w-full font-mona justify-end min-h-screen bg-secondary bg-gradient-to-t from-green-200/10">
+    <div className="w-full font-mona justify-end min-h-screen bg-secondary">
       <div className={`flex-col flex items-center min-h-screen ${isUser ? "bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top" : "relative"}`}>
         <Topbar />
         <Home />
