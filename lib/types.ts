@@ -24,6 +24,7 @@ export interface User {
   points: number,
   referralCode: string,
   leaderboardPosition: number
+  pointsLastUpdatedAt: string;
 }
 
 export interface LeaderboardUser {
