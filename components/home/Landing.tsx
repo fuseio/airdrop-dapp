@@ -18,7 +18,7 @@ const Landing = () => {
   const [invite, setInvite] = useState('');
   const searchParams = useSearchParams();
   const referralCode = searchParams.get('ref');
-  const { connectWalletLocation, isAuthenticated, isUser } = useAppSelector(selectUserSlice);
+  const { connectWalletLocation, isHydrated, isAuthenticated, isUser } = useAppSelector(selectUserSlice);
   const { address } = useAccount();
 
   useEffect(() => {
@@ -49,6 +49,7 @@ const Landing = () => {
 
   useEffect(() => {
     if (
+      isHydrated &&
       connectWalletLocation === "navbar" &&
       address &&
       !isUser

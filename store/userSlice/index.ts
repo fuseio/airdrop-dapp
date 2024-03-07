@@ -134,6 +134,7 @@ export const retrieve = createAsyncThunk<
   ) => {
     function redirectToSignupPage(userState: UserStateType) {
       if (userState.currentComponent === "landing" && userState.connectWalletLocation === "navbar") {
+        thunkAPI.dispatch(setConnectWalletLocation(""));
         thunkAPI.dispatch(setCurrentComponent("signup"));
       }
     }

@@ -19,7 +19,7 @@ export default function Airdrop() {
   const { isDisconnected } = useAccount();
   const topbarRef = useRef<HTMLElement>(null);
   const homeRef = useRef<HTMLDivElement>(null);
-  const [homeMarginBottom, setHomeMarginBottom] = useState("mb-[0px]");
+  const [homeMargin, setHomeMargin] = useState(0);
 
   useEffect(() => {
     dispatch(setHydrate());
@@ -50,7 +50,7 @@ export default function Airdrop() {
       const margin = gap / 2;
 
       if (margin > 0) {
-        setHomeMarginBottom(`${margin}px`);
+        setHomeMargin(margin);
       }
     }
   }, [])
@@ -59,7 +59,14 @@ export default function Airdrop() {
     <div className="w-full font-mona justify-end min-h-screen bg-secondary">
       <div className={`flex-col flex items-center min-h-screen ${isUser ? "bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top justify-start" : "relative justify-between"}`}>
         <Topbar topbarRef={topbarRef} />
-        <div ref={homeRef} className="w-full flex flex-col items-center" style={{ marginBottom: isUser ? "0px" : homeMarginBottom }}>
+        <div
+          ref={homeRef}
+          className="w-full flex flex-col items-center"
+          style={{
+            marginTop: isUser ? "0px" : homeMargin === 0 ? "100px" : "0px",
+            marginBottom: isUser ? "0px" : homeMargin === 0 ? "100px" : homeMargin,
+          }}
+        >
           <AnimatePresence initial={false}>
             {currentComponent === "landing" && <Landing />}
             {currentComponent === "signup" && <SignUp />}
