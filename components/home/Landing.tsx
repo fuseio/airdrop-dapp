@@ -1,14 +1,15 @@
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import rightArrow from "@/assets/right-arrow.svg";
-import { setCurrentComponent, setInviteCode } from "@/store/userSlice";
+import { authenticate, retrieve, selectUserSlice, setCurrentComponent, setInviteCode } from "@/store/userSlice";
 import { path } from "@/lib/helpers";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useSearchParams } from "next/navigation";
 import AirdropLive from "./AirdropLive";
+import { useAccount } from "wagmi";
 
 const defaultReferralCode = "FUSER";
 
@@ -17,6 +18,8 @@ const Landing = () => {
   const [invite, setInvite] = useState('');
   const searchParams = useSearchParams();
   const referralCode = searchParams.get('ref');
+  const { connectWalletLocation, isAuthenticated, isUser } = useAppSelector(selectUserSlice);
+  const { address } = useAccount();
 
   useEffect(() => {
     const threeHundredMillisecond = 300;
@@ -44,9 +47,23 @@ const Landing = () => {
     }
   }, [dispatch, referralCode])
 
+  useEffect(() => {
+    if (
+      connectWalletLocation === "navbar" &&
+      address &&
+      !isUser
+    ) {
+      if (isAuthenticated) {
+        dispatch(retrieve());
+      } else {
+        dispatch(authenticate({ eoaAddress: address }));
+      }
+    }
+  }, [address, connectWalletLocation, dispatch, isAuthenticated, isUser])
+
   return (
     <motion.div
-      className="relative w-8/9 flex flex-col items-center text-center mt-[163px] mb-[260px] md:w-9/10 max-w-7xl"
+      className="relative w-8/9 flex flex-col items-center text-center md:w-9/10 max-w-7xl"
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}

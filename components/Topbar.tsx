@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { RefObject, useState } from "react";
 import fuseLogo from "@/assets/fuse-logo.svg";
 import NavMenu from "./NavMenu";
 import NavButton from "./NavButton";
 import { useAppSelector } from "@/store/store";
 import { selectNavbarSlice } from "@/store/navbarSlice";
 import Image from "next/image";
+
+type TopbarProps = {
+  topbarRef: RefObject<HTMLElement>;
+}
 
 const menuItems = [
   {
@@ -21,12 +25,12 @@ const menuItems = [
   },
 ]
 
-const Topbar = () => {
+const Topbar = ({ topbarRef }: TopbarProps) => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const { selected } = useAppSelector(selectNavbarSlice);
 
   return (
-    <nav className="w-full h-20 top-0 flex justify-center py-7 md:h-[32px] md:mt-2 z-[60]">
+    <nav ref={topbarRef} className="w-full h-20 top-0 flex justify-center py-7 md:h-[32px] md:mt-2 z-[60]">
       <div className="flex justify-between h-full items-center w-8/9 xl:w-9/12 md:w-9/10 max-w-7xl relative">
         <span>
           <a href="/">

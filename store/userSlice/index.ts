@@ -32,6 +32,7 @@ export interface UserStateType {
   isHydrated: boolean;
   currentComponent: string;
   signupStepCompleted: SignupStepCompleted;
+  connectWalletLocation: string;
   inviteCode: string;
   twitterAccountId: string;
   accessToken: string;
@@ -52,6 +53,7 @@ const INIT_STATE: UserStateType = {
   isHydrated: false,
   currentComponent: "landing",
   signupStepCompleted: initSignupStepCompleted,
+  connectWalletLocation: "",
   inviteCode: "",
   twitterAccountId: "",
   accessToken: "",
@@ -130,17 +132,26 @@ export const retrieve = createAsyncThunk<
     _,
     thunkAPI
   ) => {
+    function redirectToSignupPage(userState: UserStateType) {
+      if (userState.currentComponent === "landing" && userState.connectWalletLocation === "navbar") {
+        thunkAPI.dispatch(setCurrentComponent("signup"));
+      }
+    }
+
     return new Promise<any>(async (resolve, reject) => {
+      const state = thunkAPI.getState();
+      const userState: UserStateType = state.user;
       try {
-        const state = thunkAPI.getState();
-        const userState: UserStateType = state.user;
+
         const fetchedUser = await fetchUser(userState.accessToken);
         if (fetchedUser?.id) {
           resolve(fetchedUser);
         } else {
+          redirectToSignupPage(userState);
           reject();
         }
       } catch (error) {
+        redirectToSignupPage(userState);
         console.error(error);
         reject();
       }
@@ -184,8 +195,11 @@ const userSlice = createSlice({
     setCurrentComponent: (state, action: PayloadAction<string>) => {
       state.currentComponent = action.payload
     },
-    setSignupStepCompleted: (state, action: PayloadAction<{key: number, value: boolean}>) => {
+    setSignupStepCompleted: (state, action: PayloadAction<{ key: number, value: boolean }>) => {
       state.signupStepCompleted[action.payload.key] = action.payload.value
+    },
+    setConnectWalletLocation: (state, action: PayloadAction<string>) => {
+      state.connectWalletLocation = action.payload
     },
     setInviteCode: (state, action: PayloadAction<string>) => {
       state.inviteCode = action.payload
@@ -308,6 +322,7 @@ export const selectUserSlice = (state: AppState): UserStateType => state.user;
 export const {
   setCurrentComponent,
   setSignupStepCompleted,
+  setConnectWalletLocation,
   setInviteCode,
   setTwitterAccountId,
   setTotalSignupStepCompleted,

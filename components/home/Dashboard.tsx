@@ -22,10 +22,11 @@ import bitazza from "@/assets/bitazza.svg";
 import lynx from "@/assets/lynx.svg";
 import zneakrz from "@/assets/zneakrz.svg";
 import meridian from "@/assets/meridian.svg";
-import { useMediaQuery } from "usehooks-ts";
+import { useIntersectionObserver, useMediaQuery } from "usehooks-ts";
 import EcosystemApp from "./EcosystemApp";
 import { EcosystemApps } from "@/lib/types";
 import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
+import crownCircle from "@/assets/crown-circle.svg";
 
 const apps: EcosystemApps = [
   {
@@ -90,8 +91,13 @@ const Dashboard = () => {
   const [rename, setRename] = useState(user.walletAddress);
   const [isRename, setIsRename] = useState(false);
   const [selectedLeaderboardTimeRange, setSelectedLeaderboardTimeRange] = useState(leaderboardTimeRanges[0].name);
-  const [isPageLoad, setIsPageLoad] = useState(false);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
+  const { isIntersecting: isUserSectionIntersecting, ref: userSection } = useIntersectionObserver({
+    freezeOnceVisible: true,
+  });
+  const { isIntersecting: isEarningSectionIntersecting, ref: earningSection } = useIntersectionObserver({
+    freezeOnceVisible: true,
+  });
   const MAX_RENAME_CHARACTER = 15;
 
   function referralLink() {
@@ -104,10 +110,6 @@ const Dashboard = () => {
       setIsRename(false);
     }
   });
-
-  useEffect(() => {
-    setIsPageLoad(true);
-  }, [])
 
   return (
     <motion.div
@@ -148,10 +150,17 @@ const Dashboard = () => {
         </div>
         <AirdropLive />
       </div>
-      <div className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col justify-between items-center md:items-start md:gap-[74px] bg-tertiary rounded-[20px] mt-[54px] mb-[100px] xl:mt-11 xl:mb-11 p-[42px] xl:p-9 ${isPageLoad ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+      <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col justify-between items-center md:items-start md:gap-[74px] bg-tertiary rounded-[20px] mt-[54px] mb-[100px] xl:mt-11 xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
         <div className="flex flex-row justify-between items-center w-1/2 md:w-auto">
           <div className="flex flex-row items-center gap-10">
-            <Avatar size={matches ? 95 : 77} />
+            <div className="relative">
+              <Avatar size={matches ? 95 : 77} />
+              <Image
+                src={crownCircle}
+                alt="crown circle"
+                className="absolute -top-2 -right-2"
+              />
+            </div>
             <div>
               <p className="text-lg xl:text-base leading-none text-pale-slate font-medium">
                 Your points
@@ -219,9 +228,9 @@ const Dashboard = () => {
         <p className="text-3xl xl:text-2xl text-white font-semibold">
           Start earning points
         </p>
-        <div className="flex flex-row md:flex-col gap-[30px] xl:gap-5">
+        <div ref={earningSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col gap-[30px] xl:gap-5 ${isEarningSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
           <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56 md:min-h-[430px]" className="block h-full md:min-h-[430px]">
-            <CardBody className="bg-tertiary rounded-[20px] flex flex-col justify-between md:justify-start md:gap-12 p-10 xl:p-[30px] w-auto h-full md:min-h-[430px] bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom xl:bg-contain">
+            <CardBody className="bg-tertiary rounded-[20px] flex flex-col justify-between md:justify-start xl:gap-2 md:gap-12 p-10 xl:p-[30px] w-auto h-full md:min-h-[430px] bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom xl:bg-contain">
               <div className="flex flex-col gap-4 xl:gap-3">
                 <CardItem
                   as="p"
