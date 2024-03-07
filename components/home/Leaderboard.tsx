@@ -10,6 +10,7 @@ import starBronze from "@/assets/star-bronze.svg";
 import { eclipseAddress, screenWidth } from "@/lib/helpers";
 import Avatar from "../ui/Avatar";
 import { useMediaQuery } from "usehooks-ts";
+import crown from "@/assets/crown.svg";
 
 type PositionStar = {
   name: string;
@@ -55,6 +56,7 @@ const Leaderboard = () => {
   const { isLeaderboardUsersLoading, leaderboardUsers, lastLeaderboardUserId, isLeaderboardUsersFinished, user } = useAppSelector(selectUserSlice);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
   const STREAK = 6;
+  const OG = 2;
 
   return (
     <AnimatePresence>
@@ -91,7 +93,7 @@ const Leaderboard = () => {
             height={matches ? 16 : 12}
           />
           <p className="xl:text-sm">
-            {user.points}
+            {user.points % 1 === 0 ? user.points : user.points.toFixed(2)}
           </p>
         </div>
       </motion.div>
@@ -104,13 +106,11 @@ const Leaderboard = () => {
         onReorder={(newleaderboardUsers) => {
           dispatch(setLeaderboardUsers(newleaderboardUsers));
         }}
-        layoutScroll
-        className="overflow-y-auto no-scrollbar h-[450px] xl:h-[360px]"
       >
         <div className="flex flex-col gap-2.5 xl:gap-2">
           {leaderboardUsers.map((leaderboardUser, index) =>
             <Reorder.Item
-              key={leaderboardUser.id}
+              key={index}
               value={leaderboardUser.points}
               variants={leaderboardVariants}
               initial="hidden"
@@ -145,11 +145,26 @@ const Leaderboard = () => {
                     <Image
                       src={fire}
                       alt="fire"
+                      title="On a streak!"
                       width={matches ? 15 : 12}
                       height={matches ? 20 : 16}
                     />
                     <p className="md:hidden xl:text-sm">
                       On a streak!
+                    </p>
+                  </div>
+                }
+                {index + 1 === OG &&
+                  <div className="bg-white/10 md:bg-transparent rounded-full flex gap-2.5 xl:gap-2 px-[13px] py-[5px] xl:px-2.5 xl:py-0.5 md:p-0 md:w-[15px] md:h-5">
+                    <Image
+                      src={crown}
+                      alt="crown"
+                      title="OG!"
+                      width={matches ? 24 : 20}
+                      height={matches ? 17 : 13}
+                    />
+                    <p className="md:hidden xl:text-sm">
+                      OG!
                     </p>
                   </div>
                 }
@@ -162,7 +177,7 @@ const Leaderboard = () => {
                   height={matches ? 16 : 12}
                 />
                 <p className="xl:text-sm">
-                  {leaderboardUser.points}
+                  {leaderboardUser.points % 1 === 0 ? leaderboardUser.points : leaderboardUser.points.toFixed(2)}
                 </p>
               </div>
             </Reorder.Item>
