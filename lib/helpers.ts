@@ -46,7 +46,10 @@ export const signUpSteps = {
   MANDATORY: 1
 }
 
-export const screenMediumWidth = 768;
+export const screenWidth = {
+  MEDIUM: 768,
+  EXTRA_LARGE: 1200,
+}
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

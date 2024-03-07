@@ -36,7 +36,7 @@ const socials = [
 const Footer = () => {
   return (
     <footer className="w-full bg-light-gray flex flex-col items-center pt-[50px]">
-      <div className="w-8/9 flex justify-between flex-row gap-y-4 items-center md:flex-col mb-12 md:w-9/10 max-w-7xl">
+      <div className="w-8/9 flex justify-between flex-row gap-y-4 items-center md:flex-col mb-12 xl:w-9/12 md:w-9/10 max-w-7xl">
         <div className="flex gap-8 md:gap-4 md:text-center text-white text-base/4 font-medium">
           <a
             href="https://docs.fuse.io"
