@@ -15,7 +15,7 @@ import {
   useSwitchChain,
 } from "wagmi";
 import { setIsWalletModalOpen } from "@/store/navbarSlice";
-import { eclipseAddress, evmDecimals, screenMediumWidth } from "@/lib/helpers";
+import { eclipseAddress, evmDecimals, screenWidth } from "@/lib/helpers";
 import { arbitrum, polygon, fuse, optimism, bsc, mainnet } from "wagmi/chains";
 import fuseIcon from "@/assets/fuse-icon.svg";
 import polygonIcon from "@/assets/polygon-icon.svg";
@@ -105,7 +105,7 @@ const ConnectWallet = ({
   const { data: balance, refetch } = useBalance({
     address,
   });
-  const matches = useMediaQuery(`(min-width: ${screenMediumWidth}px)`);
+  const matches = useMediaQuery(`(min-width: ${screenWidth.MEDIUM}px)`);
   const balanceSlice = useAppSelector(selectBalanceSlice);
   const pathname = usePathname();
 
