@@ -155,11 +155,20 @@ const Dashboard = () => {
           <div className="flex flex-row items-center gap-10">
             <div className="relative">
               <Avatar size={matches ? 95 : 77} />
-              <Image
-                src={crownCircle}
-                alt="crown circle"
-                className="absolute -top-2 -right-2"
-              />
+              <div className="absolute -top-2 -right-2">
+                <div className="group relative">
+                  <Image
+                    src={crownCircle}
+                    alt="crown circle"
+                    className=""
+                  />
+                  <div className="tooltip-text hidden absolute translate-x-1/2 -translate-y-1/2 top-[calc(-50%-30px)] right-1/2 bg-white p-6 rounded-2xl w-[250px] xl:w-[200px] shadow-lg group-hover:block text-black text-sm font-medium">
+                    <p>
+                      You&apos;re an OG! your wallet is more than 1 year old
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
             <div>
               <p className="text-lg xl:text-base leading-none text-pale-slate font-medium">
