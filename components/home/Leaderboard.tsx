@@ -7,7 +7,7 @@ import star from "@/assets/star.svg";
 import starGold from "@/assets/star-gold.svg";
 import starSilver from "@/assets/star-silver.svg";
 import starBronze from "@/assets/star-bronze.svg";
-import { eclipseAddress, screenWidth } from "@/lib/helpers";
+import { daysInYear, eclipseAddress, screenWidth } from "@/lib/helpers";
 import Avatar from "../ui/Avatar";
 import { useMediaQuery } from "usehooks-ts";
 import crown from "@/assets/crown.svg";
@@ -154,7 +154,7 @@ const Leaderboard = () => {
                     </p>
                   </div>
                 }
-                {index + 1 === OG &&
+                {(leaderboardUser.walletAgeInDays && leaderboardUser.walletAgeInDays > daysInYear) &&
                   <div className="bg-white/10 md:bg-transparent rounded-full flex gap-2.5 xl:gap-2 px-[13px] py-[5px] xl:px-2.5 xl:py-0.5 md:p-0 md:w-[15px] md:h-5">
                     <Image
                       src={crown}

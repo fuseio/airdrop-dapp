@@ -64,3 +64,5 @@ export function convertTimestampToUTC(timestampString: string) {
 
   return `${hours}:${minutes} UTC`;
 }
+
+export const daysInYear = 365;
