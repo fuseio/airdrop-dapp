@@ -213,7 +213,7 @@ const WalletModal = (): JSX.Element => {
                     return
                   }
                   localStorage.setItem("Fuse-loginHint", emailRef.current.value);
-                  connectWallet("email");
+                  connectWallet("email_passwordless");
                 }}
               >
                 Connect
