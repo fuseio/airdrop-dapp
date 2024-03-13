@@ -115,18 +115,18 @@ const Dashboard = () => {
     <motion.div
       className="w-8/9 flex flex-col mt-[65px] mb-[187px] xl:mt-[52px] xl:mb-[150px] xl:w-9/12 md:w-9/10 max-w-7xl"
       initial={{
-        x: totalSignupStepCompleted ? 300 : undefined,
-        y: totalSignupStepCompleted ? undefined : -300,
+        x: totalSignupStepCompleted > 0 ? 300 : undefined,
+        y: totalSignupStepCompleted > 0 ? undefined : -300,
         opacity: 0
       }}
       animate={{
-        x: totalSignupStepCompleted ? 0 : undefined,
-        y: totalSignupStepCompleted ? undefined : 0,
+        x: totalSignupStepCompleted > 0 ? 0 : undefined,
+        y: totalSignupStepCompleted > 0 ? undefined : 0,
         opacity: 1
       }}
       exit={{
-        x: totalSignupStepCompleted ? -300 : undefined,
-        y: totalSignupStepCompleted ? undefined : 300,
+        x: totalSignupStepCompleted > 0 ? -300 : undefined,
+        y: totalSignupStepCompleted > 0 ? undefined : 300,
         opacity: 0
       }}
     >

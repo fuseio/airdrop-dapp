@@ -67,7 +67,7 @@ export default function Airdrop() {
             marginBottom: isUser ? "0px" : homeMargin === 0 ? "100px" : homeMargin,
           }}
         >
-          <AnimatePresence initial={false}>
+          <AnimatePresence>
             {currentComponent === "landing" && <Landing />}
             {currentComponent === "signup" && <SignUp />}
             {currentComponent === "dashboard" && <Dashboard />}
