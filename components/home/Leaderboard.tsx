@@ -64,6 +64,7 @@ const Leaderboard = () => {
         Your Ranking
       </p>
       <motion.div
+        key="userLeaderboard"
         variants={leaderboardVariants}
         initial="hidden"
         animate="show"
@@ -110,7 +111,7 @@ const Leaderboard = () => {
         <div className="flex flex-col gap-2.5 xl:gap-2">
           {leaderboardUsers.map((leaderboardUser, index) =>
             <Reorder.Item
-              key={index}
+              key={leaderboardUser.id}
               value={leaderboardUser.points}
               variants={leaderboardVariants}
               initial="hidden"
