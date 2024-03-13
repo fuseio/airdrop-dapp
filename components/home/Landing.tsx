@@ -65,6 +65,7 @@ const Landing = () => {
   return (
     <motion.div
       className="relative w-8/9 flex flex-col items-center text-center md:w-9/10 max-w-7xl"
+      key="landing"
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}

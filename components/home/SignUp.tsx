@@ -39,6 +39,7 @@ const SignUp = () => {
   return (
     <motion.div
       className="w-8/9 flex flex-col items-center mt-[86px] mb-[187px] md:w-9/10 max-w-7xl"
+      key="signup"
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}
