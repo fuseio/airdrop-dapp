@@ -116,15 +116,18 @@ const Dashboard = () => {
       className="w-8/9 flex flex-col mt-[65px] mb-[187px] xl:mt-[52px] xl:mb-[150px] xl:w-9/12 md:w-9/10 max-w-7xl"
       key="dashboard"
       initial={{
-        y: -300,
+        x: totalSignupStepCompleted > 0 ? 300 : undefined,
+        y: totalSignupStepCompleted > 0 ? undefined : -300,
         opacity: 0
       }}
       animate={{
-        y: 0,
+        x: totalSignupStepCompleted > 0 ? 0 : undefined,
+        y: totalSignupStepCompleted > 0 ? undefined : 0,
         opacity: 1
       }}
       exit={{
-        y: 300,
+        x: totalSignupStepCompleted > 0 ? -300 : undefined,
+        y: totalSignupStepCompleted > 0 ? undefined : 300,
         opacity: 0
       }}
     >
@@ -347,8 +350,8 @@ const Dashboard = () => {
           Check out our ecosystem apps Earn 2x Points
         </p>
         <div className="grid grid-cols-2 md:grid-cols-1 gap-[30px] xl:gap-5">
-          {apps.map((app, index) =>
-            <EcosystemApp key={index} app={app} />
+          {apps.map((app) =>
+            <EcosystemApp key={app.name} app={app} />
           )}
         </div>
       </div>
@@ -358,10 +361,10 @@ const Dashboard = () => {
             Leaderboard
           </p>
           <div className="flex gap-2">
-            {leaderboardTimeRanges.map((leaderboardTimeRange, index) =>
+            {leaderboardTimeRanges.map((leaderboardTimeRange) =>
               (!matches && !leaderboardTimeRange.mobile ? false : true) && (
                 <motion.p
-                  key={index}
+                  key={leaderboardTimeRange.name}
                   className={`transition-all ease-in-out duration-300 text-lg xl:text-base font-semibold ${selectedLeaderboardTimeRange === leaderboardTimeRange.name ? "text-white" : "text-monsoon cursor-pointer"}`}
                   onClick={() => setSelectedLeaderboardTimeRange(leaderboardTimeRange.name)}
                 >
