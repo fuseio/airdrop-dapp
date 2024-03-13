@@ -25,6 +25,7 @@ export interface User {
   referralCode: string,
   leaderboardPosition: number
   pointsLastUpdatedAt: string;
+  walletAgeInDays?: number;
 }
 
 export interface LeaderboardUser {
@@ -33,6 +34,7 @@ export interface LeaderboardUser {
   twitterAccountId: string;
   points: number;
   referralCode: string;
+  walletAgeInDays?: number;
 }
 
 export type LeaderboardUsers = LeaderboardUser[];

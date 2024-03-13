@@ -2,13 +2,13 @@ import { motion } from "framer-motion";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
-import { IS_SERVER, convertTimestampToUTC, eclipseAddress, path, screenWidth } from "@/lib/helpers";
+import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
 import { useAppSelector } from "@/store/store";
 import { selectUserSlice } from "@/store/userSlice";
 import Leaderboard from "./Leaderboard";
 import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
 import AirdropLive from "./AirdropLive";
 import Avatar from "@/components/ui/Avatar";
@@ -87,7 +87,7 @@ const leaderboardTimeRanges = [
 ]
 
 const Dashboard = () => {
-  const { user } = useAppSelector(selectUserSlice);
+  const { totalSignupStepCompleted, user } = useAppSelector(selectUserSlice);
   const [rename, setRename] = useState(user.walletAddress);
   const [isRename, setIsRename] = useState(false);
   const [selectedLeaderboardTimeRange, setSelectedLeaderboardTimeRange] = useState(leaderboardTimeRanges[0].name);
@@ -114,9 +114,21 @@ const Dashboard = () => {
   return (
     <motion.div
       className="w-8/9 flex flex-col mt-[65px] mb-[187px] xl:mt-[52px] xl:mb-[150px] xl:w-9/12 md:w-9/10 max-w-7xl"
-      initial={{ x: 300, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: -300, opacity: 0 }}
+      initial={{
+        x: totalSignupStepCompleted ? 300 : undefined,
+        y: totalSignupStepCompleted ? undefined : -300,
+        opacity: 0
+      }}
+      animate={{
+        x: totalSignupStepCompleted ? 0 : undefined,
+        y: totalSignupStepCompleted ? undefined : 0,
+        opacity: 1
+      }}
+      exit={{
+        x: totalSignupStepCompleted ? -300 : undefined,
+        y: totalSignupStepCompleted ? undefined : 300,
+        opacity: 0
+      }}
     >
       <div className="flex justify-between items-center">
         <div className={`group flex items-center gap-9 xl:gap-7 md:gap-2 md:w-auto ${isRename ? "w-full" : "w-auto"}`}>
@@ -155,20 +167,22 @@ const Dashboard = () => {
           <div className="flex flex-row items-center gap-10">
             <div className="relative">
               <Avatar size={matches ? 95 : 77} />
-              <div className="absolute -top-2 -right-2">
-                <div className="group relative">
-                  <Image
-                    src={crownCircle}
-                    alt="crown circle"
-                    className=""
-                  />
-                  <div className="tooltip-text hidden absolute translate-x-1/2 -translate-y-1/2 top-[calc(-50%-30px)] right-1/2 bg-white p-6 rounded-2xl w-[250px] xl:w-[200px] shadow-lg group-hover:block text-black text-sm font-medium">
-                    <p>
-                      You&apos;re an OG! your wallet is more than 1 year old
-                    </p>
+              {(user.walletAgeInDays && user.walletAgeInDays > daysInYear) &&
+                <div className="absolute -top-2 -right-2">
+                  <div className="group relative">
+                    <Image
+                      src={crownCircle}
+                      alt="crown circle"
+                      className=""
+                    />
+                    <div className="tooltip-text hidden absolute translate-x-1/2 -translate-y-1/2 top-[calc(-50%-30px)] right-1/2 bg-white p-6 rounded-2xl w-[250px] xl:w-[200px] shadow-lg group-hover:block text-black text-sm font-medium">
+                      <p>
+                        You&apos;re an OG! your wallet is more than 1 year old
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              }
             </div>
             <div>
               <p className="text-lg xl:text-base leading-none text-pale-slate font-medium">

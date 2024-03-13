@@ -12,7 +12,8 @@ const initUser: User = {
   points: 0,
   referralCode: "",
   leaderboardPosition: 0,
-  pointsLastUpdatedAt: ""
+  pointsLastUpdatedAt: "",
+  walletAgeInDays: 0,
 }
 
 const initSignupStepCompleted: SignupStepCompleted = {
