@@ -250,7 +250,7 @@ const Dashboard = () => {
               {user.leaderboardPosition}
             </p>
             <Link
-              href="#leaderboard"
+              href={path.LEADERBOARD}
               className="group flex items-center gap-1 text-sm xl:text-xs leading-none text-pale-slate font-medium"
             >
               View Leaderboard
@@ -385,7 +385,7 @@ const Dashboard = () => {
         <p className="text-3xl xl:text-2xl text-white font-semibold">
           Complete quests to receive points
         </p>
-        <div className="grid grid-cols-4 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
+        <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
           {quests.map((quest) =>
             <Quest key={quest.title} quest={quest} />
           )}

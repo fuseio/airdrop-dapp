@@ -23,7 +23,7 @@ function Quest({ quest }: QuestProps) {
   });
 
   return (
-    <CardContainer containerClassName={`transition-all ease-in-out duration-300 delay-200 block p-0 h-full ${isIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`} className="block">
+    <CardContainer containerClassName={`transition-all ease-in-out duration-300 delay-200 block p-0 h-full ${isIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`} className="block h-full">
       <CardBody className="bg-oslo-gray/[.22] rounded-[20px] w-auto h-full">
         <CardItem
           as="button"
