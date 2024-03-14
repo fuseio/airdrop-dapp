@@ -7,7 +7,7 @@ import { selectNavbarSlice } from "@/store/navbarSlice";
 import Image from "next/image";
 
 type TopbarProps = {
-  topbarRef: RefObject<HTMLElement>;
+  topbarRef?: RefObject<HTMLElement>;
 }
 
 const menuItems = [

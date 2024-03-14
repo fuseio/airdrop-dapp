@@ -5,7 +5,6 @@ import Link from "next/link";
 import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
 import { useAppSelector } from "@/store/store";
 import { selectUserSlice } from "@/store/userSlice";
-import Leaderboard from "./Leaderboard";
 import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
 import { useState } from "react";
@@ -124,30 +123,10 @@ const quests = [
   },
 ]
 
-const leaderboardTimeRanges = [
-  {
-    name: "All-Time",
-    mobile: true
-  },
-  {
-    name: "Last 30 days",
-    mobile: true
-  },
-  {
-    name: "Last 7 days",
-    mobile: true
-  },
-  {
-    name: "Last 24 hrs",
-    mobile: false
-  },
-]
-
 const Dashboard = () => {
   const { totalSignupStepCompleted, user } = useAppSelector(selectUserSlice);
   const [rename, setRename] = useState(user.walletAddress);
   const [isRename, setIsRename] = useState(false);
-  const [selectedLeaderboardTimeRange, setSelectedLeaderboardTimeRange] = useState(leaderboardTimeRanges[0].name);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
   const { isIntersecting: isUserSectionIntersecting, ref: userSection } = useIntersectionObserver({
     freezeOnceVisible: true,
@@ -411,27 +390,6 @@ const Dashboard = () => {
             <Quest key={quest.title} quest={quest} />
           )}
         </div>
-      </div>
-      <div className="flex flex-col pt-[78px] xl:pt-16" id="leaderboard">
-        <div className="flex flex-row md:flex-col justify-between items-end md:items-start gap-2 mb-[31px] xl:mb-6">
-          <p className="text-3xl xl:text-2xl text-white font-semibold">
-            Leaderboard
-          </p>
-          <div className="flex gap-2">
-            {leaderboardTimeRanges.map((leaderboardTimeRange) =>
-              (!matches && !leaderboardTimeRange.mobile ? false : true) && (
-                <motion.p
-                  key={leaderboardTimeRange.name}
-                  className={`transition-all ease-in-out duration-300 text-lg xl:text-base font-semibold ${selectedLeaderboardTimeRange === leaderboardTimeRange.name ? "text-white" : "text-monsoon cursor-pointer"}`}
-                  onClick={() => setSelectedLeaderboardTimeRange(leaderboardTimeRange.name)}
-                >
-                  {leaderboardTimeRange.name}
-                </motion.p>
-              )
-            )}
-          </div>
-        </div>
-        <Leaderboard />
       </div>
     </motion.div>
   )

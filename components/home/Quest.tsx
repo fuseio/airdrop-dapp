@@ -23,11 +23,12 @@ function Quest({ quest }: QuestProps) {
   });
 
   return (
-    <CardContainer containerClassName={`transition-all ease-in-out duration-300 delay-200 block p-0 ${isIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`} className="block">
-      <CardBody className="bg-oslo-gray/[.22] rounded-[20px] w-auto h-auto">
+    <CardContainer containerClassName={`transition-all ease-in-out duration-300 delay-200 block p-0 h-full ${isIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`} className="block">
+      <CardBody className="bg-oslo-gray/[.22] rounded-[20px] w-auto h-full">
         <CardItem
           as="button"
           translateZ="40"
+          disabled={!quest.isActive}
           className="flex flex-col justify-between gap-2 w-full min-h-[346px] xl:min-h-[277px] p-6 md:p-[30px]"
           onClick={() => {
             if(!quest.isActive) {

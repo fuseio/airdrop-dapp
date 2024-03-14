@@ -56,7 +56,6 @@ const Leaderboard = () => {
   const { isLeaderboardUsersLoading, leaderboardUsers, lastLeaderboardUserId, isLeaderboardUsersFinished, user } = useAppSelector(selectUserSlice);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
   const STREAK = 6;
-  const OG = 2;
 
   return (
     <AnimatePresence>
