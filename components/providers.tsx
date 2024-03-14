@@ -15,6 +15,7 @@ import { WagmiProvider } from "wagmi";
 import { config } from "@/lib/web3Auth";
 import WalletModal from "./WalletModal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import QuestModal from "./home/QuestModal";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [isClient, setIsClient] = useState(false);
@@ -45,6 +46,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             }}
           />
           <WalletModal />
+          <QuestModal />
           {children}
         </QueryClientProvider>
       </WagmiProvider>

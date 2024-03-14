@@ -5,7 +5,6 @@ import Link from "next/link";
 import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
 import { useAppSelector } from "@/store/store";
 import { selectUserSlice } from "@/store/userSlice";
-import Leaderboard from "./Leaderboard";
 import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
 import { useState } from "react";
@@ -16,73 +15,111 @@ import star from "@/assets/star.svg";
 import rightCaret from "@/assets/right-caret.svg";
 import airdrop from "@/assets/airdrop.svg";
 import bridgeFuse from "@/assets/bridge-fuse.svg";
-import voltage from "@/assets/voltage.svg";
-import logx from "@/assets/logx.svg";
-import bitazza from "@/assets/bitazza.svg";
-import lynx from "@/assets/lynx.svg";
-import zneakrz from "@/assets/zneakrz.svg";
-import meridian from "@/assets/meridian.svg";
 import { useIntersectionObserver, useMediaQuery } from "usehooks-ts";
-import EcosystemApp from "./EcosystemApp";
-import { EcosystemApps } from "@/lib/types";
 import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
 import crownCircle from "@/assets/crown-circle.svg";
+import Quest from "./Quest";
+import followX from "@/assets/follow-x.svg";
+import joinDiscord from "@/assets/join-discord.svg";
+import sayGm from "@/assets/say-gm.svg";
+import bridgeAssets from "@/assets/bridge-assets.svg";
+import holdTokens from "@/assets/hold-tokens.svg";
+import stakeSfuse from "@/assets/stake-sfuse.svg";
+import stakeVevolt from "@/assets/stake-vevolt.svg";
+import logx from "@/assets/logx.svg";
+import bitazza from "@/assets/bitazza.svg";
+import zneakrz from "@/assets/zneakrz.svg";
 
-const apps: EcosystemApps = [
+const quests = [
   {
-    name: "Voltage",
-    description: "Trade, invest, and earn with just a few clicks",
-    image: voltage,
-    background: "absolute inset-0 bg-[url('/vectors/voltage-gradient.svg')] bg-no-repeat bg-right-bottom"
+    title: "Follow @Fuse_network on X",
+    point: "50 points",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    image: followX,
+    isActive: true,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
   },
   {
-    name: "Logx",
-    description: "Trade, invest, and earn with just a few clicks",
+    title: "Join Fuse Discord",
+    point: "50 points",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    image: joinDiscord,
+    isActive: true,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
+  },
+  {
+    title: "Say GM in Discord",
+    point: "10 points per gm/day",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    image: sayGm,
+    isActive: true,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
+  },
+  {
+    title: "Bridge assets on Fuse",
+    point: "4 points per USD",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    image: bridgeAssets,
+    isActive: true,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
+  },
+  {
+    title: "Holding more than 2 different tokens",
+    point: "10 points",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    image: holdTokens,
+    isActive: true,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
+  },
+  {
+    title: "Stake sFuse on Voltage",
+    point: "2 points per sFuse Staked",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    image: stakeSfuse,
+    isActive: true,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
+  },
+  {
+    title: "Stake VeVolt on Voltage",
+    point: "2 points per VeVolt Staked",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    image: stakeVevolt,
+    isActive: true,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
+  },
+  {
+    title: "Trade on LogX",
+    point: "",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
     image: logx,
-    background: "absolute inset-0 bg-[url('/vectors/logx-gradient.svg')] bg-no-repeat bg-right-bottom"
+    isActive: false,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
   },
   {
-    name: "Bitazza",
-    description: "Trade, invest, and earn with just a few clicks",
+    title: "Create a wallet on Bitazza",
+    point: "",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
     image: bitazza,
-    background: "absolute inset-0 bg-[url('/vectors/bitazza-gradient.svg')] bg-no-repeat bg-right-bottom"
+    isActive: false,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
   },
   {
-    name: "Lynx",
-    description: "Trade, invest, and earn with just a few clicks",
-    image: lynx,
-    background: "absolute inset-0 bg-[url('/vectors/lynx-gradient.svg')] bg-no-repeat bg-right-bottom"
-  },
-  {
-    name: "Zneakrz",
-    description: "Trade, invest, and earn with just a few clicks",
+    title: "Create a wallet on Zneakrz",
+    point: "",
+    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
     image: zneakrz,
-    background: "absolute inset-0 bg-[url('/vectors/zneakrz-gradient.svg')] bg-no-repeat bg-right-bottom"
-  },
-  {
-    name: "Meridian",
-    description: "Trade, invest, and earn with just a few clicks",
-    image: meridian,
-    background: "absolute inset-0 bg-[url('/vectors/meridian-gradient.svg')] bg-no-repeat bg-right-bottom"
-  },
-]
-
-const leaderboardTimeRanges = [
-  {
-    name: "All-Time",
-    mobile: true
-  },
-  {
-    name: "Last 30 days",
-    mobile: true
-  },
-  {
-    name: "Last 7 days",
-    mobile: true
-  },
-  {
-    name: "Last 24 hrs",
-    mobile: false
+    isActive: false,
+    button: "Go to Bridge",
+    link: "https://console.fuse.io/bridge"
   },
 ]
 
@@ -90,7 +127,6 @@ const Dashboard = () => {
   const { totalSignupStepCompleted, user } = useAppSelector(selectUserSlice);
   const [rename, setRename] = useState(user.walletAddress);
   const [isRename, setIsRename] = useState(false);
-  const [selectedLeaderboardTimeRange, setSelectedLeaderboardTimeRange] = useState(leaderboardTimeRanges[0].name);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
   const { isIntersecting: isUserSectionIntersecting, ref: userSection } = useIntersectionObserver({
     freezeOnceVisible: true,
@@ -214,7 +250,7 @@ const Dashboard = () => {
               {user.leaderboardPosition}
             </p>
             <Link
-              href="#leaderboard"
+              href={path.LEADERBOARD}
               className="group flex items-center gap-1 text-sm xl:text-xs leading-none text-pale-slate font-medium"
             >
               View Leaderboard
@@ -347,34 +383,13 @@ const Dashboard = () => {
       </div>
       <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
         <p className="text-3xl xl:text-2xl text-white font-semibold">
-          Check out our ecosystem apps Earn 2x Points
+          Complete quests to receive points
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-1 gap-[30px] xl:gap-5">
-          {apps.map((app) =>
-            <EcosystemApp key={app.name} app={app} />
+        <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
+          {quests.map((quest) =>
+            <Quest key={quest.title} quest={quest} />
           )}
         </div>
-      </div>
-      <div className="flex flex-col pt-[78px] xl:pt-16" id="leaderboard">
-        <div className="flex flex-row md:flex-col justify-between items-end md:items-start gap-2 mb-[31px] xl:mb-6">
-          <p className="text-3xl xl:text-2xl text-white font-semibold">
-            Leaderboard
-          </p>
-          <div className="flex gap-2">
-            {leaderboardTimeRanges.map((leaderboardTimeRange) =>
-              (!matches && !leaderboardTimeRange.mobile ? false : true) && (
-                <motion.p
-                  key={leaderboardTimeRange.name}
-                  className={`transition-all ease-in-out duration-300 text-lg xl:text-base font-semibold ${selectedLeaderboardTimeRange === leaderboardTimeRange.name ? "text-white" : "text-monsoon cursor-pointer"}`}
-                  onClick={() => setSelectedLeaderboardTimeRange(leaderboardTimeRange.name)}
-                >
-                  {leaderboardTimeRange.name}
-                </motion.p>
-              )
-            )}
-          </div>
-        </div>
-        <Leaderboard />
       </div>
     </motion.div>
   )

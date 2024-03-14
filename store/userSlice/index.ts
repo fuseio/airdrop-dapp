@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
-import { CreateUser, LeaderboardUsers, SignupStepCompleted, User } from "@/lib/types";
+import { CreateUser, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
 import { fetchLeaderboard, fetchUser, postAuthenticateUser, postCreateUser } from "@/lib/api";
 import { RootState } from "../store";
 import { Address } from "viem";
@@ -14,6 +14,16 @@ const initUser: User = {
   leaderboardPosition: 0,
   pointsLastUpdatedAt: "",
   walletAgeInDays: 0,
+}
+
+const initQuest: Quest = {
+  title: "",
+  point: "",
+  description: "",
+  image: "",
+  isActive: false,
+  button: "",
+  link: ""
 }
 
 const initSignupStepCompleted: SignupStepCompleted = {
@@ -31,6 +41,8 @@ export interface UserStateType {
   totalSignupStepCompleted: number;
   isUser: boolean;
   isHydrated: boolean;
+  isQuestModalOpen: boolean;
+  selectedQuest: Quest;
   currentComponent: string;
   signupStepCompleted: SignupStepCompleted;
   connectWalletLocation: string;
@@ -52,6 +64,8 @@ const INIT_STATE: UserStateType = {
   isUser: false,
   totalSignupStepCompleted: 0,
   isHydrated: false,
+  isQuestModalOpen: false,
+  selectedQuest: initQuest,
   currentComponent: "landing",
   signupStepCompleted: initSignupStepCompleted,
   connectWalletLocation: "",
@@ -194,6 +208,12 @@ const userSlice = createSlice({
   name: "USER_STATE",
   initialState: INIT_STATE,
   reducers: {
+    setIsQuestModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isQuestModalOpen = action.payload
+    },
+    setSelectedQuest: (state, action: PayloadAction<Quest>) => {
+      state.selectedQuest = action.payload
+    },
     setCurrentComponent: (state, action: PayloadAction<string>) => {
       state.currentComponent = action.payload
     },
@@ -322,6 +342,8 @@ const userSlice = createSlice({
 export const selectUserSlice = (state: AppState): UserStateType => state.user;
 
 export const {
+  setIsQuestModalOpen,
+  setSelectedQuest,
   setCurrentComponent,
   setSignupStepCompleted,
   setConnectWalletLocation,

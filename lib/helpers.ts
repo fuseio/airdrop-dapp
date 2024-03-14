@@ -31,6 +31,7 @@ export const isIos = !IS_SERVER && /iPad|iPhone|iPod/.test(navigator.userAgent);
 export const path = {
   HOME: "/",
   ABOUT: "/about",
+  LEADERBOARD: "/leaderboard",
   BRIDGE: "https://console.fuse.io/bridge"
 }
 
