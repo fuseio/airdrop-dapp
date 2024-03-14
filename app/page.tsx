@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import { selectUserSlice, setCurrentComponent, setHydrate, setLogout } from "@/store/userSlice";
 import Footer from "@/components/Footer";
 import { useAccount } from "wagmi";
-import Grid3D from "@/components/ui/Grid3D";
 import { AnimatePresence } from "framer-motion";
 import Landing from "@/components/home/Landing";
 import SignUp from "@/components/home/SignUp";
@@ -56,8 +55,8 @@ export default function Airdrop() {
   }, [])
 
   return (
-    <div className="w-full font-mona justify-end min-h-screen bg-secondary">
-      <div className={`flex-col flex items-center min-h-screen ${isUser ? "bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top justify-start" : "relative justify-between"}`}>
+    <div className="w-full font-mona justify-end min-h-screen bg-secondary bg-radial-gradient-green">
+      <div className={`flex-col flex items-center min-h-screen bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top ${isUser ? "justify-start" : "relative justify-between"}`}>
         <Topbar topbarRef={topbarRef} />
         <div
           ref={homeRef}
@@ -73,11 +72,6 @@ export default function Airdrop() {
             {currentComponent === "dashboard" && <Dashboard />}
           </AnimatePresence>
         </div>
-        {currentComponent === "landing" &&
-          <div className="absolute left-0 right-0 bottom-0 h-[500px]">
-            <Grid3D />
-          </div>
-        }
         {isUser && <Footer />}
       </div>
     </div>

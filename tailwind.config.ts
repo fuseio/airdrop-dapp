@@ -31,7 +31,8 @@ const config: Config = {
         "gray-goose": "#D0D0D0",
         "pale-slate": "#BFBFBF",
         "storm-dust": "#636363",
-        "monsoon": "#868686"
+        "monsoon": "#868686",
+        "star-dust": "#9C9C9C"
       },
       fontFamily: {
         mona: ["var(--font-mona-sans)"],
@@ -58,6 +59,9 @@ const config: Config = {
       animation: {
         'blink-underline': 'blink 1s linear infinite',
       },
+      backgroundImage: {
+        'radial-gradient-green': "radial-gradient(50% 50% at 50% 50%, rgba(163, 245, 170, 0.15) 0%, rgba(163, 245, 170, 0.00) 100%)",
+      }
     },
   },
   plugins: [],

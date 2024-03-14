@@ -55,3 +55,15 @@ export type EcosystemApp = {
 }
 
 export type EcosystemApps = EcosystemApp[];
+
+export type Quest = {
+  title: string;
+  point: string;
+  description: string;
+  image: string;
+  isActive: boolean;
+  button: string;
+  link: string;
+}
+
+export type Quests = Quest[];

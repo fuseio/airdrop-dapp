@@ -198,7 +198,7 @@ const ConnectWallet = ({
         initial="closed"
         exit="closed"
         variants={menu}
-        className="absolute top-[120%] bg-white rounded-[20px] shadow-xl z-50 font-medium w-[268.22px] py-6"
+        className="absolute top-[120%] bg-white rounded-[20px] shadow-xl z-[80] font-medium w-[268.22px] py-6"
       >
         <div className="flex flex-col gap-3.5 px-[22px]">
           <p className="font-bold">Switch Network</p>
@@ -280,7 +280,7 @@ const ConnectWallet = ({
           initial="closed"
           exit="closed"
           variants={menu}
-          className={`absolute top-[120%] right-0 bg-white rounded-[20px] cursor-auto shadow-xl py-[25.5px] z-50 w-[268.22px] ${pathname === "/dashboard" ? "md:left-1/2" : ""}`}
+          className={`absolute top-[120%] right-0 bg-white rounded-[20px] cursor-auto shadow-xl py-[25.5px] z-[80] w-[268.22px] ${pathname === "/dashboard" ? "md:left-1/2" : ""}`}
         >
           <div className="flex flex-col gap-[8.35px] px-[22px]">
             <p className="text-xs/[11.6px] text-text-dark-gray font-medium">
@@ -384,7 +384,7 @@ const ConnectWallet = ({
           initial="closed"
           exit="closed"
           variants={menu}
-          className="absolute top-[120%] right-0 bg-white rounded-[20px] cursor-auto shadow-xl py-[25.5px] z-50 w-[268.22px]"
+          className="absolute top-[120%] right-0 bg-white rounded-[20px] cursor-auto shadow-xl py-[25.5px] z-[80] w-[268.22px]"
         >
           <div className="flex flex-col gap-6 px-[22px]">
             <button
@@ -432,7 +432,7 @@ const ConnectWallet = ({
         initial="closed"
         exit="closed"
         variants={menu}
-        className="absolute top-[120%] bg-white rounded-[20px] shadow-xl z-50 font-medium w-[268.22px] py-6"
+        className="absolute top-[120%] bg-white rounded-[20px] shadow-xl z-[80] font-medium w-[268.22px] py-6"
       >
         <div className="flex flex-col gap-3.5 px-[22px]">
           <p className="font-bold">Switch Network</p>

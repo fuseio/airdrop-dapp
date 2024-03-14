@@ -9,7 +9,7 @@ const SignUpTwitter = () => {
   const { signupStepCompleted } = useAppSelector(selectUserSlice);
 
   return (
-    <div className="bg-tertiary rounded-[20px] flex flex-row md:flex-col md:gap-4 justify-between items-center md:text-center w-[849px] md:w-screen md:max-w-9/10 md:m-auto h-[113px] md:h-auto px-10 md:px-4 md:py-6">
+    <div className="bg-oslo-gray/[.22] rounded-[20px] flex flex-row md:flex-col md:gap-4 justify-between items-center md:text-center w-[849px] md:w-screen md:max-w-9/10 md:m-auto h-[113px] md:h-auto px-10 md:px-4 md:py-6">
       <div className="flex flex-row md:flex-col md:gap-2 items-center gap-6">
         <div className={`transition-all ease-in-out duration-300 relative border-dashed border rounded-full flex justify-center items-center w-[45px] h-[45px] text-2xl leading-none text-white font-bold overflow-hidden ${signupStepCompleted[signUpSteps.TWITTER] ? "border-primary" : "border-white"}`}>
           <p className={`transition-all ease-in-out duration-300 absolute left-1/2 ${signupStepCompleted[signUpSteps.TWITTER] ? "translate-x-12" : "-translate-x-1/2"}`}>
