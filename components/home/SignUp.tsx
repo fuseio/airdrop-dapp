@@ -45,7 +45,7 @@ const SignUp = () => {
       exit={{ x: -300, opacity: 0 }}
     >
       <h1 className="text-[2.125rem] leading-none text-white font-medium text-center max-w-[604px] mt-[52px] mb-16">
-        You&apos;re almost there. Connect your wallets and social media
+        You&apos;re almost there. Connect your wallet and social media
       </h1>
       <div className="flex flex-col gap-5 mb-11">
         <SignUpWallet />
