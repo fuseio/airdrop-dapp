@@ -25,12 +25,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setIsClient(true);
   }, [])
 
+  useEffect(() => {
+    if(isClient) {
+      ReactGA.initialize(NEXT_PUBLIC_GOOGLE_ANALYTICS_ID as string);
+      amplitude.init(NEXT_PUBLIC_AMPLITUDE_API_KEY as string);
+    }
+  }, [isClient])
+
   if (!isClient) {
     return null;
   }
-
-  ReactGA.initialize(NEXT_PUBLIC_GOOGLE_ANALYTICS_ID as string);
-  amplitude.init(NEXT_PUBLIC_AMPLITUDE_API_KEY as string);
 
   return (
     <Provider store={store}>
