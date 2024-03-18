@@ -73,8 +73,8 @@ const QuestModal = (): JSX.Element => {
                     <Image
                       src={pointHexagon}
                       alt="point hexagon"
-                      width={matches ? 12 : 10}
-                      height={matches ? 14 : 12}
+                      width={matches ? 20 : 16}
+                      height={matches ? 23 : 19}
                     />
                     <p className="text-lg xl:text-base text-success text-bold">
                       {selectedQuest.point}

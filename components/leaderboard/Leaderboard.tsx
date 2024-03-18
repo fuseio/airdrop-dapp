@@ -67,7 +67,7 @@ const Leaderboard = () => {
         variants={leaderboardVariants}
         initial="hidden"
         animate="show"
-        className="bg-tertiary rounded-[20px] flex items-center gap-2.5 xl:gap-2 text-white text-lg font-medium px-2.5 py-[22px] xl:px-2 xl:py-4"
+        className="bg-oslo-gray/[.22] rounded-[20px] flex items-center gap-2.5 xl:gap-2 text-white text-lg font-medium px-2.5 py-[22px] xl:px-2 xl:py-4"
       >
         <div className="w-[87px] xl:w-[70px] flex justify-center">
           <p className="bg-white/10 rounded-full xl:text-sm leading-none px-2.5 py-[6.5px] xl:px-2 xl:py-1">
@@ -115,7 +115,7 @@ const Leaderboard = () => {
               variants={leaderboardVariants}
               initial="hidden"
               animate="show"
-              className="bg-tertiary rounded-[20px] flex items-center gap-2.5 xl:gap-2 text-white text-lg xl:text-base font-medium px-2.5 py-[22px] xl:px-2 xl:py-4"
+              className="bg-oslo-gray/[.22] rounded-[20px] flex items-center gap-2.5 xl:gap-2 text-white text-lg xl:text-base font-medium px-2.5 py-[22px] xl:px-2 xl:py-4"
             >
               <div className="w-[87px] xl:w-[70px] flex justify-center items-center relative">
                 {positionStars[index + 1] &&
@@ -197,7 +197,7 @@ const Leaderboard = () => {
               }}
             >
               {isLeaderboardUsersLoading &&
-                <div className="bg-tertiary animate-pulse rounded-[20px]"></div>
+                <div className="bg-oslo-gray/[.22] animate-pulse rounded-[20px]"></div>
               }
             </motion.div>
           }
