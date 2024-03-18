@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { selectNavbarSlice, setIsWalletModalOpen } from "@/store/navbarSlice";
 import * as amplitude from "@amplitude/analytics-browser";
 import { walletType } from "@/lib/helpers";
+import { selectUserSlice } from "@/store/userSlice";
 
 const WalletModal = (): JSX.Element => {
   const [connectingWalletId, setConnectingWalletId] = useState<string>("");
@@ -27,7 +28,7 @@ const WalletModal = (): JSX.Element => {
   const { isWalletModalOpen } = useAppSelector(selectNavbarSlice);
   const dispatch = useAppDispatch();
   const { address, connector, isConnected } = useAccount();
-
+  const { user } = useAppSelector(selectUserSlice);
 
   useEffect(() => {
     window.addEventListener("click", (e) => {
@@ -41,18 +42,19 @@ const WalletModal = (): JSX.Element => {
     if (isConnected) {
       dispatch(setIsWalletModalOpen(false));
     }
+  }, [dispatch, isConnected])
 
-    if (address && connector) {
-      const identifyEvent = new amplitude.Identify();
-      identifyEvent.set('wallet_address', address);
-      amplitude.identify(identifyEvent);
-
+  useEffect(() => {
+    if (address && connector && user.points) {
+      amplitude.setUserId(address);
+      
       amplitude.track("Wallet connected", {
         walletType: walletType[connector.id],
-        walletAddress: address
+        walletAddress: address,
+        points: user.points
       });
     }
-  }, [address, connector, dispatch, isConnected])
+  }, [address, connector, user.points])
 
   const connectionEvent = (id: string) => {
     ReactGA.event({
