@@ -58,7 +58,7 @@ const Leaderboard = () => {
   const STREAK = 6;
 
   return (
-    <AnimatePresence>
+    <div>
       <p className="text-lg xl:text-base text-white font-semibold mb-4 xl:mb-2.5">
         Your Ranking
       </p>
@@ -203,7 +203,7 @@ const Leaderboard = () => {
           }
         </div>
       </Reorder.Group>
-    </AnimatePresence>
+    </div>
   )
 }
 
