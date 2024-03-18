@@ -62,7 +62,7 @@ const QuestModal = (): JSX.Element => {
                 <p className="text-2xl xl:text-xl leading-none text-white font-bold mt-8">
                   {selectedQuest.title}
                 </p>
-                <p className="text-lg xl:text-base leading-none text-pale-slate font-medium max-w-[339px] mt-5">
+                <p className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-[339px] mt-5">
                   {selectedQuest.description}
                 </p>
               </div>
@@ -82,7 +82,7 @@ const QuestModal = (): JSX.Element => {
                   </div>
                   <button
                     className="transition ease-in-out bg-primary border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
-                    onClick={() => window.open(selectedQuest.link, "_blank")}
+                    onClick={() => selectedQuest.link ? window.open(selectedQuest.link, "_blank") : undefined}
                   >
                     {selectedQuest.button}
                   </button>

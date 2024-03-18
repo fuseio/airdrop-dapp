@@ -34,34 +34,34 @@ const quests = [
   {
     title: "Follow @Fuse_network on X",
     point: "50 points",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    description: "Get 50 point for following an official Fuse Network X account",
     image: followX,
     isActive: true,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
+    button: "Go to X",
+    link: "https://twitter.com/Fuse_network"
   },
   {
     title: "Join Fuse Discord",
     point: "50 points",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    description: "Get 50 points for joining and verifying on the Fuse Network server in Discord",
     image: joinDiscord,
     isActive: true,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
+    button: "Go to Discord",
+    link: "https://discord.com/invite/jpPMeSZ"
   },
   {
     title: "Say GM in Discord",
     point: "10 points per gm/day",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    description: "Get 10 points every new day for saying GM in the #gm channel",
     image: sayGm,
     isActive: true,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
+    button: "Go to Discord",
+    link: "https://discord.com/channels/619119236362797067/929267035534422017"
   },
   {
     title: "Bridge assets on Fuse",
     point: "4 points per USD",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    description: "Bridge USDT, USDC or ETH to the Fuse Network and receive 4 points daily for every $1 remaining in the network",
     image: bridgeAssets,
     isActive: true,
     button: "Go to Bridge",
@@ -70,29 +70,29 @@ const quests = [
   {
     title: "Holding more than 2 different tokens",
     point: "10 points",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    description: "Get 10 point by holding more than 2 different tokens on your wallet",
     image: holdTokens,
     isActive: true,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
+    button: "Get Points",
+    link: ""
   },
   {
     title: "Stake sFuse on Voltage",
     point: "2 points per sFuse Staked",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
     image: stakeSfuse,
     isActive: true,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
+    button: "Go to Voltage",
+    link: "https://app.voltage.finance/stake/sFUSE"
   },
   {
     title: "Stake VeVolt on Voltage",
     point: "2 points per VeVolt Staked",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
+    description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
     image: stakeVevolt,
     isActive: true,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
+    button: "Go to Voltage",
+    link: "https://app.voltage.finance/stake/veVOLT"
   },
   {
     title: "Trade on LogX",
