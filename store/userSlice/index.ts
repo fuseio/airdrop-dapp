@@ -23,7 +23,8 @@ const initQuest: Quest = {
   image: "",
   isActive: false,
   button: "",
-  link: ""
+  link: "",
+  completed: false,
 }
 
 const initSignupStepCompleted: SignupStepCompleted = {
