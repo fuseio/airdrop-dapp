@@ -63,6 +63,7 @@ export type Quest = {
   isActive: boolean;
   button: string;
   link: string;
+  completed: boolean;
 }
 
 export type Quests = Quest[];

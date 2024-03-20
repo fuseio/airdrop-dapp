@@ -32,7 +32,8 @@ const quests = [
     image: bridgeAssets,
     isActive: true,
     button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
+    link: "https://console.fuse.io/bridge",
+    completed: false,
   },
   {
     title: "Holding more than 2 different tokens",
@@ -41,7 +42,8 @@ const quests = [
     image: holdTokens,
     isActive: true,
     button: "Get Points",
-    link: ""
+    link: "",
+    completed: true,
   },
   {
     title: "Stake sFuse on Voltage",
@@ -50,7 +52,8 @@ const quests = [
     image: stakeSfuse,
     isActive: true,
     button: "Go to Voltage",
-    link: "https://app.voltage.finance/stake/sFUSE"
+    link: "https://app.voltage.finance/stake/sFUSE",
+    completed: false,
   },
   {
     title: "Stake VeVolt on Voltage",
@@ -59,7 +62,8 @@ const quests = [
     image: stakeVevolt,
     isActive: true,
     button: "Go to Voltage",
-    link: "https://app.voltage.finance/stake/veVOLT"
+    link: "https://app.voltage.finance/stake/veVOLT",
+    completed: false,
   },
 ]
 
