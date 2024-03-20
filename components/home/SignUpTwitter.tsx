@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { selectUserSlice, setSignupStepCompleted, setTotalSignupStepCompleted, setTwitterAccountId } from "@/store/userSlice";
+import { selectUserSlice, setSignupStepCompleted, setTotalSignupStepCompleted } from "@/store/userSlice";
 import Image from "next/image";
 import check from "@/assets/check.svg";
-import { exampleTwitterAccountId, signUpSteps } from "@/lib/helpers";
+import { signUpSteps } from "@/lib/helpers";
 
 const SignUpTwitter = () => {
   const dispatch = useAppDispatch();
@@ -31,7 +31,6 @@ const SignUpTwitter = () => {
         className={`transition ease-in-out bg-primary rounded-full w-[163px] text-xl leading-none font-semibold py-[15px] ${signupStepCompleted[signUpSteps.MANDATORY] && !signupStepCompleted[signUpSteps.TWITTER] ? "opacity-100 hover:bg-white" : "opacity-30"}`}
         disabled={signupStepCompleted[signUpSteps.MANDATORY] && !signupStepCompleted[signUpSteps.TWITTER] ? false : true}
         onClick={() => {
-          dispatch(setTwitterAccountId(exampleTwitterAccountId));
           dispatch(setSignupStepCompleted({ key: signUpSteps.TWITTER, value: true }));
           dispatch(setTotalSignupStepCompleted());
         }}

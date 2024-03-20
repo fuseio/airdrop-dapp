@@ -13,7 +13,6 @@ export type WalletType = {
 
 export type CreateUser = {
   walletAddress: Address,
-  twitterAccountId: string,
   referralCode: string
 }
 

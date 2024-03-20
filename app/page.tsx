@@ -11,6 +11,8 @@ import { AnimatePresence } from "framer-motion";
 import Landing from "@/components/home/Landing";
 import SignUp from "@/components/home/SignUp";
 import Dashboard from "@/components/home/Dashboard";
+import { screenWidth } from "@/lib/helpers";
+import { useMediaQuery } from "usehooks-ts";
 
 export default function Airdrop() {
   const dispatch = useAppDispatch();
@@ -19,6 +21,7 @@ export default function Airdrop() {
   const topbarRef = useRef<HTMLElement>(null);
   const homeRef = useRef<HTMLDivElement>(null);
   const [homeMargin, setHomeMargin] = useState(0);
+  const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
 
   useEffect(() => {
     dispatch(setHydrate());
@@ -54,6 +57,22 @@ export default function Airdrop() {
     }
   }, [])
 
+  function margin() {
+    if (isUser) {
+      return { top: "0px", bottom: "0px" };
+    }
+
+    if (!matches) {
+      return { top: "70px", bottom: "70px" };
+    }
+
+    if (!homeMargin) {
+      return { top: "100px", bottom: "100px" };
+    }
+
+    return { top: "0px", bottom: homeMargin };
+  }
+
   return (
     <div className="w-full font-mona justify-end min-h-screen bg-secondary bg-radial-gradient-green">
       <div className={`flex-col flex items-center min-h-screen bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top ${isUser ? "justify-start" : "relative justify-between"}`}>
@@ -62,8 +81,8 @@ export default function Airdrop() {
           ref={homeRef}
           className="w-full flex flex-col items-center"
           style={{
-            marginTop: isUser ? "0px" : homeMargin === 0 ? "100px" : "0px",
-            marginBottom: isUser ? "0px" : homeMargin === 0 ? "100px" : homeMargin,
+            marginTop: margin().top,
+            marginBottom: margin().bottom,
           }}
         >
           <AnimatePresence>

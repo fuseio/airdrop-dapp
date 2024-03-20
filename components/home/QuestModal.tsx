@@ -66,7 +66,7 @@ const QuestModal = (): JSX.Element => {
                   {selectedQuest.description}
                 </p>
               </div>
-              <div className="min-h-[104px] xl:min-h-fit">
+              <div className="min-h-[104px] xl:min-h-fit mt-2">
                 <hr className="border-[0.3px] border-star-dust" />
                 <div className="flex justify-between items-center mt-7 mb-8 xl:mt-6 xl:mb-6.5 px-9 xl:px-7">
                   <div className="flex items-center gap-2">
