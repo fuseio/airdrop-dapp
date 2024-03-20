@@ -47,7 +47,6 @@ export interface UserStateType {
   signupStepCompleted: SignupStepCompleted;
   connectWalletLocation: string;
   inviteCode: string;
-  twitterAccountId: string;
   accessToken: string;
   user: User;
   leaderboardUsers: LeaderboardUsers;
@@ -70,7 +69,6 @@ const INIT_STATE: UserStateType = {
   signupStepCompleted: initSignupStepCompleted,
   connectWalletLocation: "",
   inviteCode: "",
-  twitterAccountId: "",
   accessToken: "",
   user: initUser,
   leaderboardUsers: [],
@@ -227,10 +225,6 @@ const userSlice = createSlice({
       state.inviteCode = action.payload
       localStorage.setItem("airdrop-inviteCode", action.payload);
     },
-    setTwitterAccountId: (state, action: PayloadAction<string>) => {
-      state.twitterAccountId = action.payload
-      localStorage.setItem("airdrop-twitterAccountId", action.payload);
-    },
     setTotalSignupStepCompleted: (state) => {
       state.totalSignupStepCompleted = state.totalSignupStepCompleted + 1
     },
@@ -239,14 +233,14 @@ const userSlice = createSlice({
       localStorage.setItem("airdrop-leaderboardUsers", JSON.stringify(action.payload));
     },
     setLogout: (state) => {
-      state.twitterAccountId = "";
       state.accessToken = "";
       state.isUser = false;
       state.user = initUser;
       state.leaderboardUsers = [];
       state.lastLeaderboardUserId = "";
       state.isLeaderboardUsersFinished = false;
-      localStorage.removeItem("airdrop-twitterAccountId");
+      state.totalSignupStepCompleted = 0;
+      state.signupStepCompleted = initSignupStepCompleted;
       localStorage.removeItem("airdrop-accessToken");
       localStorage.removeItem("airdrop-isUser");
       localStorage.removeItem("airdrop-user");
@@ -256,7 +250,6 @@ const userSlice = createSlice({
     },
     setHydrate: (state) => {
       const inviteCode = localStorage.getItem("airdrop-inviteCode");
-      const twitterAccountId = localStorage.getItem("airdrop-twitterAccountId");
       const accessToken = localStorage.getItem("airdrop-accessToken");
       const isUser = localStorage.getItem("airdrop-isUser");
       const user = localStorage.getItem("airdrop-user");
@@ -264,7 +257,6 @@ const userSlice = createSlice({
       const lastLeaderboardUserId = localStorage.getItem("airdrop-lastLeaderboardUserId");
       const isLeaderboardUsersFinished = localStorage.getItem("airdrop-isLeaderboardUsersFinished");
       state.inviteCode = inviteCode ?? "";
-      state.twitterAccountId = twitterAccountId ?? "";
       state.accessToken = accessToken ?? "";
       state.isUser = isUser ? JSON.parse(isUser) : false;
       state.user = user ? JSON.parse(user) : initUser;
@@ -348,7 +340,6 @@ export const {
   setSignupStepCompleted,
   setConnectWalletLocation,
   setInviteCode,
-  setTwitterAccountId,
   setTotalSignupStepCompleted,
   setLeaderboardUsers,
   setLogout,

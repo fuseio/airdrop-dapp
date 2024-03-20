@@ -38,8 +38,6 @@ export const path = {
 
 export const evmDecimals = 18;
 
-export const exampleTwitterAccountId = "exampleTwitterAccountId";
-
 export const signUpSteps = {
   WALLET: 1,
   TWITTER: 2,

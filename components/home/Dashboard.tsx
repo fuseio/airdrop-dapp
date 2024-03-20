@@ -19,45 +19,12 @@ import { useIntersectionObserver, useMediaQuery } from "usehooks-ts";
 import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
 import crownCircle from "@/assets/crown-circle.svg";
 import Quest from "./Quest";
-import followX from "@/assets/follow-x.svg";
-import joinDiscord from "@/assets/join-discord.svg";
-import sayGm from "@/assets/say-gm.svg";
 import bridgeAssets from "@/assets/bridge-assets.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVevolt from "@/assets/stake-vevolt.svg";
-import logx from "@/assets/logx.svg";
-import bitazza from "@/assets/bitazza.svg";
-import zneakrz from "@/assets/zneakrz.svg";
 
 const quests = [
-  {
-    title: "Follow @Fuse_network on X",
-    point: "50 points",
-    description: "Get 50 point for following an official Fuse Network X account",
-    image: followX,
-    isActive: true,
-    button: "Go to X",
-    link: "https://twitter.com/Fuse_network"
-  },
-  {
-    title: "Join Fuse Discord",
-    point: "50 points",
-    description: "Get 50 points for joining and verifying on the Fuse Network server in Discord",
-    image: joinDiscord,
-    isActive: true,
-    button: "Go to Discord",
-    link: "https://discord.com/invite/jpPMeSZ"
-  },
-  {
-    title: "Say GM in Discord",
-    point: "10 points per gm/day",
-    description: "Get 10 points every new day for saying GM in the #gm channel",
-    image: sayGm,
-    isActive: true,
-    button: "Go to Discord",
-    link: "https://discord.com/channels/619119236362797067/929267035534422017"
-  },
   {
     title: "Bridge assets on Fuse",
     point: "4 points per USD",
@@ -93,33 +60,6 @@ const quests = [
     isActive: true,
     button: "Go to Voltage",
     link: "https://app.voltage.finance/stake/veVOLT"
-  },
-  {
-    title: "Trade on LogX",
-    point: "",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
-    image: logx,
-    isActive: false,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
-  },
-  {
-    title: "Create a wallet on Bitazza",
-    point: "",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
-    image: bitazza,
-    isActive: false,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
-  },
-  {
-    title: "Create a wallet on Zneakrz",
-    point: "",
-    description: "Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge Get 1 point on every $100 you bridge",
-    image: zneakrz,
-    isActive: false,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge"
   },
 ]
 
@@ -304,7 +244,7 @@ const Dashboard = () => {
                   translateZ="60"
                   className="text-lg xl:text-base text-pale-slate font-medium max-w-[243px]"
                 >
-                  Get 10% of your friend&apos;s total points (Not including)
+                  Get 20% of your friend&apos;s total points (Not including)
                 </CardItem>
               </div>
               <div className="flex flex-col gap-2.5 xl:gap-2">
