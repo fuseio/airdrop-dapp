@@ -68,3 +68,15 @@ export const fetchLeaderboard = async (queryParams: Record<string, string>, toke
   )
   return response.data
 }
+
+export const fetchTwitterAuthUrl = async (token: string): Promise<{ authUrl: string }> => {
+  const response = await axios.get(
+    `${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/twitter/generate-auth-url`,
+    {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+  )
+  return response.data
+}

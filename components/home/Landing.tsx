@@ -21,6 +21,7 @@ const Landing = () => {
   const [isInputClicked, setIsInputClicked] = useState(false);
   const searchParams = useSearchParams();
   const referralCode = searchParams.get('ref');
+  const twitterConnected = searchParams.get('twitter-connected');
   const { connectWalletLocation, isHydrated, isAuthenticated, isUser } = useAppSelector(selectUserSlice);
   const { address } = useAccount();
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
@@ -32,6 +33,12 @@ const Landing = () => {
       setInvite(defaultReferralCode);
     }
   }, [referralCode])
+
+  useEffect(() => {
+    if(twitterConnected) {
+      dispatch(setCurrentComponent("signup"));
+    }
+  }, [dispatch, twitterConnected])
 
   useEffect(() => {
     if (

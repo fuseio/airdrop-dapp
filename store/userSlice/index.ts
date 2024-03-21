@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
 import { CreateUser, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
-import { fetchLeaderboard, fetchUser, postAuthenticateUser, postCreateUser } from "@/lib/api";
+import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postCreateUser } from "@/lib/api";
 import { RootState } from "../store";
 import { Address } from "viem";
 
@@ -39,6 +39,7 @@ export interface UserStateType {
   isCreating: boolean;
   isRetrieving: boolean;
   isLeaderboardUsersLoading: boolean;
+  isGeneratingTwitterAuthUrl: boolean;
   totalSignupStepCompleted: number;
   isUser: boolean;
   isHydrated: boolean;
@@ -53,6 +54,7 @@ export interface UserStateType {
   leaderboardUsers: LeaderboardUsers;
   lastLeaderboardUserId: string;
   isLeaderboardUsersFinished: boolean;
+  twitterAuthUrl: string;
 }
 
 const INIT_STATE: UserStateType = {
@@ -61,6 +63,7 @@ const INIT_STATE: UserStateType = {
   isCreating: false,
   isRetrieving: false,
   isLeaderboardUsersLoading: false,
+  isGeneratingTwitterAuthUrl: false,
   isUser: false,
   totalSignupStepCompleted: 0,
   isHydrated: false,
@@ -74,11 +77,12 @@ const INIT_STATE: UserStateType = {
   user: initUser,
   leaderboardUsers: [],
   lastLeaderboardUserId: "",
-  isLeaderboardUsersFinished: false
+  isLeaderboardUsersFinished: false,
+  twitterAuthUrl: "",
 };
 
 export const authenticate = createAsyncThunk(
-  "OPERATOR/AUTHENTICATE",
+  "USER/AUTHENTICATE",
   async ({
     eoaAddress,
   }: {
@@ -107,7 +111,7 @@ export const create = createAsyncThunk<
   },
   { state: RootState }
 >(
-  "OPERATOR/CREATE",
+  "USER/CREATE",
   async ({
     createUserDetail,
   }: {
@@ -141,7 +145,7 @@ export const retrieve = createAsyncThunk<
   undefined,
   { state: RootState }
 >(
-  "OPERATOR/RETRIEVE",
+  "USER/RETRIEVE",
   async (
     _,
     thunkAPI
@@ -181,7 +185,7 @@ export const fetchLeaderboardUsers = createAsyncThunk<
   },
   { state: RootState }
 >(
-  "OPERATOR/FETCH_LEADERBOARD_USERS",
+  "USER/FETCH_LEADERBOARD_USERS",
   async ({
     queryParams,
   }: {
@@ -195,6 +199,30 @@ export const fetchLeaderboardUsers = createAsyncThunk<
         const userState: UserStateType = state.user;
         const leaderboard = await fetchLeaderboard(queryParams, userState.accessToken);
         resolve(leaderboard.users);
+      } catch (error) {
+        console.error(error);
+        reject();
+      }
+    });
+  }
+);
+
+export const generateTwitterAuthUrl = createAsyncThunk<
+  any,
+  undefined,
+  { state: RootState }
+>(
+  "USER/GENERATE_TWITTER_AUTH_URL",
+  async (
+    _,
+    thunkAPI
+  ) => {
+    return new Promise<any>(async (resolve, reject) => {
+      try {
+        const state = thunkAPI.getState();
+        const userState: UserStateType = state.user;
+        const generatedTwitterAuthUrl = await fetchTwitterAuthUrl(userState.accessToken);
+        resolve(generatedTwitterAuthUrl.authUrl);
       } catch (error) {
         console.error(error);
         reject();
@@ -218,6 +246,7 @@ const userSlice = createSlice({
     },
     setSignupStepCompleted: (state, action: PayloadAction<{ key: number, value: boolean }>) => {
       state.signupStepCompleted[action.payload.key] = action.payload.value
+      localStorage.setItem("airdrop-signupStepCompleted", JSON.stringify(state.signupStepCompleted));
     },
     setConnectWalletLocation: (state, action: PayloadAction<string>) => {
       state.connectWalletLocation = action.payload
@@ -228,6 +257,7 @@ const userSlice = createSlice({
     },
     setTotalSignupStepCompleted: (state) => {
       state.totalSignupStepCompleted = state.totalSignupStepCompleted + 1
+      localStorage.setItem("airdrop-totalSignupStepCompleted", JSON.stringify(state.totalSignupStepCompleted));
     },
     setLeaderboardUsers: (state, action: PayloadAction<LeaderboardUsers>) => {
       state.leaderboardUsers = action.payload
@@ -248,6 +278,8 @@ const userSlice = createSlice({
       localStorage.removeItem("airdrop-leaderboardUsers");
       localStorage.removeItem("airdrop-lastLeaderboardUserId");
       localStorage.removeItem("airdrop-isLeaderboardUsersFinished");
+      localStorage.removeItem("airdrop-totalSignupStepCompleted");
+      localStorage.removeItem("airdrop-signupStepCompleted");
     },
     setHydrate: (state) => {
       const inviteCode = localStorage.getItem("airdrop-inviteCode");
@@ -257,6 +289,8 @@ const userSlice = createSlice({
       const leaderboardUsers = localStorage.getItem("airdrop-leaderboardUsers");
       const lastLeaderboardUserId = localStorage.getItem("airdrop-lastLeaderboardUserId");
       const isLeaderboardUsersFinished = localStorage.getItem("airdrop-isLeaderboardUsersFinished");
+      const totalSignupStepCompleted = localStorage.getItem("airdrop-totalSignupStepCompleted");
+      const signupStepCompleted = localStorage.getItem("airdrop-signupStepCompleted");
       state.inviteCode = inviteCode ?? "";
       state.accessToken = accessToken ?? "";
       state.isUser = isUser ? JSON.parse(isUser) : false;
@@ -264,6 +298,8 @@ const userSlice = createSlice({
       state.leaderboardUsers = leaderboardUsers ? JSON.parse(leaderboardUsers) : [];
       state.lastLeaderboardUserId = lastLeaderboardUserId ?? "";
       state.isLeaderboardUsersFinished = isLeaderboardUsersFinished ? JSON.parse(isLeaderboardUsersFinished) : false;
+      state.totalSignupStepCompleted = totalSignupStepCompleted ? JSON.parse(totalSignupStepCompleted) : false;
+      state.signupStepCompleted = signupStepCompleted ? JSON.parse(signupStepCompleted) : initSignupStepCompleted;
       state.isHydrated = true;
     }
   },
@@ -328,6 +364,16 @@ const userSlice = createSlice({
       })
       .addCase(fetchLeaderboardUsers.rejected, (state) => {
         state.isLeaderboardUsersLoading = false;
+      })
+      .addCase(generateTwitterAuthUrl.pending, (state) => {
+        state.isGeneratingTwitterAuthUrl = true;
+      })
+      .addCase(generateTwitterAuthUrl.fulfilled, (state, action) => {
+        state.isGeneratingTwitterAuthUrl = false;
+        state.twitterAuthUrl = action.payload;
+      })
+      .addCase(generateTwitterAuthUrl.rejected, (state) => {
+        state.isGeneratingTwitterAuthUrl = false;
       })
   },
 });
