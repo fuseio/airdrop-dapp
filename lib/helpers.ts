@@ -66,3 +66,5 @@ export function convertTimestampToUTC(timestampString: string) {
 }
 
 export const daysInYear = 365;
+
+export const defaultReferralCode = "FUSER";
