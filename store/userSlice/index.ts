@@ -256,15 +256,23 @@ const userSlice = createSlice({
       localStorage.setItem("airdrop-inviteCode", action.payload);
     },
     setTotalSignupStepCompleted: (state) => {
-      state.totalSignupStepCompleted = state.totalSignupStepCompleted + 1
-      localStorage.setItem("airdrop-totalSignupStepCompleted", JSON.stringify(state.totalSignupStepCompleted));
+      let totalSteps = 0;
+      for(let property in state.signupStepCompleted) {
+        if(state.signupStepCompleted[property]) {
+          totalSteps += 1
+        }
+      }
+      state.totalSignupStepCompleted = totalSteps;
+      localStorage.setItem("airdrop-totalSignupStepCompleted", JSON.stringify(totalSteps));
     },
     setLeaderboardUsers: (state, action: PayloadAction<LeaderboardUsers>) => {
       state.leaderboardUsers = action.payload
       localStorage.setItem("airdrop-leaderboardUsers", JSON.stringify(action.payload));
     },
     setLogout: (state) => {
+      state.inviteCode = "";
       state.accessToken = "";
+      state.isAuthenticated = false;
       state.isUser = false;
       state.user = initUser;
       state.leaderboardUsers = [];
@@ -272,6 +280,7 @@ const userSlice = createSlice({
       state.isLeaderboardUsersFinished = false;
       state.totalSignupStepCompleted = 0;
       state.signupStepCompleted = initSignupStepCompleted;
+      localStorage.removeItem("airdrop-inviteCode");
       localStorage.removeItem("airdrop-accessToken");
       localStorage.removeItem("airdrop-isUser");
       localStorage.removeItem("airdrop-user");
@@ -293,6 +302,7 @@ const userSlice = createSlice({
       const signupStepCompleted = localStorage.getItem("airdrop-signupStepCompleted");
       state.inviteCode = inviteCode ?? "";
       state.accessToken = accessToken ?? "";
+      state.isAuthenticated = !!accessToken;
       state.isUser = isUser ? JSON.parse(isUser) : false;
       state.user = user ? JSON.parse(user) : initUser;
       state.leaderboardUsers = leaderboardUsers ? JSON.parse(leaderboardUsers) : [];

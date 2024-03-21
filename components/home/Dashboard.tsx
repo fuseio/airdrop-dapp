@@ -7,7 +7,7 @@ import { useAppSelector } from "@/store/store";
 import { selectUserSlice } from "@/store/userSlice";
 import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
 import AirdropLive from "./AirdropLive";
 import Avatar from "@/components/ui/Avatar";
@@ -19,53 +19,12 @@ import { useIntersectionObserver, useMediaQuery } from "usehooks-ts";
 import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
 import crownCircle from "@/assets/crown-circle.svg";
 import Quest from "./Quest";
+import followX from "@/assets/follow-x.svg";
 import bridgeAssets from "@/assets/bridge-assets.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVevolt from "@/assets/stake-vevolt.svg";
-
-const quests = [
-  {
-    title: "Bridge assets on Fuse",
-    point: "4 points per USD",
-    description: "Bridge USDT, USDC or ETH to the Fuse Network and receive 4 points daily for every $1 remaining in the network",
-    image: bridgeAssets,
-    isActive: true,
-    button: "Go to Bridge",
-    link: "https://console.fuse.io/bridge",
-    completed: false,
-  },
-  {
-    title: "Holding more than 2 different tokens",
-    point: "10 points",
-    description: "Get 10 point by holding more than 2 different tokens on your wallet",
-    image: holdTokens,
-    isActive: true,
-    button: "Get Points",
-    link: "",
-    completed: true,
-  },
-  {
-    title: "Stake sFuse on Voltage",
-    point: "2 points per sFuse Staked",
-    description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
-    image: stakeSfuse,
-    isActive: true,
-    button: "Go to Voltage",
-    link: "https://app.voltage.finance/stake/sFUSE",
-    completed: false,
-  },
-  {
-    title: "Stake VeVolt on Voltage",
-    point: "2 points per VeVolt Staked",
-    description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
-    image: stakeVevolt,
-    isActive: true,
-    button: "Go to Voltage",
-    link: "https://app.voltage.finance/stake/veVOLT",
-    completed: false,
-  },
-]
+import { Quests } from "@/lib/types";
 
 const Dashboard = () => {
   const { totalSignupStepCompleted, user } = useAppSelector(selectUserSlice);
@@ -79,6 +38,58 @@ const Dashboard = () => {
     freezeOnceVisible: true,
   });
   const MAX_RENAME_CHARACTER = 15;
+  const [quests, setQuests] = useState<Quests>([
+    {
+      title: "Follow @Fuse_network on X",
+      point: "50 points",
+      description: "Get 50 point for following an official Fuse Network X account",
+      image: followX,
+      isActive: true,
+      button: "Go to X",
+      link: "https://twitter.com/Fuse_network",
+      completed: false,
+    },
+    {
+      title: "Bridge assets on Fuse",
+      point: "4 points per USD",
+      description: "Bridge USDT, USDC or ETH to the Fuse Network and receive 4 points daily for every $1 remaining in the network",
+      image: bridgeAssets,
+      isActive: true,
+      button: "Go to Bridge",
+      link: "https://console.fuse.io/bridge",
+      completed: false,
+    },
+    {
+      title: "Holding more than 2 different tokens",
+      point: "10 points",
+      description: "Get 10 point by holding more than 2 different tokens on your wallet",
+      image: holdTokens,
+      isActive: true,
+      button: "Get Points",
+      link: "",
+      completed: false,
+    },
+    {
+      title: "Stake sFuse on Voltage",
+      point: "2 points per sFuse Staked",
+      description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
+      image: stakeSfuse,
+      isActive: true,
+      button: "Go to Voltage",
+      link: "https://app.voltage.finance/stake/sFUSE",
+      completed: false,
+    },
+    {
+      title: "Stake VeVolt on Voltage",
+      point: "2 points per VeVolt Staked",
+      description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
+      image: stakeVevolt,
+      isActive: true,
+      button: "Go to Voltage",
+      link: "https://app.voltage.finance/stake/veVOLT",
+      completed: false,
+    },
+  ])
 
   function referralLink() {
     const host = !IS_SERVER ? window?.location?.host : ""
@@ -90,6 +101,21 @@ const Dashboard = () => {
       setIsRename(false);
     }
   });
+
+  useEffect(() => {
+    if(user.twitterAccountId) {
+      setQuests((prevQuests) => {
+        const newQuests = [...prevQuests];
+        newQuests.map((newQuest) => {
+          if(newQuest.title === "Follow @Fuse_network on X") {
+            newQuest.completed = true;
+          }
+          return newQuest;
+        });
+        return newQuests;
+      })
+    }
+  }, [user.twitterAccountId])
   
   return (
     <motion.div

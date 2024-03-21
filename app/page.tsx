@@ -13,6 +13,7 @@ import SignUp from "@/components/home/SignUp";
 import Dashboard from "@/components/home/Dashboard";
 import { screenWidth } from "@/lib/helpers";
 import { useMediaQuery } from "usehooks-ts";
+import { useSearchParams } from "next/navigation";
 
 export default function Airdrop() {
   const dispatch = useAppDispatch();
@@ -22,6 +23,8 @@ export default function Airdrop() {
   const homeRef = useRef<HTMLDivElement>(null);
   const [homeMargin, setHomeMargin] = useState(0);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
+  const searchParams = useSearchParams();
+  const twitterConnected = searchParams.get('twitter-connected');
 
   useEffect(() => {
     dispatch(setHydrate());
@@ -31,10 +34,12 @@ export default function Airdrop() {
   useEffect(() => {
     if (isUser) {
       dispatch(setCurrentComponent("dashboard"));
+    } else if(twitterConnected) {
+      dispatch(setCurrentComponent("signup"));
     } else {
       dispatch(setCurrentComponent("landing"));
     }
-  }, [dispatch, isUser])
+  }, [dispatch, isUser, twitterConnected])
 
   useEffect(() => {
     if (isDisconnected) {
