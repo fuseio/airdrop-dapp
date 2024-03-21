@@ -169,7 +169,7 @@ const ConnectWallet = ({
     </div>
   ) : checkCorrectNetwork() && isChainOpen ? (
     <div
-      className="flex relative justify-end md:me-2.5 text-base/4 h-9"
+      className="flex relative justify-end md:me-3 text-base/4 h-9"
       ref={chainRef}
     >
       <div
@@ -248,7 +248,7 @@ const ConnectWallet = ({
       </motion.div>
     </div>
   ) : checkCorrectNetwork() ? (
-    <div className="flex justify-end md:justify-center relative md:me-2.5 h-9">
+    <div className="flex justify-end md:justify-center relative md:me-3 h-9">
       <div
         className="flex bg-tertiary px-4 py-3 md:py-3.5 rounded-full cursor-pointer items-center relative text-base/4 font-normal ml-2"
         ref={accountsRef}
@@ -411,7 +411,7 @@ const ConnectWallet = ({
     </div>
   ) : (
     <div
-      className="flex relative justify-end md:me-2.5 text-base/4"
+      className="flex relative justify-end md:me-3 text-base/4"
       ref={wrongNetworkRef}
     >
       <div
