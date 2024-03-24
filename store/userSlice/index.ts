@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
 import { CreateUser, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
-import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postCreateUser } from "@/lib/api";
+import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser } from "@/lib/api";
 import { RootState } from "../store";
 import { Address } from "viem";
 
@@ -40,6 +40,7 @@ export interface UserStateType {
   isRetrieving: boolean;
   isLeaderboardUsersLoading: boolean;
   isGeneratingTwitterAuthUrl: boolean;
+  isSubmittingComingSoonSubscribe: boolean;
   totalSignupStepCompleted: number;
   isUser: boolean;
   isHydrated: boolean;
@@ -55,6 +56,8 @@ export interface UserStateType {
   lastLeaderboardUserId: string;
   isLeaderboardUsersFinished: boolean;
   twitterAuthUrl: string;
+  isSubmittedComingSoonSubscribe: boolean;
+  isErrorSubmittingComingSoonSubscribe: boolean;
 }
 
 const INIT_STATE: UserStateType = {
@@ -64,6 +67,7 @@ const INIT_STATE: UserStateType = {
   isRetrieving: false,
   isLeaderboardUsersLoading: false,
   isGeneratingTwitterAuthUrl: false,
+  isSubmittingComingSoonSubscribe: false,
   isUser: false,
   totalSignupStepCompleted: 0,
   isHydrated: false,
@@ -79,6 +83,8 @@ const INIT_STATE: UserStateType = {
   lastLeaderboardUserId: "",
   isLeaderboardUsersFinished: false,
   twitterAuthUrl: "",
+  isSubmittedComingSoonSubscribe: false,
+  isErrorSubmittingComingSoonSubscribe: false,
 };
 
 export const authenticate = createAsyncThunk(
@@ -223,6 +229,25 @@ export const generateTwitterAuthUrl = createAsyncThunk<
         const userState: UserStateType = state.user;
         const generatedTwitterAuthUrl = await fetchTwitterAuthUrl(userState.accessToken);
         resolve(generatedTwitterAuthUrl.authUrl);
+      } catch (error) {
+        console.error(error);
+        reject();
+      }
+    });
+  }
+);
+
+export const submitComingSoonSubscribe = createAsyncThunk(
+  "USER/SUBMIT_COMING_SOON_SUBSCRIBE",
+  async ({
+    email,
+  }: {
+    email: string;
+  }) => {
+    return new Promise<any>(async (resolve, reject) => {
+      try {
+        const submittedComingSoonSubscribe = await postComingSoonSubscribe(email);
+        resolve(submittedComingSoonSubscribe);
       } catch (error) {
         console.error(error);
         reject();
@@ -384,6 +409,17 @@ const userSlice = createSlice({
       })
       .addCase(generateTwitterAuthUrl.rejected, (state) => {
         state.isGeneratingTwitterAuthUrl = false;
+      })
+      .addCase(submitComingSoonSubscribe.pending, (state) => {
+        state.isSubmittingComingSoonSubscribe = true;
+      })
+      .addCase(submitComingSoonSubscribe.fulfilled, (state, action) => {
+        state.isSubmittingComingSoonSubscribe = false;
+        state.isSubmittedComingSoonSubscribe = true;
+      })
+      .addCase(submitComingSoonSubscribe.rejected, (state) => {
+        state.isSubmittingComingSoonSubscribe = false;
+        state.isErrorSubmittingComingSoonSubscribe = true;
       })
   },
 });

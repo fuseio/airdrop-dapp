@@ -14,7 +14,6 @@ const Landing = () => {
   const [invite, setInvite] = useState('');
   const searchParams = useSearchParams();
   const referralCode = searchParams.get('ref');
-  const cta = searchParams.get('cta');
   const { connectWalletLocation, isHydrated, isAuthenticated, isUser } = useAppSelector(selectUserSlice);
   const { address } = useAccount();
 
@@ -55,8 +54,9 @@ const Landing = () => {
       <p className="text-xl xl:text-lg text-white/70 max-w-[628px] md:max-w-[391px] mt-7 mb-16">
         Join the Fuse Airdrop! Get into the Fuse, connect your wallet and earn Rewards with ease: Join the Explosive Airdrop Campaign
       </p>
-      {!cta && <JoinAirdrop invite={invite} setInvite={setInvite} />}
-      {cta === "subscribe" && <NotifySubscribe />}
+      {/* JoinAirdrop component is commented out for Airdrop website Coming Soon */}
+      {/* <JoinAirdrop invite={invite} setInvite={setInvite} /> */}
+      <NotifySubscribe />
     </motion.div>
   )
 }
