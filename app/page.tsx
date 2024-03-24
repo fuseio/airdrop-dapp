@@ -42,8 +42,8 @@ export default function Airdrop() {
   }, [isDisconnected, dispatch])
 
   return (
-    <div className={`w-full font-mona bg-secondary ${currentComponent === "landing" ? "h-screen min-h-[1800px] md:min-h-[1600px]" : "min-h-screen bg-radial-gradient-green"}`}>
-      <div className={`flex-col flex justify-start items-center bg-cover bg-no-repeat bg-bottom ${currentComponent === "landing" ? "h-screen min-h-[1800px] md:min-h-[1600px] bg-[url('/vectors/astronaut-planet.svg')]" : "min-h-screen bg-[url('/vectors/grid.svg')]"}`}>
+    <div className={`w-full font-mona bg-secondary ${currentComponent === "landing" ? "h-screen min-h-[1800px] 2xl:min-h-fit md:min-h-[1500px]" : "min-h-screen bg-radial-gradient-green"}`}>
+      <div className={`flex-col flex justify-start items-center bg-cover bg-no-repeat bg-bottom ${currentComponent === "landing" ? "h-screen min-h-[1800px] 2xl:min-h-fit md:min-h-[1500px] bg-[url('/vectors/astronaut-planet.svg')] 2xl:bg-[url('/vectors/astronaut-planet-laptop.svg')] md:bg-[url('/vectors/astronaut-planet.svg')]" : "min-h-screen bg-[url('/vectors/grid.svg')]"}`}>
         <Topbar />
         <div className="w-full flex flex-col items-center">
           <AnimatePresence>
