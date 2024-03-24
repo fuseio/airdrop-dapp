@@ -163,7 +163,6 @@ const ConnectWallet = ({
           dispatch(setIsWalletModalOpen(true));
           dispatch(setConnectWalletLocation(location));
         }}
-        // disabled for Airdrop website Coming Soon
         disabled
       >
         Connect Wallet
