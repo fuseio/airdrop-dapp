@@ -48,7 +48,7 @@ const Landing = () => {
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}
     >
-      <h1 className="text-[5rem] 2xl:text-[3.75rem] xl:text-[3.125rem] leading-none text-white font-semibold max-w-[700px] 2xl:max-w-[546px] md:max-w-none">
+      <h1 className="text-[5rem] 2xl:text-[3.75rem] xl:text-[3.125rem] leading-none text-white font-semibold max-w-[700px] 2xl:max-w-[546px] xl:max-w-[450px] md:max-w-none">
         Welcome to the Fuse airdrop
       </h1>
       <p className="text-xl 2xl:text-base md:text-lg text-white/70 max-w-[628px] 2xl:max-w-[493px] md:max-w-[391px] mt-7 mb-16 2xl:mt-5 2xl:mb-[30px]">
