@@ -12,10 +12,6 @@ const menuItems = [
     link: "/",
   },
   {
-    title: "Leaderboard",
-    link: "#",
-  },
-  {
     title: "Fuse Home",
     link: "https://www.fuse.io",
   },
