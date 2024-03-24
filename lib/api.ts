@@ -1,5 +1,5 @@
 import axios from "axios";
-import { NEXT_PUBLIC_AIRDROP_API_BASE_URL, NEXT_PUBLIC_COIN_GECKO_API_KEY } from './config'
+import { NEXT_PUBLIC_AIRDROP_API_BASE_URL, NEXT_PUBLIC_COIN_GECKO_API_KEY, NEXT_PUBLIC_HUBSPOT_AIRDROP_SUBSCRIBERS_FORM_ID, NEXT_PUBLIC_HUBSPOT_PORTAL_ID } from './config'
 import { CreateUser, Leaderboard, User } from "./types";
 import { Address } from "viem";
 
@@ -77,6 +77,19 @@ export const fetchTwitterAuthUrl = async (token: string): Promise<{ authUrl: str
         "Authorization": `Bearer ${token}`
       }
     }
+  )
+  return response.data
+}
+
+export const postComingSoonSubscribe = async (email: string) => {
+  const formData = {
+    submittedAt: Date.now(),
+    fields: [{ name: "email", value: email }],
+  };
+
+  const response = await axios.post(
+    `https://api.hsforms.com/submissions/v3/integration/submit/${NEXT_PUBLIC_HUBSPOT_PORTAL_ID}/${NEXT_PUBLIC_HUBSPOT_AIRDROP_SUBSCRIBERS_FORM_ID}`,
+    formData
   )
   return response.data
 }

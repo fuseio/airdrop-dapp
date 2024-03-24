@@ -13,7 +13,7 @@ const menuItems = [
   },
   {
     title: "Leaderboard",
-    link: "/leaderboard",
+    link: "#",
   },
   {
     title: "Fuse Home",
