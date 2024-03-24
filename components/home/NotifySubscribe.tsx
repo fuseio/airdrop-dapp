@@ -10,7 +10,7 @@ const NotifySubscribe = () => {
 
   return (
     <>
-      <p className="text-xl text-white font-bold mb-5">
+      <p className="text-xl text-white font-bold mb-5 2xl:hidden">
         Get notified when the airdrop is live
       </p>
       <form
