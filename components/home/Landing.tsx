@@ -49,8 +49,8 @@ const Landing = () => {
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -300, opacity: 0 }}
     >
-      <h1 className="text-[6.875rem] xl:text-[3.125rem] leading-none text-white font-semibold max-w-[980.05px] md:max-w-none mt-9">
-        Welcome to the fuse airdrop
+      <h1 className="text-[5rem] xl:text-[3.125rem] leading-none text-white font-semibold max-w-[980.05px] md:max-w-none mt-9">
+        Welcome to the Fuse airdrop
       </h1>
       <p className="text-xl xl:text-lg text-white/70 max-w-[628px] md:max-w-[391px] mt-7 mb-16">
         Join the Fuse Airdrop! Get into the Fuse, connect your wallet and earn Rewards with ease: Join the Explosive Airdrop Campaign
