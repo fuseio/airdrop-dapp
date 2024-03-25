@@ -163,7 +163,6 @@ const ConnectWallet = ({
           dispatch(setIsWalletModalOpen(true));
           dispatch(setConnectWalletLocation(location));
         }}
-        disabled
       >
         Connect Wallet
       </button>
