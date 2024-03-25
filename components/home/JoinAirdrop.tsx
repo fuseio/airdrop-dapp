@@ -15,7 +15,7 @@ const JoinAirdrop = ({ invite, setInvite }: JoinAirdropProps) => {
 
   return (
     <>
-      <p className="text-xl text-white font-bold mb-5">
+      <p className="text-xl text-white font-bold mb-5 4xl:hidden">
         Enter invite code
       </p>
       <form
