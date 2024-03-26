@@ -227,7 +227,10 @@ export const generateTwitterAuthUrl = createAsyncThunk<
       try {
         const state = thunkAPI.getState();
         const userState: UserStateType = state.user;
-        const generatedTwitterAuthUrl = await fetchTwitterAuthUrl(userState.accessToken);
+        const generatedTwitterAuthUrl = await fetchTwitterAuthUrl(
+          userState.accessToken,
+          window.location.origin
+        );
         resolve(generatedTwitterAuthUrl.authUrl);
       } catch (error) {
         console.error(error);
@@ -282,8 +285,8 @@ const userSlice = createSlice({
     },
     setTotalSignupStepCompleted: (state) => {
       let totalSteps = 0;
-      for(let property in state.signupStepCompleted) {
-        if(state.signupStepCompleted[property]) {
+      for (let property in state.signupStepCompleted) {
+        if (state.signupStepCompleted[property]) {
           totalSteps += 1
         }
       }
