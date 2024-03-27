@@ -54,13 +54,38 @@ const config: Config = {
           '0%': { 'border-color': 'rgba(255, 255, 255, 1)' },
           '50%': { 'border-color': 'rgba(255, 255, 255, 0.5)' },
           '100%': { 'border-color': 'rgba(255, 255, 255, 1)' },
-        }
+        },
+        slideInFromTop: {
+          '0%': { 'transform': 'translateY(-50%)', 'opacity': '0' },
+          '100%': { 'transform': 'translateY(0)', 'opacity': '1' },
+        },
+        slideInFromBottom: {
+          '0%': { 'transform': 'translateY(100%)' },
+          '100%': { 'transform': 'translateY(0)' },
+        },
+        slideInFromBottom50: {
+          '0%': { 'transform': 'translateY(50%)' },
+          '100%': { 'transform': 'translateY(0)' },
+        },
       },
       animation: {
         'blink-underline': 'blink 1s linear infinite',
+        'slide-in-bg-layer1': '3s ease-out 0s 1 slideInFromBottom50 forwards',
+        'slide-in-bg-layer2': '3s ease-out 0.5s 1 slideInFromBottom50 forwards',
+        'slide-in-bg-layer3': '3s ease-out 0.9s 1 slideInFromBottom50 forwards',
+        'slide-in-bg-layer4': '4s ease-out 2.5s 1 slideInFromBottom50 forwards',
+        'slide-in-bg-layer5': '4s ease-out 0s 1 slideInFromBottom forwards',
+        'slide-in-bg-stars1': '20s ease-out 0s 1 slideInFromBottom50 forwards',
+        'slide-in-bg-stars2': '30s ease-out 0s 1 slideInFromBottom50 forwards',
+        'slide-in-heading': '2s ease-out 3s 1 slideInFromTop forwards',
       },
       backgroundImage: {
         'radial-gradient-green': "radial-gradient(50% 50% at 50% 50%, rgba(163, 245, 170, 0.15) 0%, rgba(163, 245, 170, 0.00) 100%)",
+      },
+      backgroundSize: {
+        '100%': '100%',
+        '80%': '80%',
+        'auto-100%': 'auto 100%',
       }
     },
   },

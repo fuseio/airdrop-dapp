@@ -42,7 +42,7 @@ const Landing = () => {
 
   return (
     <motion.div
-      className="relative w-8/9 flex flex-col items-center text-center mt-24 mb-12 3xl:mt-[53px] 4xl:mt-[100px] md:w-9/10 max-w-7xl landing-title"
+      className="relative w-8/9 flex flex-col items-center text-center mt-24 mb-12 3xl:mt-[53px] 4xl:mt-[100px] md:w-9/10 max-w-7xl opacity-0 animate-slide-in-heading"
       key="landing"
       
     >
