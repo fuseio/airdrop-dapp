@@ -32,7 +32,8 @@ const config: Config = {
         "pale-slate": "#BFBFBF",
         "storm-dust": "#636363",
         "monsoon": "#868686",
-        "star-dust": "#9C9C9C"
+        "star-dust": "#9C9C9C",
+        "cactus": "#566A57",
       },
       fontFamily: {
         mona: ["var(--font-mona-sans)"],
