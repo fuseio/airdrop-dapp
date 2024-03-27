@@ -14,7 +14,7 @@ const NotifySubscribe = () => {
         Get notified when the airdrop is live
       </p>
       <form
-        className="flex flex-row md:flex-col items-center gap-5 md:gap-3 z-10"
+        className="flex flex-row md:flex-col items-center gap-5 md:gap-3 z-10 w-auto md:w-[100%]"
         onSubmit={(e) => {
           e.preventDefault();
           if (!email) {
@@ -30,7 +30,7 @@ const NotifySubscribe = () => {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           required
-          className="flex gap-2 bg-oslo-gray/30 rounded-full text-xl leading-none text-white px-[30px] py-3.5 focus:outline-none placeholder:text-white"
+          className="flex gap-2 bg-oslo-gray/30 rounded-full text-xl leading-none text-white px-[30px] py-3.5 focus:outline-none placeholder:text-white w-[100%]"
         />
         <button
           type="submit"
