@@ -3,11 +3,13 @@ import { AppState } from "../rootReducer";
 
 export interface NavbarStateType {
   selected: string;
+  currentComingSoonComponent: string;
   isWalletModalOpen: boolean;
 }
 
 const INIT_STATE: NavbarStateType = {
   selected: "",
+  currentComingSoonComponent: "countdown",
   isWalletModalOpen: false,
 };
 
@@ -21,11 +23,18 @@ const navbarSlice = createSlice({
     setIsWalletModalOpen: (state, action: PayloadAction<boolean>) => {
       state.isWalletModalOpen = action.payload
     },
+    setCurrentComingSoonComponent: (state, action: PayloadAction<string>) => {
+      state.currentComingSoonComponent = action.payload
+    },
   },
 });
 
 export const selectNavbarSlice = (state: AppState): NavbarStateType => state.navbar;
 
-export const { setSelectedNavbar, setIsWalletModalOpen } = navbarSlice.actions;
+export const {
+  setSelectedNavbar,
+  setIsWalletModalOpen,
+  setCurrentComingSoonComponent
+} = navbarSlice.actions;
 
 export default navbarSlice.reducer;
