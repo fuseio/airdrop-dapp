@@ -47,19 +47,20 @@ const Landing = () => {
 
   return (
     <motion.div
-      className="relative w-8/9 flex flex-col items-center text-center mt-24 mb-12 3xl:mt-[53px] 4xl:mt-[100px] md:w-9/10 max-w-7xl opacity-0 animate-slide-in-heading"
+      className="relative w-8/9 flex flex-col items-center text-center mt-24 mb-12 4xl:mt-16 md:w-9/10 max-w-7xl opacity-0 animate-slide-in-heading"
       key="landing"
     >
-      <h1 className="text-[5rem] 4xl:text-[5rem] xl:text-[3.125rem] leading-none text-white font-semibold max-w-[743px] xl:max-w-[450px] md:max-w-none">
+      <h1 className="text-[5rem] 4xl:text-[3.75rem] xl:text-[3.125rem] leading-none text-white font-semibold max-w-[743px] xl:max-w-[450px] md:max-w-none">
         Light up the Fuse!
       </h1>
-      <p className="text-xl 4xl:text-[1.2rem] md:text-lg text-white/70 max-w-[628px] 4xl:max-w-[600px] md:max-w-[391px] mt-7 mb-16 4xl:mt-5 4xl:mb-[30px]">
-        Join the Fuse Airdrop now! Explore, earn points, and be part of
-        our vibrant community. Register today for exclusive updates!
+      <p className="text-xl 4xl:text-base text-white/70 max-w-[584px] md:max-w-[391px] mt-7 mb-16 4xl:mt-5 4xl:mb-[30px]">
+        You are invited to the Fuse Airdrop! Don&apos;t be left out of the chance to explore,
+        get points and earn. We are thrilled to have you as a part of the Fuse vibrant community.
+        Register today and get notified when we go Live!
       </p>
       {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
         <div className="flex flex-col gap-3.5">
-          <p className="text-xl text-white font-bold mb-5 4xl:hidden">
+          <p className="text-xl text-white font-bold mb-5 2xl:hidden">
             Enter invite code
           </p>
           <JoinAirdrop invite={invite} setInvite={setInvite} />
@@ -73,15 +74,15 @@ const Landing = () => {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -300, opacity: 0 }}
         >
-          <p className="text-xl text-white/70 font-bold 4xl:hidden">
+          <p className="text-xl text-white/70 font-bold 2xl:hidden">
             Coming Soon
           </p>
           <Countdown />
           <button
-            className="group flex justify-center items-center gap-1 mt-3 4xl:hidden"
+            className="group flex justify-center items-center gap-1 mt-3 2xl:mt-1.5"
             onClick={() => dispatch(setCurrentComingSoonComponent("notify"))}
           >
-            <p className="text-xl text-white font-bold">
+            <p className="text-xl md:text-base text-white font-bold">
               Get notified when the airdrop is live
             </p>
             <Image
@@ -100,7 +101,7 @@ const Landing = () => {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -300, opacity: 0 }}
         >
-          <p className="text-xl text-white/70 font-bold 4xl:hidden">
+          <p className="text-xl text-white/70 font-bold 2xl:hidden">
             Get notified when the airdrop is live
           </p>
           <NotifySubscribe />
