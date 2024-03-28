@@ -53,10 +53,9 @@ const Landing = () => {
       <h1 className="text-[5rem] 4xl:text-[3.75rem] xl:text-[3.125rem] leading-none text-white font-semibold max-w-[743px] xl:max-w-[450px] md:max-w-none">
         Light up the Fuse!
       </h1>
-      <p className="text-xl 4xl:text-base text-white/70 max-w-[584px] md:max-w-[391px] mt-7 mb-16 4xl:mt-5 4xl:mb-[30px]">
+      <p className="text-xl 4xl:text-base text-white/70 max-w-[783px] 3xl:max-w-[628px] md:max-w-[391px] mt-7 mb-16 4xl:mt-5 4xl:mb-[30px]">
         You are invited to the Fuse Airdrop! Don&apos;t be left out of the chance to explore,
         get points and earn. We are thrilled to have you as a part of the Fuse vibrant community.
-        Register today and get notified when we go Live!
       </p>
       {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
         <div className="flex flex-col gap-3.5">
@@ -68,18 +67,15 @@ const Landing = () => {
       }
       {(NEXT_PUBLIC_ENVIRONMENT === "production" && currentComingSoonComponent === "countdown") &&
         <motion.div
-          className="flex flex-col gap-3.5"
+          className="flex flex-col gap-10 3xl:gap-6 md:gap-4"
           key="countdown"
           initial={{ x: 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -300, opacity: 0 }}
         >
-          <p className="text-xl text-white/70 font-bold 2xl:hidden">
-            Coming Soon
-          </p>
           <Countdown />
           <button
-            className="group flex justify-center items-center gap-1 mt-3 2xl:mt-1.5"
+            className="group flex justify-center items-center gap-1 2xl:mt-1.5"
             onClick={() => dispatch(setCurrentComingSoonComponent("notify"))}
           >
             <p className="text-xl md:text-base text-white font-bold">
