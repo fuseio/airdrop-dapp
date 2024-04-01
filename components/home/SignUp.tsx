@@ -3,7 +3,7 @@ import SignUpTwitter from "./SignUpTwitter";
 import SignUpWallet from "./SignUpWallet";
 import SignUpSkip from "./SignUpSkip";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { create, selectUserSlice } from "@/store/userSlice";
+import { create, selectUserSlice, setCurrentComponent } from "@/store/userSlice";
 import { useAccount } from "wagmi";
 import { signUpSteps } from "@/lib/helpers";
 import { useEffect } from "react";
@@ -11,12 +11,12 @@ import SignUpDiscord from "./SignUpDiscord";
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
-  const { signupStepCompleted, isAuthenticated, inviteCode, totalSignupStepCompleted } = useAppSelector(selectUserSlice);
+  const { signupStepCompleted, isAuthenticated, inviteCode, totalSignupStepCompleted, isUser, user } = useAppSelector(selectUserSlice);
   const { address } = useAccount();
 
   useEffect(() => {
     if (
-      totalSignupStepCompleted === signUpSteps.TOTAL &&
+      totalSignupStepCompleted === signUpSteps.MANDATORY &&
       isAuthenticated &&
       address &&
       inviteCode
@@ -29,6 +29,16 @@ const SignUp = () => {
       }));
     }
   }, [address, dispatch, inviteCode, isAuthenticated, totalSignupStepCompleted])
+
+
+  useEffect(() => {
+    if (
+      isUser &&
+      user.twitterAccountId
+    ) {
+      dispatch(setCurrentComponent("dashboard"));
+    }
+  }, [dispatch, isUser, user.twitterAccountId])
 
   return (
     <motion.div

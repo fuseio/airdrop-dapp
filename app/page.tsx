@@ -26,14 +26,18 @@ export default function Airdrop() {
   }, [dispatch])
 
   useEffect(() => {
-    if (isUser) {
-      dispatch(setCurrentComponent("dashboard"));
-    } else if (twitterConnected) {
+    if (twitterConnected) {
       dispatch(setCurrentComponent("signup"));
-    } else {
+    } else if (!isUser) {
       dispatch(setCurrentComponent("landing"));
     }
   }, [dispatch, isUser, twitterConnected])
+
+  useEffect(() => {
+    if (isUser && currentComponent !== "signup") {
+      dispatch(setCurrentComponent("dashboard"));
+    }
+  }, [currentComponent, dispatch, isUser])
 
   useEffect(() => {
     if (isDisconnected) {

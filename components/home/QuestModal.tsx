@@ -80,12 +80,14 @@ const QuestModal = (): JSX.Element => {
                       {selectedQuest.point}
                     </p>
                   </div>
+                  {selectedQuest.button &&
                   <button
                     className="transition ease-in-out bg-primary border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
                     onClick={() => selectedQuest.link ? window.open(selectedQuest.link, "_blank") : undefined}
                   >
                     {selectedQuest.button}
                   </button>
+                  }
                 </div>
               </div>
             </div>

@@ -18,7 +18,6 @@ const NavButton = ({ isOpen, setOpen }: NavButtonProps) => {
         <ConnectWallet
           containerClassName="ml-auto md:me-3"
           className="transition ease-in-out hover:bg-success hover:text-black hover:border-success"
-          location="navbar"
         />
       }
       {NEXT_PUBLIC_ENVIRONMENT === "production" &&

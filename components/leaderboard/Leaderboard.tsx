@@ -1,8 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { fetchLeaderboardUsers, selectUserSlice, setLeaderboardUsers } from "@/store/userSlice";
-import { motion, AnimatePresence, Reorder } from "framer-motion";
+import { motion, Reorder } from "framer-motion";
 import Image from "next/image";
-import fire from "@/assets/fire.svg";
 import star from "@/assets/star.svg";
 import starGold from "@/assets/star-gold.svg";
 import starSilver from "@/assets/star-silver.svg";
@@ -55,7 +54,6 @@ const Leaderboard = () => {
   const dispatch = useAppDispatch();
   const { isLeaderboardUsersLoading, leaderboardUsers, lastLeaderboardUserId, isLeaderboardUsersFinished, user } = useAppSelector(selectUserSlice);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
-  const STREAK = 6;
 
   return (
     <div>
@@ -140,20 +138,6 @@ const Leaderboard = () => {
                 <p className="hidden md:block xl:text-sm">
                   {eclipseAddress(leaderboardUser.walletAddress)}
                 </p>
-                {index + 1 === STREAK &&
-                  <div className="bg-white/10 md:bg-transparent rounded-full flex gap-2.5 xl:gap-2 px-[13px] py-[5px] xl:px-2.5 xl:py-0.5 md:p-0 md:w-[15px] md:h-5">
-                    <Image
-                      src={fire}
-                      alt="fire"
-                      title="On a streak!"
-                      width={matches ? 15 : 12}
-                      height={matches ? 20 : 16}
-                    />
-                    <p className="md:hidden xl:text-sm">
-                      On a streak!
-                    </p>
-                  </div>
-                }
                 {(leaderboardUser.walletAgeInDays && leaderboardUser.walletAgeInDays > daysInYear) &&
                   <div className="bg-white/10 md:bg-transparent rounded-full flex gap-2.5 xl:gap-2 px-[13px] py-[5px] xl:px-2.5 xl:py-0.5 md:p-0 md:w-[15px] md:h-5">
                     <Image

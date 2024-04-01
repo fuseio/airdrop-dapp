@@ -30,10 +30,8 @@ import { fetchUsdPrice, selectBalanceSlice } from "@/store/balanceSlice";
 import leftArrow from "@/assets/left-arrow.svg";
 import QRCode from "react-qr-code";
 import { usePathname } from "next/navigation";
-import switchNetworkIcon from "@/assets/switch-network.svg";
 import Copy from "./ui/Copy";
 import { formatUnits } from "viem";
-import { setConnectWalletLocation } from "@/store/userSlice";
 
 const menu: Variants = {
   closed: (isCenter) => ({
@@ -89,11 +87,9 @@ const usdTokens: UsdTokens = {
 const ConnectWallet = ({
   className = "",
   containerClassName = "",
-  location = ""
 }: {
   className?: string;
   containerClassName?: string;
-  location?: string;
 }) => {
   const dispatch = useAppDispatch();
   const [isChainOpen, setIsChainOpen] = React.useState(false);
@@ -159,10 +155,7 @@ const ConnectWallet = ({
           "border border-white text-white px-4 py-2 rounded-full font-medium " +
           className
         }
-        onClick={() => {
-          dispatch(setIsWalletModalOpen(true));
-          dispatch(setConnectWalletLocation(location));
-        }}
+        onClick={() => dispatch(setIsWalletModalOpen(true))}
       >
         Connect Wallet
       </button>
@@ -350,22 +343,6 @@ const ConnectWallet = ({
             </div>
           </div>
           <hr className="border-border-dark-gray mt-[22.6px] mb-[18.5px]" />
-          <div
-            className="flex items-center gap-[17.7px] cursor-pointer px-[22px]"
-            onClick={() => {
-              setIsAccountsOpen(!isAccountsOpen);
-              setIsChainOpen(!isChainOpen);
-            }}
-          >
-            <Image
-              src={switchNetworkIcon}
-              alt="switch network"
-              width={12.16}
-              height={19.8}
-            />
-            <p>Switch Network</p>
-          </div>
-          <hr className="border-border-dark-gray mt-[25.62px] mb-[18.5px]" />
           <div
             className="flex items-center gap-[17.7px] cursor-pointer px-[22px]"
             onClick={() => disconnect()}
