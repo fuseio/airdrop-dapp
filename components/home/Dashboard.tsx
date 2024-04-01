@@ -62,10 +62,10 @@ const Dashboard = () => {
     {
       title: "Holding more than 2 different tokens",
       point: "10 points",
-      description: "Get 10 point by holding more than 2 different tokens on your wallet",
+      description: "Get 10 point by holding more than 2 different tokens on your wallet\nPoints are awarded automatically when the conditions are met.",
       image: holdTokens,
       isActive: true,
-      button: "Get Points",
+      button: "",
       link: "",
       completed: false,
     },

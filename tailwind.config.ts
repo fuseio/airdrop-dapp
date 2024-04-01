@@ -34,6 +34,7 @@ const config: Config = {
         "monsoon": "#868686",
         "star-dust": "#9C9C9C",
         "cactus": "#566A57",
+        "dune": "#333333",
       },
       fontFamily: {
         mona: ["var(--font-mona-sans)"],

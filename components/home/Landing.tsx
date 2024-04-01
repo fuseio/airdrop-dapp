@@ -18,7 +18,7 @@ const Landing = () => {
   const [invite, setInvite] = useState('');
   const searchParams = useSearchParams();
   const referralCode = searchParams.get('ref');
-  const { connectWalletLocation, isHydrated, isAuthenticated, isUser } = useAppSelector(selectUserSlice);
+  const { isHydrated, isAuthenticated, isUser } = useAppSelector(selectUserSlice);
   const { currentComingSoonComponent } = useAppSelector(selectNavbarSlice);
   const { address } = useAccount();
 
@@ -33,7 +33,6 @@ const Landing = () => {
   useEffect(() => {
     if (
       isHydrated &&
-      connectWalletLocation === "navbar" &&
       address &&
       !isUser
     ) {
@@ -43,7 +42,7 @@ const Landing = () => {
         dispatch(authenticate({ eoaAddress: address }));
       }
     }
-  }, [address, connectWalletLocation, dispatch, isAuthenticated, isHydrated, isUser])
+  }, [address, dispatch, isAuthenticated, isHydrated, isUser])
 
   return (
     <motion.div
