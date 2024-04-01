@@ -55,14 +55,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function convertTimestampToUTC(timestampString: string) {
-  const date = new Date(timestampString);
-
-  const twelveHourFormat = 12;
-  const hours = date.getHours() % twelveHourFormat || twelveHourFormat;
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-
-  return `${hours}:${minutes} UTC`;
+export function convertTimestampToUTC(timestamp: string) {
+  const months: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const date = new Date(timestamp);
+  const day = date.getUTCDate().toString().padStart(2, '0');
+  const monthName = months[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
+  const hour = date.getUTCHours().toString().padStart(2, '0');
+  const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+  return `${day} ${monthName}, ${year} ${hour}:${minutes} UTC`;
 }
 
 export const daysInYear = 365;
