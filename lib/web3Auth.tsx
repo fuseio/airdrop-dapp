@@ -13,7 +13,7 @@ import {
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
   NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
 } from "./config";
-import { arbitrum, polygon, fuse, optimism, mainnet, bsc, Chain } from "wagmi/chains";
+import { fuse, Chain } from "wagmi/chains";
 import { coinbaseWallet } from '@wagmi/connectors';
 import { injected } from '@wagmi/connectors';
 import { walletConnect } from '@wagmi/connectors';
@@ -23,11 +23,6 @@ import { Web3AuthEmailConnector } from "./connectors/email";
 
 const chains: readonly [Chain, ...Chain[]] = [
   fuse,
-  polygon,
-  optimism,
-  arbitrum,
-  mainnet,
-  bsc,
 ]
 
 export const config = createConfig({
@@ -51,11 +46,6 @@ export const config = createConfig({
   ],
   transports: {
     [fuse.id]: http(),
-    [polygon.id]: http(),
-    [optimism.id]: http(),
-    [arbitrum.id]: http(),
-    [mainnet.id]: http(),
-    [bsc.id]: http(),
   },
 })
 

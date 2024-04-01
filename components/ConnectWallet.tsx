@@ -352,22 +352,6 @@ const ConnectWallet = ({
           <hr className="border-border-dark-gray mt-[22.6px] mb-[18.5px]" />
           <div
             className="flex items-center gap-[17.7px] cursor-pointer px-[22px]"
-            onClick={() => {
-              setIsAccountsOpen(!isAccountsOpen);
-              setIsChainOpen(!isChainOpen);
-            }}
-          >
-            <Image
-              src={switchNetworkIcon}
-              alt="switch network"
-              width={12.16}
-              height={19.8}
-            />
-            <p>Switch Network</p>
-          </div>
-          <hr className="border-border-dark-gray mt-[25.62px] mb-[18.5px]" />
-          <div
-            className="flex items-center gap-[17.7px] cursor-pointer px-[22px]"
             onClick={() => disconnect()}
           >
             <Image
