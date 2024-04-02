@@ -274,7 +274,7 @@ const Dashboard = () => {
                   translateZ="60"
                   className="text-lg xl:text-base text-pale-slate font-medium max-w-[243px]"
                 >
-                  Get 20% of your friend&apos;s total points (Not including)
+                  Get 20% of your friend&apos;s total points
                 </CardItem>
               </div>
               <div className="flex flex-col gap-2.5 xl:gap-2">
