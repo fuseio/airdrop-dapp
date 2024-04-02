@@ -62,10 +62,11 @@ export type Quest = {
   description: string;
   image: string;
   isActive: boolean;
-  button: string;
-  onClick: () => void;
-  isLoading: boolean;
   completed: boolean;
+  button: string;
+  link?: string;
+  isFunction?: boolean;
+  isLoading?: boolean;
 }
 
 export type Quests = Quest[];

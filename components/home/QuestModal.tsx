@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { selectUserSlice, setIsQuestModalOpen } from "@/store/userSlice";
+import { generateTwitterAuthUrl, selectUserSlice, setIsQuestModalOpen } from "@/store/userSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import closeWhite from "@/assets/close-white.svg";
@@ -13,6 +13,18 @@ const QuestModal = (): JSX.Element => {
   const { isQuestModalOpen, selectedQuest } = useAppSelector(selectUserSlice);
   const dispatch = useAppDispatch();
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
+
+  function handleClick(id: number) {
+    if(id === 1) {
+      dispatch(generateTwitterAuthUrl());
+    }
+  }
+
+  const renderMultilineText = (text: string) => {
+    return text.split('\n').map((line, index) => {
+      return <p key={index}>{line}</p>;
+    });
+  };
 
   useEffect(() => {
     window.addEventListener("click", (e) => {
@@ -64,7 +76,7 @@ const QuestModal = (): JSX.Element => {
                   {selectedQuest.title}
                 </p>
                 <p className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-[339px] mt-5">
-                  {selectedQuest.description}
+                  {renderMultilineText(selectedQuest.description)}
                 </p>
               </div>
               <div className="min-h-[104px] xl:min-h-fit mt-2">
@@ -84,7 +96,14 @@ const QuestModal = (): JSX.Element => {
                   {selectedQuest.button &&
                     <button
                       className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
-                      onClick={selectedQuest.onClick}
+                      onClick={() => {
+                        if(selectedQuest.isFunction){
+                          handleClick(selectedQuest.id);
+                        }
+                        if(selectedQuest.link) {
+                          window.open(selectedQuest.link, "_blank")
+                        }
+                      }}
                     >
                       {selectedQuest.button}
                       {selectedQuest.isLoading &&
