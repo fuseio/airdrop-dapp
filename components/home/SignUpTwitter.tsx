@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { generateTwitterAuthUrl, selectUserSlice, setSignupStepCompleted, setTotalSignupStepCompleted } from "@/store/userSlice";
+import { generateTwitterAuthUrl, retrieve, selectUserSlice, setSignupStepCompleted, setTotalSignupStepCompleted } from "@/store/userSlice";
 import Image from "next/image";
 import check from "@/assets/check.svg";
 import { signUpSteps } from "@/lib/helpers";
@@ -19,6 +19,7 @@ const SignUpTwitter = () => {
     if (twitterConnected === "true") {
       dispatch(setSignupStepCompleted({ key: signUpSteps.TWITTER, value: true }));
       dispatch(setTotalSignupStepCompleted());
+      dispatch(retrieve());
     } else if (twitterConnected === "false") {
       setIsTwitterConnectedError(true);
     }

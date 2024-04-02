@@ -17,13 +17,15 @@ const initUser: User = {
 }
 
 const initQuest: Quest = {
+  id: 0,
   title: "",
   point: "",
   description: "",
   image: "",
   isActive: false,
   button: "",
-  link: "",
+  onClick: () => undefined,
+  isLoading: false,
   completed: false,
 }
 

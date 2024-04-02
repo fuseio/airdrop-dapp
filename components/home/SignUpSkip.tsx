@@ -1,12 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { create, selectUserSlice } from "@/store/userSlice";
 import Spinner from "../ui/Spinner";
-import { signUpSteps } from "@/lib/helpers";
 import { useAccount } from "wagmi";
 
 const SignUpSkip = () => {
   const dispatch = useAppDispatch();
-  const { totalSignupStepCompleted, isCreating, isRetrieving, inviteCode, isAuthenticated } = useAppSelector(selectUserSlice);
+  const { isCreating, isRetrieving, inviteCode, isAuthenticated, isUser, user } = useAppSelector(selectUserSlice);
   const { address } = useAccount();
 
   function handleSkip() {
@@ -30,7 +29,10 @@ const SignUpSkip = () => {
       onClick={handleSkip}
       disabled={isCreating || isRetrieving}
     >
-      {totalSignupStepCompleted === signUpSteps.TOTAL ? "Redirecting" : "Skip for now"}
+      {(isUser && user.twitterAccountId) && "Redirecting"}
+      {isCreating && "Creating"}
+      {isRetrieving && "Retrieving"}
+      {(!isUser && !user.twitterAccountId && !isCreating && !isRetrieving) && "Skip for now"}
       {(isCreating || isRetrieving) &&
         <Spinner />
       }
