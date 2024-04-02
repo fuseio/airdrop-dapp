@@ -24,7 +24,8 @@ const initQuest: Quest = {
   image: "",
   isActive: false,
   button: "",
-  onClick: () => undefined,
+  link: "",
+  isFunction: false,
   isLoading: false,
   completed: false,
 }

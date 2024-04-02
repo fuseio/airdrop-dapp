@@ -29,7 +29,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
-  const { totalSignupStepCompleted, isGeneratingTwitterAuthUrl, twitterAuthUrl, selectedQuest, user } = useAppSelector(selectUserSlice);
+  const { totalSignupStepCompleted, isGeneratingTwitterAuthUrl, twitterAuthUrl, user } = useAppSelector(selectUserSlice);
   const router = useRouter();
   const searchParams = useSearchParams();
   const twitterConnected = searchParams.get('twitter-connected');
@@ -53,10 +53,9 @@ const Dashboard = () => {
       description: "Get 50 point for following an official Fuse Network X account",
       image: followX,
       isActive: true,
-      button: "Go to X",
-      onClick: () => dispatch(generateTwitterAuthUrl()),
-      isLoading: false,
       completed: false,
+      button: "Go to X",
+      isFunction: true,
     },
     {
       id: 2,
@@ -65,22 +64,19 @@ const Dashboard = () => {
       description: "Bridge USDT, USDC or ETH to the Fuse Network and receive 4 points daily for every $1 remaining in the network",
       image: bridgeAssets,
       isActive: true,
-      button: "Go to Bridge",
-      onClick: () => window.open("https://console.fuse.io/bridge", "_blank"),
-      isLoading: false,
       completed: false,
+      button: "Go to Bridge",
+      link: "https://console.fuse.io/bridge",
     },
     {
       id: 3,
       title: "Holding more than 2 different tokens",
       point: "10 points",
-      description: "Get 10 point by holding more than 2 different tokens on your wallet\nPoints are awarded automatically when the conditions are met.",
+      description: `Get 10 point by holding more than 2 different tokens on your wallet.\nPoints are awarded automatically when the conditions are met.`,
       image: holdTokens,
       isActive: true,
-      button: "",
-      onClick: () => undefined,
-      isLoading: false,
       completed: false,
+      button: "",
     },
     {
       id: 4,
@@ -89,10 +85,9 @@ const Dashboard = () => {
       description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
       image: stakeSfuse,
       isActive: true,
-      button: "Go to Voltage",
-      onClick: () => window.open("https://app.voltage.finance/stake/sFUSE", "_blank"),
-      isLoading: false,
       completed: false,
+      button: "Go to Voltage",
+      link: "https://app.voltage.finance/stake/sFUSE",
     },
     {
       id: 5,
@@ -101,10 +96,9 @@ const Dashboard = () => {
       description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
       image: stakeVevolt,
       isActive: true,
-      button: "Go to Voltage",
-      onClick: () => window.open("https://app.voltage.finance/stake/veVOLT", "_blank"),
-      isLoading: false,
       completed: false,
+      button: "Go to Voltage",
+      link: "https://app.voltage.finance/stake/veVOLT",
     },
   ])
 
