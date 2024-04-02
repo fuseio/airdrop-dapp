@@ -56,13 +56,15 @@ export type EcosystemApp = {
 export type EcosystemApps = EcosystemApp[];
 
 export type Quest = {
+  id: number;
   title: string;
   point: string;
   description: string;
   image: string;
   isActive: boolean;
   button: string;
-  link: string;
+  onClick: () => void;
+  isLoading: boolean;
   completed: boolean;
 }
 

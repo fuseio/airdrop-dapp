@@ -3,8 +3,8 @@ import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
 import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
-import { useAppSelector } from "@/store/store";
-import { selectUserSlice } from "@/store/userSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { generateTwitterAuthUrl, retrieve, selectUserSlice, setSelectedQuest } from "@/store/userSlice";
 import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -25,11 +25,17 @@ import holdTokens from "@/assets/hold-tokens.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVevolt from "@/assets/stake-vevolt.svg";
 import { Quests } from "@/lib/types";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Dashboard = () => {
-  const { totalSignupStepCompleted, user } = useAppSelector(selectUserSlice);
+  const dispatch = useAppDispatch();
+  const { totalSignupStepCompleted, isGeneratingTwitterAuthUrl, twitterAuthUrl, selectedQuest, user } = useAppSelector(selectUserSlice);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const twitterConnected = searchParams.get('twitter-connected');
   const [rename, setRename] = useState(user.walletAddress);
   const [isRename, setIsRename] = useState(false);
+  const [isTwitterConnectedError, setIsTwitterConnectedError] = useState(false);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
   const { isIntersecting: isUserSectionIntersecting, ref: userSection } = useIntersectionObserver({
     freezeOnceVisible: true,
@@ -38,55 +44,66 @@ const Dashboard = () => {
     freezeOnceVisible: true,
   });
   const MAX_RENAME_CHARACTER = 15;
+
   const [quests, setQuests] = useState<Quests>([
     {
+      id: 1,
       title: "Follow @Fuse_network on X",
       point: "50 points",
       description: "Get 50 point for following an official Fuse Network X account",
       image: followX,
       isActive: true,
       button: "Go to X",
-      link: "https://twitter.com/Fuse_network",
+      onClick: () => dispatch(generateTwitterAuthUrl()),
+      isLoading: false,
       completed: false,
     },
     {
+      id: 2,
       title: "Bridge assets on Fuse",
       point: "4 points per USD",
       description: "Bridge USDT, USDC or ETH to the Fuse Network and receive 4 points daily for every $1 remaining in the network",
       image: bridgeAssets,
       isActive: true,
       button: "Go to Bridge",
-      link: "https://console.fuse.io/bridge",
+      onClick: () => window.open("https://console.fuse.io/bridge", "_blank"),
+      isLoading: false,
       completed: false,
     },
     {
+      id: 3,
       title: "Holding more than 2 different tokens",
       point: "10 points",
       description: "Get 10 point by holding more than 2 different tokens on your wallet\nPoints are awarded automatically when the conditions are met.",
       image: holdTokens,
       isActive: true,
       button: "",
-      link: "",
+      onClick: () => undefined,
+      isLoading: false,
       completed: false,
     },
     {
+      id: 4,
       title: "Stake sFuse on Voltage",
       point: "2 points per sFuse Staked",
       description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
       image: stakeSfuse,
       isActive: true,
       button: "Go to Voltage",
-      link: "https://app.voltage.finance/stake/sFUSE",
+      onClick: () => window.open("https://app.voltage.finance/stake/sFUSE", "_blank"),
+      isLoading: false,
       completed: false,
     },
     {
+      id: 5,
       title: "Stake VeVolt on Voltage",
       point: "2 points per VeVolt Staked",
       description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
       image: stakeVevolt,
       isActive: true,
       button: "Go to Voltage",
-      link: "https://app.voltage.finance/stake/veVOLT",
+      onClick: () => window.open("https://app.voltage.finance/stake/veVOLT", "_blank"),
+      isLoading: false,
       completed: false,
     },
   ])
@@ -103,11 +120,12 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    if(user.twitterAccountId) {
+    const twitterQuestId = 1;
+    if (user.twitterAccountId) {
       setQuests((prevQuests) => {
         const newQuests = [...prevQuests];
         newQuests.map((newQuest) => {
-          if(newQuest.title === "Follow @Fuse_network on X") {
+          if (newQuest.id === twitterQuestId) {
             newQuest.completed = true;
           }
           return newQuest;
@@ -116,7 +134,41 @@ const Dashboard = () => {
       })
     }
   }, [user.twitterAccountId])
-  
+
+  useEffect(() => {
+    const twitterQuestId = 1;
+    let twitterQuest = quests.find((quest) => quest.id === twitterQuestId);
+    if (twitterQuest) {
+      twitterQuest = { ...twitterQuest };
+      twitterQuest.isLoading = isGeneratingTwitterAuthUrl;
+      dispatch(setSelectedQuest(twitterQuest));
+    }
+  }, [dispatch, isGeneratingTwitterAuthUrl, quests])
+
+  useEffect(() => {
+    const twitterQuestId = 1;
+    let twitterQuest = quests.find((quest) => quest.id === twitterQuestId);
+    if (twitterQuest) {
+      twitterQuest = { ...twitterQuest };
+      twitterQuest.button = isTwitterConnectedError ? "Retry" : "Go to X";
+      dispatch(setSelectedQuest(twitterQuest));
+    }
+  }, [dispatch, isTwitterConnectedError, quests])
+
+  useEffect(() => {
+    if (twitterConnected === "true") {
+      dispatch(retrieve());
+    } else if (twitterConnected === "false") {
+      setIsTwitterConnectedError(true);
+    }
+  }, [dispatch, twitterConnected])
+
+  useEffect(() => {
+    if (twitterAuthUrl) {
+      router.push(twitterAuthUrl);
+    }
+  }, [router, twitterAuthUrl])
+
   return (
     <motion.div
       className="w-8/9 flex flex-col mt-[65px] mb-[187px] xl:mt-[52px] xl:mb-[150px] xl:w-9/12 md:w-9/10 max-w-7xl"

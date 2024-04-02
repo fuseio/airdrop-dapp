@@ -7,6 +7,7 @@ import closeWhite from "@/assets/close-white.svg";
 import pointHexagon from "@/assets/point-hexagon.svg";
 import { useMediaQuery } from "usehooks-ts";
 import { screenWidth } from "@/lib/helpers";
+import Spinner from "../ui/Spinner";
 
 const QuestModal = (): JSX.Element => {
   const { isQuestModalOpen, selectedQuest } = useAppSelector(selectUserSlice);
@@ -53,11 +54,11 @@ const QuestModal = (): JSX.Element => {
               </div>
               <div className="flex flex-col items-center text-center">
                 <div className="flex justify-center items-center h-[210px] xl:h-auto">
-                <Image
-                  src={selectedQuest.image}
-                  alt={selectedQuest.title}
-                  className="pt-2.5"
-                />
+                  <Image
+                    src={selectedQuest.image}
+                    alt={selectedQuest.title}
+                    className="pt-2.5"
+                  />
                 </div>
                 <p className="text-2xl xl:text-xl leading-none text-white font-bold mt-8">
                   {selectedQuest.title}
@@ -81,12 +82,15 @@ const QuestModal = (): JSX.Element => {
                     </p>
                   </div>
                   {selectedQuest.button &&
-                  <button
-                    className="transition ease-in-out bg-primary border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
-                    onClick={() => selectedQuest.link ? window.open(selectedQuest.link, "_blank") : undefined}
-                  >
-                    {selectedQuest.button}
-                  </button>
+                    <button
+                      className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
+                      onClick={selectedQuest.onClick}
+                    >
+                      {selectedQuest.button}
+                      {selectedQuest.isLoading &&
+                        <Spinner />
+                      }
+                    </button>
                   }
                 </div>
               </div>
