@@ -91,9 +91,9 @@ const Dashboard = () => {
     },
     {
       id: 5,
-      title: "Stake VeVolt on Voltage",
-      point: "2 points per VeVolt Staked",
-      description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
+      title: "Stake VOLT on Voltage",
+      point: "2 points per staked VOLT",
+      description: "Stake VOLT tokens to get 2 points daily for each staked token.\nThe longer funds remain in staking, the more points you receive.",
       image: stakeVevolt,
       isActive: true,
       completed: false,
@@ -368,7 +368,7 @@ const Dashboard = () => {
                     translateZ="60"
                     className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
                   >
-                    Get 1 point on every $100 you bridge
+                    Get 4 points on every 1 USD you bridge to Fuse
                   </CardItem>
                 </div>
                 <div>
