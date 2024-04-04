@@ -26,7 +26,7 @@ export default function Airdrop() {
   }, [dispatch])
 
   useEffect(() => {
-    if (twitterConnected && isUser) {
+    if (twitterConnected === "true" && isUser) {
       dispatch(setCurrentComponent("dashboard"));
     } else if (twitterConnected && !isUser) {
       dispatch(setCurrentComponent("signup"));

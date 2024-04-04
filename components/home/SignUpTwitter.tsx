@@ -2,10 +2,11 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { generateTwitterAuthUrl, retrieve, selectUserSlice, setSignupStepCompleted, setTotalSignupStepCompleted } from "@/store/userSlice";
 import Image from "next/image";
 import check from "@/assets/check.svg";
-import { signUpSteps } from "@/lib/helpers";
+import { path, signUpSteps } from "@/lib/helpers";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Spinner from "../ui/Spinner";
+import { useAccount } from "wagmi";
 
 const SignUpTwitter = () => {
   const dispatch = useAppDispatch();
@@ -14,16 +15,19 @@ const SignUpTwitter = () => {
   const twitterConnected = searchParams.get('twitter-connected');
   const [isTwitterConnectedError, setIsTwitterConnectedError] = useState(false);
   const router = useRouter();
+  const { isConnected } = useAccount();
 
   useEffect(() => {
     if (twitterConnected === "true") {
       dispatch(setSignupStepCompleted({ key: signUpSteps.TWITTER, value: true }));
       dispatch(setTotalSignupStepCompleted());
       dispatch(retrieve());
+      router.replace(path.HOME);
     } else if (twitterConnected === "false") {
       setIsTwitterConnectedError(true);
+      router.replace(path.HOME);
     }
-  }, [dispatch, twitterConnected])
+  }, [dispatch, router, twitterConnected])
 
   useEffect(() => {
     if (twitterAuthUrl) {
@@ -55,7 +59,8 @@ const SignUpTwitter = () => {
         disabled={signupStepCompleted[signUpSteps.MANDATORY] && !signupStepCompleted[signUpSteps.TWITTER] ? false : true}
         onClick={() => dispatch(generateTwitterAuthUrl())}
       >
-        {isTwitterConnectedError ? "Retry" : "Follow"}
+        {(isTwitterConnectedError && isConnected) && "Retry"}
+        {!isTwitterConnectedError && "Follow"}
         {isGeneratingTwitterAuthUrl &&
           <Spinner />
         }
