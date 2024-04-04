@@ -4,7 +4,7 @@ import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
 import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { generateTwitterAuthUrl, retrieve, selectUserSlice, setSelectedQuest } from "@/store/userSlice";
+import { retrieve, selectUserSlice, setSelectedQuest } from "@/store/userSlice";
 import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -152,10 +152,12 @@ const Dashboard = () => {
   useEffect(() => {
     if (twitterConnected === "true") {
       dispatch(retrieve());
+      router.replace(path.HOME);
     } else if (twitterConnected === "false") {
       setIsTwitterConnectedError(true);
+      router.replace(path.HOME);
     }
-  }, [dispatch, twitterConnected])
+  }, [dispatch, router, twitterConnected])
 
   useEffect(() => {
     if (twitterAuthUrl) {
@@ -201,7 +203,7 @@ const Dashboard = () => {
                   setRename(event.target.value);
                 }}
               /> :
-              user.walletAddress === rename ? eclipseAddress(rename) : rename
+              eclipseAddress(rename)
             }
           </h1>
           <Image

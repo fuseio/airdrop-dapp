@@ -33,6 +33,7 @@ export const path = {
   HOME: "/",
   ABOUT: "/about",
   LEADERBOARD: "/leaderboard",
+  DASHBOARD: "/dashboard",
   BRIDGE: "https://console.fuse.io/bridge"
 }
 
