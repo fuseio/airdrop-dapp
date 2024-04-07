@@ -59,17 +59,6 @@ const Dashboard = () => {
     },
     {
       id: 2,
-      title: "Bridge assets on Fuse",
-      point: "4 points per USD",
-      description: "Bridge USDT, USDC or ETH to the Fuse Network and receive 4 points daily for every $1 remaining in the network",
-      image: bridgeAssets,
-      isActive: true,
-      completed: false,
-      button: "Go to Bridge",
-      link: "https://console.fuse.io/bridge",
-    },
-    {
-      id: 3,
       title: "Holding more than 2 different tokens",
       point: "10 points",
       description: `Get 10 point by holding more than 2 different tokens on your wallet.\nPoints are awarded automatically when the conditions are met.`,
@@ -79,7 +68,7 @@ const Dashboard = () => {
       button: "",
     },
     {
-      id: 4,
+      id: 3,
       title: "Stake sFuse on Voltage",
       point: "2 points per sFuse Staked",
       description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
@@ -90,7 +79,7 @@ const Dashboard = () => {
       link: "https://app.voltage.finance/stake/sFUSE",
     },
     {
-      id: 5,
+      id: 4,
       title: "Stake VOLT on Voltage",
       point: "2 points per staked VOLT",
       description: "Stake VOLT tokens to get 2 points daily for each staked token.\nThe longer funds remain in staking, the more points you receive.",
