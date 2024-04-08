@@ -290,7 +290,7 @@ const userSlice = createSlice({
     setRetrieveTime: (state) => {
       const date = new Date().toString();
       state.retrieveTime = date;
-      localStorage.setItem('airdrop-retrieveTime', date.toString());
+      localStorage.setItem('airdrop-retrieveTime', date);
     },
     setLogout: (state) => {
       state.inviteCode = "";
