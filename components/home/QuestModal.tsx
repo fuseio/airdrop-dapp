@@ -14,8 +14,8 @@ const QuestModal = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
 
-  function handleClick(id: number) {
-    if(id === 1) {
+  function handleClick(id: string) {
+    if(id === "followFuseOnTwitter") {
       dispatch(generateTwitterAuthUrl());
     }
   }
