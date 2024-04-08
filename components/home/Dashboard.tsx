@@ -22,7 +22,7 @@ import Quest from "./Quest";
 import followX from "@/assets/follow-x.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
-import stakeVevolt from "@/assets/stake-vevolt.svg";
+import stakeVolt from "@/assets/stake-volt.svg";
 import { Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -82,7 +82,7 @@ const Dashboard = () => {
       title: "Stake VOLT on Voltage",
       point: "2 points per staked VOLT",
       description: "Stake VOLT tokens to get 2 points daily for each staked token.\nThe longer funds remain in staking, the more points you receive.",
-      image: stakeVevolt,
+      image: stakeVolt,
       isActive: true,
       completed: false,
       button: "Go to Voltage",
