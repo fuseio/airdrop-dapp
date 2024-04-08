@@ -4,7 +4,7 @@ import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
 import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { retrieve, selectUserSlice, setSelectedQuest } from "@/store/userSlice";
+import { retrieve, selectUserSlice, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
 import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -20,7 +20,6 @@ import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
 import crownCircle from "@/assets/crown-circle.svg";
 import Quest from "./Quest";
 import followX from "@/assets/follow-x.svg";
-import bridgeAssets from "@/assets/bridge-assets.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVevolt from "@/assets/stake-vevolt.svg";
@@ -29,7 +28,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
-  const { totalSignupStepCompleted, isGeneratingTwitterAuthUrl, twitterAuthUrl, user } = useAppSelector(selectUserSlice);
+  const { totalSignupStepCompleted, isGeneratingTwitterAuthUrl, twitterAuthUrl, user, retrieveTime } = useAppSelector(selectUserSlice);
   const router = useRouter();
   const searchParams = useSearchParams();
   const twitterConnected = searchParams.get('twitter-connected');
@@ -47,7 +46,7 @@ const Dashboard = () => {
 
   const [quests, setQuests] = useState<Quests>([
     {
-      id: 1,
+      id: "followFuseOnTwitter",
       title: "Follow @Fuse_network on X",
       point: "50 points",
       description: "Get 50 point for following an official Fuse Network X account",
@@ -58,7 +57,7 @@ const Dashboard = () => {
       isFunction: true,
     },
     {
-      id: 2,
+      id: "numOfTokens",
       title: "Holding more than 2 different tokens",
       point: "10 points",
       description: `Get 10 point by holding more than 2 different tokens on your wallet.\nPoints are awarded automatically when the conditions are met.`,
@@ -68,7 +67,7 @@ const Dashboard = () => {
       button: "",
     },
     {
-      id: 3,
+      id: "staking-sFuse",
       title: "Stake sFuse on Voltage",
       point: "2 points per sFuse Staked",
       description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
@@ -79,7 +78,7 @@ const Dashboard = () => {
       link: "https://app.voltage.finance/stake/sFUSE",
     },
     {
-      id: 4,
+      id: "staking-veVolt",
       title: "Stake VOLT on Voltage",
       point: "2 points per staked VOLT",
       description: "Stake VOLT tokens to get 2 points daily for each staked token.\nThe longer funds remain in staking, the more points you receive.",
@@ -103,23 +102,45 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    const twitterQuestId = 1;
-    if (user.twitterAccountId) {
-      setQuests((prevQuests) => {
-        const newQuests = [...prevQuests];
-        newQuests.map((newQuest) => {
-          if (newQuest.id === twitterQuestId) {
-            newQuest.completed = true;
-          }
-          return newQuest;
-        });
-        return newQuests;
-      })
+    const RETRIEVE_DIFFERENCE_IN_MILLISECONDS = 600000;
+
+    function retrieveUser() {
+      const currentTime = new Date();
+      if ((currentTime.getTime() - retrieveTime.getTime()) > RETRIEVE_DIFFERENCE_IN_MILLISECONDS) {
+        dispatch(retrieve());
+        dispatch(setRetrieveTime());
+      }
     }
-  }, [user.twitterAccountId])
+    retrieveUser();
+
+    const intervalId = setInterval(() => retrieveUser, RETRIEVE_DIFFERENCE_IN_MILLISECONDS);
+
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, [dispatch, retrieveTime])
 
   useEffect(() => {
-    const twitterQuestId = 1;
+    setQuests((prevQuests) => {
+      const newQuests = [...prevQuests];
+      newQuests.map((newQuest) => {
+        user.completedQuests?.map((completedQuest) => {
+          let completedQuestId = completedQuest.type;
+          if (completedQuest.stakingType) {
+            completedQuestId = `${completedQuest.type}-${completedQuest.stakingType}`;
+          }
+          if (newQuest.id === completedQuestId) {
+            newQuest.completed = true;
+          }
+        })
+        return newQuest;
+      });
+      return newQuests;
+    })
+  }, [user.completedQuests])
+
+  useEffect(() => {
+    const twitterQuestId = "followFuseOnTwitter";
     let twitterQuest = quests.find((quest) => quest.id === twitterQuestId);
     if (twitterQuest) {
       twitterQuest = { ...twitterQuest };
@@ -129,7 +150,7 @@ const Dashboard = () => {
   }, [dispatch, isGeneratingTwitterAuthUrl, quests])
 
   useEffect(() => {
-    const twitterQuestId = 1;
+    const twitterQuestId = "followFuseOnTwitter";
     let twitterQuest = quests.find((quest) => quest.id === twitterQuestId);
     if (twitterQuest) {
       twitterQuest = { ...twitterQuest };

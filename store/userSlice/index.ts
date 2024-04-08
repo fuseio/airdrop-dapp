@@ -13,11 +13,12 @@ const initUser: User = {
   referralCode: "",
   leaderboardPosition: 0,
   pointsLastUpdatedAt: "",
+  completedQuests: [],
   walletAgeInDays: 0,
 }
 
 const initQuest: Quest = {
-  id: 0,
+  id: "",
   title: "",
   point: "",
   description: "",
@@ -58,6 +59,7 @@ export interface UserStateType {
   lastLeaderboardUserId: string;
   isLeaderboardUsersFinished: boolean;
   twitterAuthUrl: string;
+  retrieveTime: Date;
   isSubmittedComingSoonSubscribe: boolean;
   isErrorSubmittingComingSoonSubscribe: boolean;
 }
@@ -84,6 +86,7 @@ const INIT_STATE: UserStateType = {
   lastLeaderboardUserId: "",
   isLeaderboardUsersFinished: false,
   twitterAuthUrl: "",
+  retrieveTime: new Date(0),
   isSubmittedComingSoonSubscribe: false,
   isErrorSubmittingComingSoonSubscribe: false,
 };
@@ -285,6 +288,11 @@ const userSlice = createSlice({
       state.leaderboardUsers = action.payload
       localStorage.setItem("airdrop-leaderboardUsers", JSON.stringify(action.payload));
     },
+    setRetrieveTime: (state) => {
+      const date = new Date();
+      state.retrieveTime = date;
+      localStorage.setItem('airdrop-retrieveTime', date.toString());
+    },
     setLogout: (state) => {
       state.inviteCode = "";
       state.accessToken = "";
@@ -296,6 +304,7 @@ const userSlice = createSlice({
       state.isLeaderboardUsersFinished = false;
       state.totalSignupStepCompleted = 0;
       state.signupStepCompleted = initSignupStepCompleted;
+      state.retrieveTime = new Date(0);
       localStorage.removeItem("airdrop-inviteCode");
       localStorage.removeItem("airdrop-accessToken");
       localStorage.removeItem("airdrop-isUser");
@@ -305,6 +314,7 @@ const userSlice = createSlice({
       localStorage.removeItem("airdrop-isLeaderboardUsersFinished");
       localStorage.removeItem("airdrop-totalSignupStepCompleted");
       localStorage.removeItem("airdrop-signupStepCompleted");
+      localStorage.removeItem("airdrop-retrieveTime");
     },
     setHydrate: (state) => {
       const inviteCode = localStorage.getItem("airdrop-inviteCode");
@@ -316,6 +326,7 @@ const userSlice = createSlice({
       const isLeaderboardUsersFinished = localStorage.getItem("airdrop-isLeaderboardUsersFinished");
       const totalSignupStepCompleted = localStorage.getItem("airdrop-totalSignupStepCompleted");
       const signupStepCompleted = localStorage.getItem("airdrop-signupStepCompleted");
+      const retrieveTime = localStorage.getItem("airdrop-retrieveTime");
       state.inviteCode = inviteCode ?? "";
       state.accessToken = accessToken ?? "";
       state.isAuthenticated = !!accessToken;
@@ -326,6 +337,7 @@ const userSlice = createSlice({
       state.isLeaderboardUsersFinished = isLeaderboardUsersFinished ? JSON.parse(isLeaderboardUsersFinished) : false;
       state.totalSignupStepCompleted = totalSignupStepCompleted ? JSON.parse(totalSignupStepCompleted) : false;
       state.signupStepCompleted = signupStepCompleted ? JSON.parse(signupStepCompleted) : initSignupStepCompleted;
+      state.retrieveTime = retrieveTime ? new Date(retrieveTime) : new Date(0);
       state.isHydrated = true;
     }
   },
@@ -425,6 +437,7 @@ export const {
   setInviteCode,
   setTotalSignupStepCompleted,
   setLeaderboardUsers,
+  setRetrieveTime,
   setLogout,
   setHydrate
 } = userSlice.actions;
