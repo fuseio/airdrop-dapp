@@ -106,7 +106,8 @@ const Dashboard = () => {
 
     function retrieveUser() {
       const currentTime = new Date();
-      if ((currentTime.getTime() - retrieveTime.getTime()) > RETRIEVE_DIFFERENCE_IN_MILLISECONDS) {
+      const retrieveUserTime = new Date(retrieveTime);
+      if ((currentTime.getTime() - retrieveUserTime.getTime()) > RETRIEVE_DIFFERENCE_IN_MILLISECONDS) {
         dispatch(retrieve());
         dispatch(setRetrieveTime());
       }
@@ -380,7 +381,7 @@ const Dashboard = () => {
                     translateZ="60"
                     className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
                   >
-                    Get 4 points on every 1 USD you bridge to Fuse
+                    Get 4 points daily on every 1 USD you bridge to Fuse
                   </CardItem>
                 </div>
                 <div>

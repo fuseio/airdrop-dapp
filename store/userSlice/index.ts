@@ -58,7 +58,7 @@ export interface UserStateType {
   lastLeaderboardUserId: string;
   isLeaderboardUsersFinished: boolean;
   twitterAuthUrl: string;
-  retrieveTime: Date;
+  retrieveTime: string;
   isSubmittedComingSoonSubscribe: boolean;
   isErrorSubmittingComingSoonSubscribe: boolean;
 }
@@ -85,7 +85,7 @@ const INIT_STATE: UserStateType = {
   lastLeaderboardUserId: "",
   isLeaderboardUsersFinished: false,
   twitterAuthUrl: "",
-  retrieveTime: new Date(0),
+  retrieveTime: new Date(0).toString(),
   isSubmittedComingSoonSubscribe: false,
   isErrorSubmittingComingSoonSubscribe: false,
 };
@@ -288,9 +288,9 @@ const userSlice = createSlice({
       localStorage.setItem("airdrop-leaderboardUsers", JSON.stringify(action.payload));
     },
     setRetrieveTime: (state) => {
-      const date = new Date();
+      const date = new Date().toString();
       state.retrieveTime = date;
-      localStorage.setItem('airdrop-retrieveTime', date.toString());
+      localStorage.setItem('airdrop-retrieveTime', date);
     },
     setLogout: (state) => {
       state.inviteCode = "";
@@ -303,7 +303,7 @@ const userSlice = createSlice({
       state.isLeaderboardUsersFinished = false;
       state.totalSignupStepCompleted = 0;
       state.signupStepCompleted = initSignupStepCompleted;
-      state.retrieveTime = new Date(0);
+      state.retrieveTime = new Date(0).toString();
       localStorage.removeItem("airdrop-inviteCode");
       localStorage.removeItem("airdrop-accessToken");
       localStorage.removeItem("airdrop-isUser");
@@ -336,7 +336,7 @@ const userSlice = createSlice({
       state.isLeaderboardUsersFinished = isLeaderboardUsersFinished ? JSON.parse(isLeaderboardUsersFinished) : false;
       state.totalSignupStepCompleted = totalSignupStepCompleted ? JSON.parse(totalSignupStepCompleted) : false;
       state.signupStepCompleted = signupStepCompleted ? JSON.parse(signupStepCompleted) : initSignupStepCompleted;
-      state.retrieveTime = retrieveTime ? new Date(retrieveTime) : new Date(0);
+      state.retrieveTime = retrieveTime ? new Date(retrieveTime).toString() : new Date(0).toString();
       state.isHydrated = true;
     }
   },
