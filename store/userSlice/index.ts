@@ -34,7 +34,6 @@ const initQuest: Quest = {
 const initSignupStepCompleted: SignupStepCompleted = {
   1: false,
   2: false,
-  3: false,
 }
 
 export interface UserStateType {
