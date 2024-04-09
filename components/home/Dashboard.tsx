@@ -19,10 +19,19 @@ import { useIntersectionObserver, useMediaQuery } from "usehooks-ts";
 import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
 import crownCircle from "@/assets/crown-circle.svg";
 import Quest from "./Quest";
+import fireTransparent from "@/assets/fire-transparent.svg";
 import followX from "@/assets/follow-x.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
+import ogWallet from "@/assets/og-wallet.svg";
+import joinDiscord from "@/assets/join-discord.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVolt from "@/assets/stake-volt.svg";
+import liquidityVoltage from "@/assets/liquidity-voltage.svg";
+import sayGm from "@/assets/say-gm.svg";
+import meridian from "@/assets/meridian.svg";
+import logx from "@/assets/logx.svg";
+import bitazza from "@/assets/bitazza.svg";
+import zneakrz from "@/assets/zneakrz.svg";
 import { Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -67,12 +76,37 @@ const Dashboard = () => {
       button: "",
     },
     {
+      id: "ogWallet",
+      title: "You're an OG! - Wallet older then a year",
+      point: "10 points",
+      description: "",
+      image: ogWallet,
+      isActive: true,
+      completed: false,
+      button: "Go to Voltage",
+      link: "https://app.voltage.finance/stake/sFUSE",
+    },
+    {
+      id: "joinDiscord",
+      title: "Join Fuse Discord",
+      point: "",
+      description: "",
+      image: joinDiscord,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+  ])
+
+  const [multiplyQuests, setMultiplyQuests] = useState<Quests>([
+    {
       id: "staking-sFuse",
       title: "Stake sFuse on Voltage",
       point: "2 points per sFuse Staked",
       description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
       image: stakeSfuse,
-      isActive: true,
+      isActive: false,
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
@@ -83,10 +117,76 @@ const Dashboard = () => {
       point: "2 points per staked VOLT",
       description: "Stake VOLT tokens to get 2 points daily for each staked token.\nThe longer funds remain in staking, the more points you receive.",
       image: stakeVolt,
-      isActive: true,
+      isActive: false,
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/veVOLT",
+    },
+    {
+      id: "liquidityVoltage",
+      title: "Provide liquidity on Voltage",
+      point: "",
+      description: "",
+      image: liquidityVoltage,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "sayGm",
+      title: "Say GM in Discord",
+      point: "",
+      description: "",
+      image: sayGm,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "meridian",
+      title: "Lend on Meridian",
+      point: "",
+      description: "",
+      image: meridian,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "logX",
+      title: "Trade on LogX",
+      point: "",
+      description: "",
+      image: logx,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "bitazza",
+      title: "Create a wallet on Bitazza",
+      point: "",
+      description: "",
+      image: bitazza,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "zneakrz",
+      title: "Create a wallet on Zneakrz",
+      point: "",
+      description: "",
+      image: zneakrz,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
     },
   ])
 
@@ -304,12 +404,12 @@ const Dashboard = () => {
             <p className="text-2xl xl:text-xl leading-none text-white font-bold max-w-64 md:max-w-full">
               Welcome to the Fuse Airdrop program
             </p>
-            <Link
-              href={path.ABOUT}
+            <button
               className="transition ease-in-out border border-primary rounded-full xl:text-sm text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 md:px-5 hover:bg-primary hover:text-black"
+              onClick={() => window.open("https://news.fuse.io/fuse-airdrop-program-is-live/", "_blank")}
             >
               Learn More
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -415,8 +515,29 @@ const Dashboard = () => {
           Complete quests to receive points
         </p>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
-          {quests.map((quest) =>
-            <Quest key={quest.title} quest={quest} />
+          {quests.map((quest) => {
+            if(quest.id === "ogWallet" && !quest.completed) {
+              return
+            }
+            return (
+              <Quest key={quest.title} quest={quest} />
+            )
+          })}
+        </div>
+      </div>
+      <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
+        <div className="flex items-center gap-2.5">
+          <Image
+          src={fireTransparent}
+          alt="fire"
+          />
+          <p className="text-3xl xl:text-2xl text-white font-semibold">
+          Multiply your points!
+        </p>
+        </div>
+        <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
+          {multiplyQuests.map((multiplyQuest) =>
+            <Quest key={multiplyQuest.title} quest={multiplyQuest} />
           )}
         </div>
       </div>
