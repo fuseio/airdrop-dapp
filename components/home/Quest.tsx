@@ -10,7 +10,7 @@ import hourglass from "@/assets/hourglass.svg";
 import { screenWidth } from "@/lib/helpers";
 import { useAppDispatch } from "@/store/store";
 import { setIsQuestModalOpen, setSelectedQuest } from "@/store/userSlice";
-import checkBorder from "@/assets/check-border.svg";
+import checkBackground from "@/assets/check-background.svg";
 
 type QuestProps = {
   quest: Quest;
@@ -49,7 +49,7 @@ function QuestItem({ quest }: QuestProps) {
           </div>
           {quest.completed &&
             <Image
-              src={checkBorder}
+              src={checkBackground}
               alt="check"
               width={matches ? 47 : 38}
               height={matches ? 47 : 38}
