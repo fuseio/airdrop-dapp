@@ -23,15 +23,12 @@ import fireTransparent from "@/assets/fire-transparent.svg";
 import followX from "@/assets/follow-x.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
 import ogWallet from "@/assets/og-wallet.svg";
-import joinDiscord from "@/assets/join-discord.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVolt from "@/assets/stake-volt.svg";
 import liquidityVoltage from "@/assets/liquidity-voltage.svg";
 import sayGm from "@/assets/say-gm.svg";
 import meridian from "@/assets/meridian.svg";
 import logx from "@/assets/logx.svg";
-import bitazza from "@/assets/bitazza.svg";
-import zneakrz from "@/assets/zneakrz.svg";
 import { Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -85,17 +82,6 @@ const Dashboard = () => {
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
-    },
-    {
-      id: "joinDiscord",
-      title: "Join Fuse Discord",
-      point: "",
-      description: "",
-      image: joinDiscord,
-      isActive: false,
-      completed: false,
-      button: "",
-      link: "",
     },
   ])
 
@@ -161,28 +147,6 @@ const Dashboard = () => {
       point: "",
       description: "",
       image: logx,
-      isActive: false,
-      completed: false,
-      button: "",
-      link: "",
-    },
-    {
-      id: "bitazza",
-      title: "Create a wallet on Bitazza",
-      point: "",
-      description: "",
-      image: bitazza,
-      isActive: false,
-      completed: false,
-      button: "",
-      link: "",
-    },
-    {
-      id: "zneakrz",
-      title: "Create a wallet on Zneakrz",
-      point: "",
-      description: "",
-      image: zneakrz,
       isActive: false,
       completed: false,
       button: "",
@@ -516,7 +480,7 @@ const Dashboard = () => {
         </p>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
           {quests.map((quest) => {
-            if(quest.id === "ogWallet" && !quest.completed) {
+            if (quest.id === "ogWallet" && !quest.completed) {
               return
             }
             return (
@@ -528,12 +492,12 @@ const Dashboard = () => {
       <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
         <div className="flex items-center gap-2.5">
           <Image
-          src={fireTransparent}
-          alt="fire"
+            src={fireTransparent}
+            alt="fire"
           />
           <p className="text-3xl xl:text-2xl text-white font-semibold">
-          Multiply your points!
-        </p>
+            Multiply your points!
+          </p>
         </div>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
           {multiplyQuests.map((multiplyQuest) =>
