@@ -73,7 +73,7 @@ const Dashboard = () => {
       button: "",
     },
     {
-      id: "ogWallet",
+      id: "walletAge",
       title: "You're an OG! - Wallet older then a year",
       point: "10 points",
       description: "",
@@ -480,7 +480,7 @@ const Dashboard = () => {
         </p>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
           {quests.map((quest) => {
-            if (quest.id === "ogWallet" && !quest.completed) {
+            if (quest.id === "walletAge" && !quest.completed) {
               return
             }
             return (
