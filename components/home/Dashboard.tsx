@@ -404,12 +404,12 @@ const Dashboard = () => {
             <p className="text-2xl xl:text-xl leading-none text-white font-bold max-w-64 md:max-w-full">
               Welcome to the Fuse Airdrop program
             </p>
-            <Link
-              href={path.ABOUT}
+            <button
               className="transition ease-in-out border border-primary rounded-full xl:text-sm text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 md:px-5 hover:bg-primary hover:text-black"
+              onClick={() => window.open("https://news.fuse.io/fuse-airdrop-program-is-live/", "_blank")}
             >
               Learn More
-            </Link>
+            </button>
           </div>
         </div>
       </div>
