@@ -16,7 +16,7 @@ type QuestProps = {
   quest: Quest;
 }
 
-function Quest({ quest }: QuestProps) {
+function QuestItem({ quest }: QuestProps) {
   const dispatch = useAppDispatch();
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
   const { isIntersecting, ref } = useIntersectionObserver({
@@ -88,4 +88,4 @@ function Quest({ quest }: QuestProps) {
   );
 }
 
-export default Quest;
+export default QuestItem;
