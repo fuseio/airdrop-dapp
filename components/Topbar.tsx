@@ -5,35 +5,21 @@ import NavButton from "./NavButton";
 import { useAppSelector } from "@/store/store";
 import { selectNavbarSlice } from "@/store/navbarSlice";
 import Image from "next/image";
-import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
 
-let menuItems = [
+const menuItems = [
   {
     title: "Airdrop",
     link: "/",
+  },
+  {
+    title: "Leaderboard",
+    link: "/leaderboard",
   },
   {
     title: "Fuse Home",
     link: "https://www.fuse.io",
   },
 ]
-
-if (NEXT_PUBLIC_ENVIRONMENT === "staging") {
-  menuItems = [
-    {
-      title: "Airdrop",
-      link: "/",
-    },
-    {
-      title: "Leaderboard",
-      link: "/leaderboard",
-    },
-    {
-      title: "Fuse Home",
-      link: "https://www.fuse.io",
-    },
-  ]
-}
 
 const Topbar = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
