@@ -120,17 +120,6 @@ const Dashboard = () => {
       link: "",
     },
     {
-      id: "sayGm",
-      title: "Say GM in Discord",
-      point: "",
-      description: "",
-      image: sayGm,
-      isActive: false,
-      completed: false,
-      button: "",
-      link: "",
-    },
-    {
       id: "meridian",
       title: "Lend on Meridian",
       point: "",
