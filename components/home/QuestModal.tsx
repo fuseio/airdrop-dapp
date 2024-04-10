@@ -80,7 +80,7 @@ const QuestModal = (): JSX.Element => {
                 </p>
               </div>
               <div className="min-h-[104px] xl:min-h-fit mt-2">
-                <hr className="border-[0.3px] border-star-dust" />
+                <hr className="border-[0.3px] border-davy-gray" />
                 <div className="flex justify-between items-center mt-7 mb-8 xl:mt-6 xl:mb-6.5 px-9 xl:px-7">
                   <div className="flex items-center gap-2">
                     <Image
@@ -89,7 +89,7 @@ const QuestModal = (): JSX.Element => {
                       width={matches ? 20 : 16}
                       height={matches ? 23 : 19}
                     />
-                    <p className="text-lg xl:text-base text-success text-bold">
+                    <p className="text-lg xl:text-base text-success font-bold">
                       {selectedQuest.point}
                     </p>
                   </div>

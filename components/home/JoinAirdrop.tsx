@@ -48,7 +48,7 @@ const JoinAirdrop = ({ invite, setInvite }: JoinAirdropProps) => {
           />
         }
         containerStyle={"gap-2 bg-oslo-gray/30 rounded-full px-[30px] py-3.5"}
-        inputStyle="font-pixeloid bg-transparent border-b text-center text-xl leading-none text-white text-bold w-9 focus:outline-none"
+        inputStyle="font-pixeloid bg-transparent border-b text-center text-xl leading-none text-white font-bold w-9 focus:outline-none"
         skipDefaultStyles
       />
       <button

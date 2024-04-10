@@ -65,7 +65,10 @@ function QuestItem({ quest }: QuestProps) {
               {quest.title}
             </CardItem>
             <div className="flex items-center gap-1">
-              <CardItem translateZ="30">
+              <CardItem
+                translateZ="30"
+                className="mb-0.5"
+              >
                 <Image
                   src={quest.isActive ? pointHexagon : hourglass}
                   alt={quest.isActive ? "point hexagon" : "hourglass"}
