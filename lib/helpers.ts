@@ -33,6 +33,7 @@ export const path = {
   HOME: "/",
   ABOUT: "/about",
   LEADERBOARD: "/leaderboard",
+  DASHBOARD: "/dashboard",
   BRIDGE: "https://console.fuse.io/bridge"
 }
 
@@ -41,8 +42,7 @@ export const evmDecimals = 18;
 export const signUpSteps = {
   WALLET: 1,
   TWITTER: 2,
-  DISCORD: 3,
-  TOTAL: 3,
+  TOTAL: 2,
   MANDATORY: 1
 }
 

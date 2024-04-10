@@ -1,8 +1,9 @@
 import { defaultReferralCode } from "@/lib/helpers";
-import { useAppDispatch } from "@/store/store";
-import { setCurrentComponent, setInviteCode } from "@/store/userSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { selectUserSlice, setCurrentComponent, setInviteCode } from "@/store/userSlice";
 import { useState } from "react";
 import OTPInput from "react-otp-input";
+import Spinner from "../ui/Spinner";
 
 type JoinAirdropProps = {
   invite: string;
@@ -12,6 +13,7 @@ type JoinAirdropProps = {
 const JoinAirdrop = ({ invite, setInvite }: JoinAirdropProps) => {
   const dispatch = useAppDispatch();
   const [isInputClicked, setIsInputClicked] = useState(false);
+  const { isRetrieving } = useAppSelector(selectUserSlice);
 
   return (
     <form
@@ -46,14 +48,17 @@ const JoinAirdrop = ({ invite, setInvite }: JoinAirdropProps) => {
           />
         }
         containerStyle={"gap-2 bg-oslo-gray/30 rounded-full px-[30px] py-3.5"}
-        inputStyle="font-pixeloid bg-transparent border-b text-center text-xl leading-none text-white text-bold w-9 focus:outline-none"
+        inputStyle="font-pixeloid bg-transparent border-b text-center text-xl leading-none text-white font-bold w-9 focus:outline-none"
         skipDefaultStyles
       />
       <button
         type="submit"
-        className="transition ease-in-out bg-primary rounded-full text-xl leading-none font-semibold px-12 py-4 md:w-full hover:bg-white"
+        className="transition ease-in-out bg-primary flex justify-center items-center gap-2 rounded-full text-xl leading-none font-semibold px-12 py-4 md:w-full hover:bg-white"
       >
         Join Airdrop
+        {isRetrieving &&
+          <Spinner />
+        }
       </button>
     </form>
   )

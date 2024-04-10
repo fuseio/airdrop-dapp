@@ -32,6 +32,7 @@ import QRCode from "react-qr-code";
 import { usePathname } from "next/navigation";
 import Copy from "./ui/Copy";
 import { formatUnits } from "viem";
+import Spinner from "./ui/Spinner";
 
 const menu: Variants = {
   closed: (isCenter) => ({
@@ -99,7 +100,7 @@ const ConnectWallet = ({
   const { address, isConnected, chain } = useAccount();
   const { chains } = useConfig();
   const { switchChain } = useSwitchChain();
-  const { disconnect } = useDisconnect();
+  const { disconnect, isPending } = useDisconnect();
   const { data: blockNumber } = useBlockNumber({ watch: true });
   const { data: balance, refetch } = useBalance({
     address,
@@ -230,12 +231,17 @@ const ConnectWallet = ({
           className="flex items-center gap-[17.7px] cursor-pointer px-[22px]"
           onClick={() => disconnect()}
         >
-          <Image
-            src={disconnectIcon.src}
-            alt="disconnect wallet"
-            width={17.68}
-            height={20}
-          />
+          {isPending ?
+            <div className="h-5 flex justify-center items-center">
+              <Spinner />
+            </div> :
+            <Image
+              src={disconnectIcon.src}
+              alt="disconnect wallet"
+              width={17.68}
+              height={20}
+            />
+          }
           <p>Disconnect</p>
         </div>
       </motion.div>
@@ -347,12 +353,17 @@ const ConnectWallet = ({
             className="flex items-center gap-[17.7px] cursor-pointer px-[22px]"
             onClick={() => disconnect()}
           >
-            <Image
-              src={disconnectIcon.src}
-              alt="disconnect wallet"
-              width={17.68}
-              height={20}
-            />
+            {isPending ?
+              <div className="h-5 flex justify-center items-center">
+                <Spinner />
+              </div> :
+              <Image
+                src={disconnectIcon.src}
+                alt="disconnect wallet"
+                width={17.68}
+                height={20}
+              />
+            }
             <p>Disconnect</p>
           </div>
         </motion.div>
@@ -443,12 +454,17 @@ const ConnectWallet = ({
           className="flex items-center gap-[17.7px] cursor-pointer px-[22px]"
           onClick={() => disconnect()}
         >
-          <Image
-            src={disconnectIcon.src}
-            alt="disconnect wallet"
-            width={17.68}
-            height={20}
-          />
+          {isPending ?
+            <div className="h-5 flex justify-center items-center">
+              <Spinner />
+            </div> :
+            <Image
+              src={disconnectIcon.src}
+              alt="disconnect wallet"
+              width={17.68}
+              height={20}
+            />
+          }
           <p>Disconnect</p>
         </div>
       </motion.div>

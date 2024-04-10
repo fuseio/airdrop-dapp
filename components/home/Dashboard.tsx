@@ -3,8 +3,8 @@ import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
 import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
-import { useAppSelector } from "@/store/store";
-import { selectUserSlice } from "@/store/userSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { retrieve, selectUserSlice, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
 import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -19,17 +19,28 @@ import { useIntersectionObserver, useMediaQuery } from "usehooks-ts";
 import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
 import crownCircle from "@/assets/crown-circle.svg";
 import Quest from "./Quest";
+import fireTransparent from "@/assets/fire-transparent.svg";
 import followX from "@/assets/follow-x.svg";
-import bridgeAssets from "@/assets/bridge-assets.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
+import ogWallet from "@/assets/og-wallet.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
-import stakeVevolt from "@/assets/stake-vevolt.svg";
+import stakeVolt from "@/assets/stake-volt.svg";
+import liquidityVoltage from "@/assets/liquidity-voltage.svg";
+import sayGm from "@/assets/say-gm.svg";
+import meridian from "@/assets/meridian.svg";
+import logx from "@/assets/logx.svg";
 import { Quests } from "@/lib/types";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Dashboard = () => {
-  const { totalSignupStepCompleted, user } = useAppSelector(selectUserSlice);
+  const dispatch = useAppDispatch();
+  const { totalSignupStepCompleted, isGeneratingTwitterAuthUrl, twitterAuthUrl, user, retrieveTime } = useAppSelector(selectUserSlice);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const twitterConnected = searchParams.get('twitter-connected');
   const [rename, setRename] = useState(user.walletAddress);
   const [isRename, setIsRename] = useState(false);
+  const [isTwitterConnectedError, setIsTwitterConnectedError] = useState(false);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
   const { isIntersecting: isUserSectionIntersecting, ref: userSection } = useIntersectionObserver({
     freezeOnceVisible: true,
@@ -38,56 +49,108 @@ const Dashboard = () => {
     freezeOnceVisible: true,
   });
   const MAX_RENAME_CHARACTER = 15;
+
   const [quests, setQuests] = useState<Quests>([
     {
+      id: "followFuseOnTwitter",
       title: "Follow @Fuse_network on X",
       point: "50 points",
       description: "Get 50 point for following an official Fuse Network X account",
       image: followX,
       isActive: true,
+      completed: false,
       button: "Go to X",
-      link: "https://twitter.com/Fuse_network",
-      completed: false,
+      isFunction: true,
     },
     {
-      title: "Bridge assets on Fuse",
-      point: "4 points per USD",
-      description: "Bridge USDT, USDC or ETH to the Fuse Network and receive 4 points daily for every $1 remaining in the network",
-      image: bridgeAssets,
-      isActive: true,
-      button: "Go to Bridge",
-      link: "https://console.fuse.io/bridge",
-      completed: false,
-    },
-    {
+      id: "numOfTokens",
       title: "Holding more than 2 different tokens",
       point: "10 points",
-      description: "Get 10 point by holding more than 2 different tokens on your wallet\nPoints are awarded automatically when the conditions are met.",
+      description: `Get 10 point by holding more than 2 different tokens on your wallet.\nPoints are awarded automatically when the conditions are met.`,
       image: holdTokens,
       isActive: true,
-      button: "",
-      link: "",
       completed: false,
+      button: "",
     },
     {
+      id: "walletAge",
+      title: "You're an OG! - Wallet older then a year",
+      point: "10 points",
+      description: "",
+      image: ogWallet,
+      isActive: true,
+      completed: false,
+      button: "Go to Voltage",
+      link: "https://app.voltage.finance/stake/sFUSE",
+    },
+  ])
+
+  const [multiplyQuests, setMultiplyQuests] = useState<Quests>([
+    {
+      id: "staking-sFuse",
       title: "Stake sFuse on Voltage",
       point: "2 points per sFuse Staked",
       description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
       image: stakeSfuse,
-      isActive: true,
+      isActive: false,
+      completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
-      completed: false,
     },
     {
-      title: "Stake VeVolt on Voltage",
-      point: "2 points per VeVolt Staked",
-      description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
-      image: stakeVevolt,
-      isActive: true,
+      id: "staking-veVolt",
+      title: "Stake VOLT on Voltage",
+      point: "2 points per staked VOLT",
+      description: "Stake VOLT tokens to get 2 points daily for each staked token.\nThe longer funds remain in staking, the more points you receive.",
+      image: stakeVolt,
+      isActive: false,
+      completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/veVOLT",
+    },
+    {
+      id: "liquidityVoltage",
+      title: "Provide liquidity on Voltage",
+      point: "",
+      description: "",
+      image: liquidityVoltage,
+      isActive: false,
       completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "sayGm",
+      title: "Say GM in Discord",
+      point: "",
+      description: "",
+      image: sayGm,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "meridian",
+      title: "Lend on Meridian",
+      point: "",
+      description: "",
+      image: meridian,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "logX",
+      title: "Trade on LogX",
+      point: "",
+      description: "",
+      image: logx,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
     },
   ])
 
@@ -103,37 +166,94 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    if(user.twitterAccountId) {
-      setQuests((prevQuests) => {
-        const newQuests = [...prevQuests];
-        newQuests.map((newQuest) => {
-          if(newQuest.title === "Follow @Fuse_network on X") {
+    const RETRIEVE_DIFFERENCE_IN_MILLISECONDS = 600000;
+
+    function retrieveUser() {
+      const currentTime = new Date();
+      const retrieveUserTime = new Date(retrieveTime);
+      if ((currentTime.getTime() - retrieveUserTime.getTime()) > RETRIEVE_DIFFERENCE_IN_MILLISECONDS) {
+        dispatch(retrieve());
+        dispatch(setRetrieveTime());
+      }
+    }
+    retrieveUser();
+
+    const intervalId = setInterval(() => retrieveUser, RETRIEVE_DIFFERENCE_IN_MILLISECONDS);
+
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, [dispatch, retrieveTime])
+
+  useEffect(() => {
+    setQuests((prevQuests) => {
+      const newQuests = [...prevQuests];
+      newQuests.map((newQuest) => {
+        user.completedQuests?.map((completedQuest) => {
+          let completedQuestId = completedQuest.type;
+          if (completedQuest.stakingType) {
+            completedQuestId = `${completedQuest.type}-${completedQuest.stakingType}`;
+          }
+          if (newQuest.id === completedQuestId) {
             newQuest.completed = true;
           }
-          return newQuest;
-        });
-        return newQuests;
-      })
+        })
+        return newQuest;
+      });
+      return newQuests;
+    })
+  }, [user.completedQuests])
+
+  useEffect(() => {
+    const twitterQuestId = "followFuseOnTwitter";
+    let twitterQuest = quests.find((quest) => quest.id === twitterQuestId);
+    if (twitterQuest) {
+      twitterQuest = { ...twitterQuest };
+      twitterQuest.isLoading = isGeneratingTwitterAuthUrl;
+      dispatch(setSelectedQuest(twitterQuest));
     }
-  }, [user.twitterAccountId])
-  
+  }, [dispatch, isGeneratingTwitterAuthUrl, quests])
+
+  useEffect(() => {
+    const twitterQuestId = "followFuseOnTwitter";
+    let twitterQuest = quests.find((quest) => quest.id === twitterQuestId);
+    if (twitterQuest) {
+      twitterQuest = { ...twitterQuest };
+      twitterQuest.button = isTwitterConnectedError ? "Retry" : "Go to X";
+      dispatch(setSelectedQuest(twitterQuest));
+    }
+  }, [dispatch, isTwitterConnectedError, quests])
+
+  useEffect(() => {
+    if (twitterConnected === "true") {
+      dispatch(retrieve());
+      router.replace(path.HOME);
+    } else if (twitterConnected === "false") {
+      setIsTwitterConnectedError(true);
+      router.replace(path.HOME);
+    }
+  }, [dispatch, router, twitterConnected])
+
+  useEffect(() => {
+    if (twitterAuthUrl) {
+      router.push(twitterAuthUrl);
+    }
+  }, [router, twitterAuthUrl])
+
   return (
     <motion.div
       className="w-8/9 flex flex-col mt-[65px] mb-[187px] xl:mt-[52px] xl:mb-[150px] xl:w-9/12 md:w-9/10 max-w-7xl"
       key="dashboard"
       initial={{
-        x: totalSignupStepCompleted > 0 ? 300 : undefined,
-        y: totalSignupStepCompleted > 0 ? undefined : -300,
+        y: -300,
         opacity: 0
       }}
       animate={{
-        x: totalSignupStepCompleted > 0 ? 0 : undefined,
-        y: totalSignupStepCompleted > 0 ? undefined : 0,
+        y: 0,
         opacity: 1
       }}
       exit={{
-        x: totalSignupStepCompleted > 0 ? -300 : undefined,
-        y: totalSignupStepCompleted > 0 ? undefined : 300,
+        y: 300,
         opacity: 0
       }}
     >
@@ -155,7 +275,7 @@ const Dashboard = () => {
                   setRename(event.target.value);
                 }}
               /> :
-              user.walletAddress === rename ? eclipseAddress(rename) : rename
+              eclipseAddress(rename)
             }
           </h1>
           <Image
@@ -169,7 +289,7 @@ const Dashboard = () => {
         </div>
         <AirdropLive />
       </div>
-      <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col justify-between items-center md:items-start md:gap-[74px] bg-oslo-gray/[.22] rounded-[20px] mt-[54px] mb-[100px] xl:mt-11 xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+      <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col justify-between items-center md:items-start md:gap-[74px] bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
         <div className="flex flex-row justify-between items-center w-1/2 md:w-auto">
           <div className="flex flex-row items-center gap-10">
             <div className="relative">
@@ -180,7 +300,6 @@ const Dashboard = () => {
                     <Image
                       src={crownCircle}
                       alt="crown circle"
-                      className=""
                     />
                     <div className="tooltip-text hidden absolute translate-x-1/2 -translate-y-1/2 top-[calc(-50%-30px)] right-1/2 bg-white p-6 rounded-2xl w-[250px] xl:w-[200px] shadow-lg group-hover:block text-black text-sm font-medium">
                       <p>
@@ -245,12 +364,12 @@ const Dashboard = () => {
             <p className="text-2xl xl:text-xl leading-none text-white font-bold max-w-64 md:max-w-full">
               Welcome to the Fuse Airdrop program
             </p>
-            <Link
-              href={path.ABOUT}
+            <button
               className="transition ease-in-out border border-primary rounded-full xl:text-sm text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 md:px-5 hover:bg-primary hover:text-black"
+              onClick={() => window.open("https://news.fuse.io/fuse-airdrop-program-is-live/", "_blank")}
             >
               Learn More
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -274,7 +393,7 @@ const Dashboard = () => {
                   translateZ="60"
                   className="text-lg xl:text-base text-pale-slate font-medium max-w-[243px]"
                 >
-                  Get 20% of your friend&apos;s total points (Not including)
+                  Get 20% of your friend&apos;s total points
                 </CardItem>
               </div>
               <div className="flex flex-col gap-2.5 xl:gap-2">
@@ -322,7 +441,7 @@ const Dashboard = () => {
                     translateZ="60"
                     className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
                   >
-                    Get 1 point on every $100 you bridge
+                    Get 4 points daily on every 1 USD you bridge to Fuse
                   </CardItem>
                 </div>
                 <div>
@@ -356,8 +475,29 @@ const Dashboard = () => {
           Complete quests to receive points
         </p>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
-          {quests.map((quest) =>
-            <Quest key={quest.title} quest={quest} />
+          {quests.map((quest) => {
+            if (quest.id === "walletAge" && !quest.completed) {
+              return
+            }
+            return (
+              <Quest key={quest.title} quest={quest} />
+            )
+          })}
+        </div>
+      </div>
+      <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
+        <div className="flex items-center gap-2.5">
+          <Image
+            src={fireTransparent}
+            alt="fire"
+          />
+          <p className="text-3xl xl:text-2xl text-white font-semibold">
+            Multiply your points!
+          </p>
+        </div>
+        <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
+          {multiplyQuests.map((multiplyQuest) =>
+            <Quest key={multiplyQuest.title} quest={multiplyQuest} />
           )}
         </div>
       </div>

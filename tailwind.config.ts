@@ -27,6 +27,7 @@ const config: Config = {
         "oslo-gray": "#8E8E8E",
         "ironside-gray": "#606060",
         "smokey-gray": "#6F6F6F",
+        "davy-gray": "#545454",
         "gray-cloud": "#B6B6B6",
         "gray-goose": "#D0D0D0",
         "pale-slate": "#BFBFBF",

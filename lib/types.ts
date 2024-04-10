@@ -16,6 +16,13 @@ export type CreateUser = {
   referralCode: string
 }
 
+export interface CompletedQuest {
+  type: string;
+  stakingType?: string;
+}
+
+export type CompletedQuests = CompletedQuest[];
+
 export interface User {
   id: string,
   walletAddress: string,
@@ -24,6 +31,7 @@ export interface User {
   referralCode: string,
   leaderboardPosition: number
   pointsLastUpdatedAt: string;
+  completedQuests: CompletedQuests;
   walletAgeInDays?: number;
 }
 
@@ -56,14 +64,17 @@ export type EcosystemApp = {
 export type EcosystemApps = EcosystemApp[];
 
 export type Quest = {
+  id: string;
   title: string;
   point: string;
   description: string;
   image: string;
   isActive: boolean;
-  button: string;
-  link: string;
   completed: boolean;
+  button: string;
+  link?: string;
+  isFunction?: boolean;
+  isLoading?: boolean;
 }
 
 export type Quests = Quest[];

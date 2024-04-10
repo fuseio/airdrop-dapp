@@ -7,7 +7,6 @@ import { create, selectUserSlice, setCurrentComponent } from "@/store/userSlice"
 import { useAccount } from "wagmi";
 import { signUpSteps } from "@/lib/helpers";
 import { useEffect } from "react";
-import SignUpDiscord from "./SignUpDiscord";
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
@@ -54,7 +53,6 @@ const SignUp = () => {
       <div className="flex flex-col gap-5 mb-11">
         <SignUpWallet />
         <SignUpTwitter />
-        <SignUpDiscord />
       </div>
       {signupStepCompleted[signUpSteps.MANDATORY] && <SignUpSkip />}
     </motion.div>
