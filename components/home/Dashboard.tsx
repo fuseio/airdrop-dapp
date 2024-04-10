@@ -26,9 +26,9 @@ import ogWallet from "@/assets/og-wallet.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVolt from "@/assets/stake-volt.svg";
 import liquidityVoltage from "@/assets/liquidity-voltage.svg";
-import sayGm from "@/assets/say-gm.svg";
 import meridian from "@/assets/meridian.svg";
 import logx from "@/assets/logx.svg";
+import mirakle from "@/assets/mirakle.svg";
 import { Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -136,6 +136,17 @@ const Dashboard = () => {
       point: "",
       description: "",
       image: logx,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "mirakle",
+      title: "Trade on Mirakle",
+      point: "",
+      description: "",
+      image: mirakle,
       isActive: false,
       completed: false,
       button: "",
