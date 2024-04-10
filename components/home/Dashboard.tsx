@@ -34,7 +34,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
-  const { totalSignupStepCompleted, isGeneratingTwitterAuthUrl, twitterAuthUrl, user, retrieveTime } = useAppSelector(selectUserSlice);
+  const { isGeneratingTwitterAuthUrl, twitterAuthUrl, user, retrieveTime } = useAppSelector(selectUserSlice);
   const router = useRouter();
   const searchParams = useSearchParams();
   const twitterConnected = searchParams.get('twitter-connected');
@@ -85,7 +85,7 @@ const Dashboard = () => {
     },
   ])
 
-  const [multiplyQuests, setMultiplyQuests] = useState<Quests>([
+  const [multiplyQuests] = useState<Quests>([
     {
       id: "staking-sFuse",
       title: "Stake sFuse on Voltage",
@@ -245,7 +245,7 @@ const Dashboard = () => {
       className="w-8/9 flex flex-col mt-[65px] mb-[187px] xl:mt-[52px] xl:mb-[150px] xl:w-9/12 md:w-9/10 max-w-7xl"
       key="dashboard"
       initial={{
-        y: -300,
+        y: 300,
         opacity: 0
       }}
       animate={{
@@ -253,7 +253,7 @@ const Dashboard = () => {
         opacity: 1
       }}
       exit={{
-        y: 300,
+        y: -300,
         opacity: 0
       }}
     >
