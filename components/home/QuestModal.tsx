@@ -89,7 +89,7 @@ const QuestModal = (): JSX.Element => {
                       width={matches ? 20 : 16}
                       height={matches ? 23 : 19}
                     />
-                    <p className="text-lg xl:text-base text-success text-bold">
+                    <p className="text-lg xl:text-base text-success font-bold">
                       {selectedQuest.point}
                     </p>
                   </div>
