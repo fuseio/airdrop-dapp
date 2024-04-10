@@ -300,7 +300,6 @@ const Dashboard = () => {
                     <Image
                       src={crownCircle}
                       alt="crown circle"
-                      className=""
                     />
                     <div className="tooltip-text hidden absolute translate-x-1/2 -translate-y-1/2 top-[calc(-50%-30px)] right-1/2 bg-white p-6 rounded-2xl w-[250px] xl:w-[200px] shadow-lg group-hover:block text-black text-sm font-medium">
                       <p>
