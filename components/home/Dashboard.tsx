@@ -31,6 +31,7 @@ import logx from "@/assets/logx.svg";
 import mirakle from "@/assets/mirakle.svg";
 import { Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
+import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -92,7 +93,7 @@ const Dashboard = () => {
       point: "2 points per sFuse Staked",
       description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
       image: stakeSfuse,
-      isActive: false,
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
@@ -103,7 +104,7 @@ const Dashboard = () => {
       point: "2 points per staked VOLT",
       description: "Stake VOLT tokens to get 2 points daily for each staked token.\nThe longer funds remain in staking, the more points you receive.",
       image: stakeVolt,
-      isActive: false,
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/veVOLT",
