@@ -96,7 +96,7 @@ const Leaderboard = () => {
         </div>
       </motion.div>
       <p className="text-lg xl:text-base text-white font-semibold mt-10 mb-4 xl:mt-8 xl:mb-2.5">
-        Top users of all-time (Showing top 100)
+        Top users of all-time
       </p>
       <Reorder.Group
         axis="y"
