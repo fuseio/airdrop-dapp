@@ -8,6 +8,7 @@ import pointHexagon from "@/assets/point-hexagon.svg";
 import { useMediaQuery } from "usehooks-ts";
 import { screenWidth } from "@/lib/helpers";
 import Spinner from "../ui/Spinner";
+import Markdown from "react-markdown";
 
 const QuestModal = (): JSX.Element => {
   const { isQuestModalOpen, selectedQuest } = useAppSelector(selectUserSlice);
@@ -15,16 +16,10 @@ const QuestModal = (): JSX.Element => {
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
 
   function handleClick(id: string) {
-    if(id === "followFuseOnTwitter") {
+    if (id === "followFuseOnTwitter") {
       dispatch(generateTwitterAuthUrl());
     }
   }
-
-  const renderMultilineText = (text: string) => {
-    return text.split('\n').map((line, index) => {
-      return <p key={index}>{line}</p>;
-    });
-  };
 
   useEffect(() => {
     window.addEventListener("click", (e) => {
@@ -75,8 +70,8 @@ const QuestModal = (): JSX.Element => {
                 <p className="text-2xl xl:text-xl leading-none text-white font-bold mt-8">
                   {selectedQuest.title}
                 </p>
-                <p className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-[339px] mt-5">
-                  {renderMultilineText(selectedQuest.description)}
+                <p className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-[339px] mt-5 whitespace-pre-wrap">
+                  <Markdown>{selectedQuest.description}</Markdown>
                 </p>
               </div>
               <div className="min-h-[104px] xl:min-h-fit mt-2">
@@ -89,7 +84,7 @@ const QuestModal = (): JSX.Element => {
                       width={matches ? 20 : 16}
                       height={matches ? 23 : 19}
                     />
-                    <p className="text-lg xl:text-base text-success font-bold">
+                    <p className="text-lg xl:text-base text-success font-bold max-w-60">
                       {selectedQuest.point}
                     </p>
                   </div>
@@ -97,10 +92,10 @@ const QuestModal = (): JSX.Element => {
                     <button
                       className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
                       onClick={() => {
-                        if(selectedQuest.isFunction){
+                        if (selectedQuest.isFunction) {
                           handleClick(selectedQuest.id);
                         }
-                        if(selectedQuest.link) {
+                        if (selectedQuest.link) {
                           window.open(selectedQuest.link, "_blank")
                         }
                       }}
