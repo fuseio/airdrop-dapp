@@ -79,7 +79,7 @@ function QuestItem({ quest }: QuestProps) {
               <CardItem
                 translateZ="20"
                 as="p"
-                className={`text-lg xl:text-base leading-none ${quest.isActive ? "text-success" : "text-white/50"}`}
+                className={`text-left text-lg xl:text-base leading-none ${quest.isActive ? "text-success" : "text-white/50"}`}
               >
                 {quest.isActive ? quest.point : "Coming Soon"}
               </CardItem>
