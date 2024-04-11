@@ -67,7 +67,7 @@ const Dashboard = () => {
       id: "numOfTokens",
       title: "Holding more than 2 different tokens",
       point: "10 points",
-      description: `Get 10 point by holding more than 2 different tokens on your wallet.\nPoints are awarded automatically when the conditions are met.`,
+      description: "Get 10 point by holding more than 2 different tokens on your wallet.\nPoints are awarded automatically when the conditions are met.",
       image: holdTokens,
       isActive: true,
       completed: false,
@@ -87,6 +87,17 @@ const Dashboard = () => {
   ])
 
   const [multiplyQuests] = useState<Quests>([
+    {
+      id: "liquidityVoltage",
+      title: "Provide liquidity on Voltage",
+      point: "8 points per $1 in the Voltage liquidity pool daily",
+      description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by putting bridged funds in any V3 liquidity pool on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
+      image: liquidityVoltage,
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
+      completed: false,
+      button: "Go to Voltage",
+      link: "https://voltage.finance/pool",
+    },
     {
       id: "staking-sFuse",
       title: "Stake sFuse on Voltage",
@@ -108,17 +119,6 @@ const Dashboard = () => {
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/veVOLT",
-    },
-    {
-      id: "liquidityVoltage",
-      title: "Provide liquidity on Voltage",
-      point: "",
-      description: "",
-      image: liquidityVoltage,
-      isActive: false,
-      completed: false,
-      button: "",
-      link: "",
     },
     {
       id: "meridian",
