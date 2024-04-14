@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { fetchLeaderboardUsers, selectUserSlice, setLeaderboardUsers } from "@/store/userSlice";
-import { motion, Reorder } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import star from "@/assets/star.svg";
 import starGold from "@/assets/star-gold.svg";
@@ -98,95 +98,85 @@ const Leaderboard = () => {
       <p className="text-lg xl:text-base text-white font-semibold mt-10 mb-4 xl:mt-8 xl:mb-2.5">
         Top users of all-time
       </p>
-      <Reorder.Group
-        axis="y"
-        values={leaderboardUsers}
-        onReorder={(newleaderboardUsers) => {
-          dispatch(setLeaderboardUsers(newleaderboardUsers));
-        }}
-      >
-        <div className="flex flex-col gap-2.5 xl:gap-2">
-          {leaderboardUsers.map((leaderboardUser, index) =>
-            <Reorder.Item
-              key={leaderboardUser.id}
-              value={leaderboardUser.points}
-              variants={leaderboardVariants}
-              initial="hidden"
-              animate="show"
-              className="bg-oslo-gray/[.22] rounded-[20px] flex items-center gap-2.5 xl:gap-2 text-white text-lg xl:text-base font-medium px-2.5 py-[22px] xl:px-2 xl:py-4"
-            >
-              <div className="w-[87px] xl:w-[70px] flex justify-center items-center relative">
-                {positionStars[index + 1] &&
-                  <Image
-                    src={positionStars[index + 1].icon}
-                    alt={positionStars[index + 1].name}
-                    width={matches ? 36 : 28}
-                    height={matches ? 36 : 28}
-                  />
-                }
-                <p className="absolute top-[55%] -translate-y-1/2 xl:text-sm leading-none">
-                  {new Intl.NumberFormat().format(index + 1)}
-                </p>
-              </div>
-              <div className="flex items-center pl-2.5 pr-7 xl:pl-2 xl:pr-4">
-                <Avatar size={matches ? 40 : 32} />
-              </div>
-              <div className="grow flex flex-row items-center gap-9 xl:gap-4 md:w-8/12">
-                <p className="md:hidden xl:text-sm">
-                  {leaderboardUser.walletAddress}
-                </p>
-                <p className="hidden md:block xl:text-sm">
-                  {eclipseAddress(leaderboardUser.walletAddress)}
-                </p>
-                {(leaderboardUser.walletAgeInDays && leaderboardUser.walletAgeInDays > daysInYear) &&
-                  <div className="bg-white/10 md:bg-transparent rounded-full flex gap-2.5 xl:gap-2 px-[13px] py-[5px] xl:px-2.5 xl:py-0.5 md:p-0 md:w-[15px] md:h-5">
-                    <Image
-                      src={crown}
-                      alt="crown"
-                      title="OG!"
-                      width={matches ? 24 : 20}
-                      height={matches ? 17 : 13}
-                    />
-                    <p className="md:hidden xl:text-sm">
-                      OG!
-                    </p>
-                  </div>
-                }
-              </div>
-              <div className="w-[84px] xl:w-[67px] flex gap-[7px] xl:gap-1 text-success">
+      <div className="flex flex-col gap-2.5 xl:gap-2">
+        {leaderboardUsers.map((leaderboardUser, index) =>
+          <motion.div
+            key={leaderboardUser.id}
+            variants={leaderboardVariants}
+            initial="hidden"
+            animate="show"
+            className="bg-oslo-gray/[.22] rounded-[20px] flex items-center gap-2.5 xl:gap-2 text-white text-lg xl:text-base font-medium px-2.5 py-[22px] xl:px-2 xl:py-4"
+          >
+            <div className="w-[87px] xl:w-[70px] flex justify-center items-center relative">
+              {positionStars[index + 1] &&
                 <Image
-                  src={star}
-                  alt="star"
-                  width={matches ? 16 : 12}
-                  height={matches ? 16 : 12}
+                  src={positionStars[index + 1].icon}
+                  alt={positionStars[index + 1].name}
+                  width={matches ? 36 : 28}
+                  height={matches ? 36 : 28}
                 />
-                <p className="xl:text-sm">
-                  {leaderboardUser.points % 1 === 0 ? leaderboardUser.points : leaderboardUser.points.toFixed(2)}
-                </p>
-              </div>
-            </Reorder.Item>
-          )}
-          {!isLeaderboardUsersFinished &&
-            <motion.div
-              key={leaderboardUsers.length}
-              viewport={{ once: true, margin: "100px" }}
-              className="flex gap-2.5 xl:gap-2 py-[22px] xl:py-4"
-              onViewportEnter={() => {
-                dispatch(fetchLeaderboardUsers({
-                  queryParams: {
-                    pageSize: PAGE_SIZE,
-                    userIdToStartAfter: lastLeaderboardUserId
-                  }
-                }))
-              }}
-            >
-              {isLeaderboardUsersLoading &&
-                <div className="bg-oslo-gray/[.22] animate-pulse rounded-[20px]"></div>
               }
-            </motion.div>
-          }
-        </div>
-      </Reorder.Group>
+              <p className="absolute top-[55%] -translate-y-1/2 xl:text-sm leading-none">
+                {new Intl.NumberFormat().format(index + 1)}
+              </p>
+            </div>
+            <div className="flex items-center pl-2.5 pr-7 xl:pl-2 xl:pr-4">
+              <Avatar size={matches ? 40 : 32} />
+            </div>
+            <div className="grow flex flex-row items-center gap-9 xl:gap-4 md:w-8/12">
+              <p className="md:hidden xl:text-sm">
+                {leaderboardUser.walletAddress}
+              </p>
+              <p className="hidden md:block xl:text-sm">
+                {eclipseAddress(leaderboardUser.walletAddress)}
+              </p>
+              {(leaderboardUser.walletAgeInDays && leaderboardUser.walletAgeInDays > daysInYear) &&
+                <div className="bg-white/10 md:bg-transparent rounded-full flex gap-2.5 xl:gap-2 px-[13px] py-[5px] xl:px-2.5 xl:py-0.5 md:p-0 md:w-[15px] md:h-5">
+                  <Image
+                    src={crown}
+                    alt="crown"
+                    title="OG!"
+                    width={matches ? 24 : 20}
+                    height={matches ? 17 : 13}
+                  />
+                  <p className="md:hidden xl:text-sm">
+                    OG!
+                  </p>
+                </div>
+              }
+            </div>
+            <div className="w-[84px] xl:w-[67px] flex gap-[7px] xl:gap-1 text-success">
+              <Image
+                src={star}
+                alt="star"
+                width={matches ? 16 : 12}
+                height={matches ? 16 : 12}
+              />
+              <p className="xl:text-sm">
+                {leaderboardUser.points % 1 === 0 ? leaderboardUser.points : leaderboardUser.points.toFixed(2)}
+              </p>
+            </div>
+          </motion.div>
+        )}
+        {!isLeaderboardUsersFinished &&
+          <motion.div
+            key={leaderboardUsers.length}
+            viewport={{ once: true, margin: "100px" }}
+            onViewportEnter={() => {
+              dispatch(fetchLeaderboardUsers({
+                queryParams: {
+                  pageSize: PAGE_SIZE,
+                  userIdToStartAfter: lastLeaderboardUserId
+                }
+              }))
+            }}
+          >
+            {isLeaderboardUsersLoading &&
+              <div className="bg-oslo-gray/[.22] animate-pulse rounded-[20px] h-20 xl:h-16"></div>
+            }
+          </motion.div>
+        }
+      </div>
     </div>
   )
 }
