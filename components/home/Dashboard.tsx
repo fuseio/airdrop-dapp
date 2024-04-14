@@ -177,7 +177,6 @@ const Dashboard = () => {
         dispatch(setRetrieveTime());
       }
     }
-    retrieveUser();
 
     const intervalId = setInterval(() => retrieveUser, RETRIEVE_DIFFERENCE_IN_MILLISECONDS);
 
