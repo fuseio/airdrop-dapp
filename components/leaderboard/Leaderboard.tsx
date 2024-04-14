@@ -130,7 +130,7 @@ const Leaderboard = () => {
               <p className="hidden md:block xl:text-sm">
                 {eclipseAddress(leaderboardUser.walletAddress)}
               </p>
-              {(leaderboardUser.walletAgeInDays && leaderboardUser.walletAgeInDays > daysInYear) &&
+              {(leaderboardUser.walletAgeInDays && leaderboardUser.walletAgeInDays > daysInYear) ?
                 <div className="bg-white/10 md:bg-transparent rounded-full flex gap-2.5 xl:gap-2 px-[13px] py-[5px] xl:px-2.5 xl:py-0.5 md:p-0 md:w-[15px] md:h-5">
                   <Image
                     src={crown}
@@ -143,7 +143,7 @@ const Leaderboard = () => {
                     OG!
                   </p>
                 </div>
-              }
+              : null}
             </div>
             <div className="w-[84px] xl:w-[67px] flex gap-[7px] xl:gap-1 text-success">
               <Image

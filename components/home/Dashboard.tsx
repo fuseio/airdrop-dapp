@@ -5,10 +5,8 @@ import Link from "next/link";
 import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { retrieve, selectUserSlice, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
-import renameIcon from "@/assets/rename.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
 import AirdropLive from "./AirdropLive";
 import Avatar from "@/components/ui/Avatar";
 import star from "@/assets/star.svg";
@@ -39,8 +37,6 @@ const Dashboard = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const twitterConnected = searchParams.get('twitter-connected');
-  const [rename, setRename] = useState(user.walletAddress);
-  const [isRename, setIsRename] = useState(false);
   const [isTwitterConnectedError, setIsTwitterConnectedError] = useState(false);
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
   const { isIntersecting: isUserSectionIntersecting, ref: userSection } = useIntersectionObserver({
@@ -49,7 +45,6 @@ const Dashboard = () => {
   const { isIntersecting: isEarningSectionIntersecting, ref: earningSection } = useIntersectionObserver({
     freezeOnceVisible: true,
   });
-  const MAX_RENAME_CHARACTER = 15;
 
   const [quests, setQuests] = useState<Quests>([
     {
@@ -90,6 +85,7 @@ const Dashboard = () => {
     {
       id: "liquidityVoltage",
       title: "Provide liquidity on Voltage",
+      heading: "Multiply your points by providing liquidity on Voltage DEX",
       point: "8 points per $1 in the Voltage liquidity pool daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by putting bridged funds in any V3 liquidity pool on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: liquidityVoltage,
@@ -101,8 +97,9 @@ const Dashboard = () => {
     {
       id: "staking-sFuse",
       title: "Stake sFuse on Voltage",
-      point: "2 points per sFuse Staked",
-      description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
+      heading: "Multiply your points by staking FUSE token on Voltage DEX",
+      point: "8 points per $1 in the Voltage liquid staking",
+      description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a FUSE token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: stakeSfuse,
       isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
       completed: false,
@@ -112,8 +109,9 @@ const Dashboard = () => {
     {
       id: "staking-veVolt",
       title: "Stake VOLT on Voltage",
-      point: "2 points per staked VOLT",
-      description: "Stake VOLT tokens to get 2 points daily for each staked token.\nThe longer funds remain in staking, the more points you receive.",
+      heading: "Multiply your points by staking VOLT token on Voltage DEX",
+      point: "8 points per $1 in the Voltage liquid staking",
+      description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a VOLT token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: stakeVolt,
       isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
       completed: false,
@@ -159,12 +157,6 @@ const Dashboard = () => {
     const host = !IS_SERVER ? window?.location?.host : ""
     return `${host}?ref=${user.referralCode}`
   }
-
-  const renameRef = useOutsideClick<HTMLInputElement>(() => {
-    if (isRename) {
-      setIsRename(false);
-    }
-  });
 
   useEffect(() => {
     const RETRIEVE_DIFFERENCE_IN_MILLISECONDS = 600000;
@@ -258,35 +250,9 @@ const Dashboard = () => {
       }}
     >
       <div className="flex justify-between items-center">
-        <div className={`group flex items-center gap-9 xl:gap-7 md:gap-2 md:w-auto ${isRename ? "w-full" : "w-auto"}`}>
-          <h1 className={`flex items-center gap-2 text-5xl xl:text-4xl md:text-3xl text-white font-semibold md:max-w-[198px] md:break-all md:truncate md:w-auto ${isRename ? "w-full" : "w-auto"}`}>
-            Hey, {isRename ?
-              <input
-                type="text"
-                name="rename"
-                ref={renameRef}
-                value={rename}
-                autoFocus={isRename}
-                className={`bg-transparent focus:outline-none xl:w-8/12 ${isRename ? "w-full" : "w-auto"}`}
-                onChange={(event) => {
-                  if (event.target.value.length > MAX_RENAME_CHARACTER) {
-                    return;
-                  }
-                  setRename(event.target.value);
-                }}
-              /> :
-              eclipseAddress(rename)
-            }
-          </h1>
-          <Image
-            src={renameIcon}
-            alt="rename"
-            width={31}
-            height={28}
-            className={`transition-all ease-in-out duration-300 cursor-pointer opacity-0 group-hover:opacity-100 hover:opacity-50 ${isRename ? "hidden" : ""}`}
-            onClick={() => setIsRename(true)}
-          />
-        </div>
+        <h1 className="text-5xl xl:text-4xl md:text-3xl text-white font-semibold md:max-w-[198px] md:break-all md:truncate">
+          Hey, {eclipseAddress(user.walletAddress)}
+        </h1>
         <AirdropLive />
       </div>
       <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col justify-between items-center md:items-start md:gap-[74px] bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>

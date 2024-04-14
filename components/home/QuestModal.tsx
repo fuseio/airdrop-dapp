@@ -67,27 +67,27 @@ const QuestModal = (): JSX.Element => {
                     className="pt-2.5"
                   />
                 </div>
-                <p className="text-2xl xl:text-xl leading-none text-white font-bold mt-8">
-                  {selectedQuest.title}
+                <p className="text-2xl xl:text-xl leading-none text-white font-bold mt-8 max-w-md xl:max-w-xs">
+                  {selectedQuest.heading ?? selectedQuest.title}
                 </p>
-                <p className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-[339px] mt-5 whitespace-pre-wrap">
+                <p className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-md xl:max-w-xs mt-5 whitespace-pre-wrap">
                   <Markdown>{selectedQuest.description}</Markdown>
                 </p>
+                <div className="flex items-center gap-2 text-left mt-12 max-w-md xl:max-w-xs">
+                  <Image
+                    src={pointHexagon}
+                    alt="point hexagon"
+                    width={matches ? 20 : 16}
+                    height={matches ? 23 : 19}
+                  />
+                  <p className="text-lg xl:text-base text-success font-bold">
+                    {selectedQuest.point}
+                  </p>
+                </div>
               </div>
-              <div className="min-h-[104px] xl:min-h-fit mt-2">
+              <div className="min-h-[104px] xl:min-h-fit mt-10">
                 <hr className="border-[0.3px] border-davy-gray" />
-                <div className="flex justify-between items-center mt-7 mb-8 xl:mt-6 xl:mb-6.5 px-9 xl:px-7">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src={pointHexagon}
-                      alt="point hexagon"
-                      width={matches ? 20 : 16}
-                      height={matches ? 23 : 19}
-                    />
-                    <p className="text-lg xl:text-base text-success font-bold max-w-60">
-                      {selectedQuest.point}
-                    </p>
-                  </div>
+                <div className="flex justify-end items-center mt-7 mb-8 xl:mt-6 xl:mb-6.5 px-9 xl:px-7">
                   {selectedQuest.button &&
                     <button
                       className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
