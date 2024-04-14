@@ -4,7 +4,7 @@ import Topbar from "@/components/Topbar";
 import { setSelectedNavbar } from "@/store/navbarSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { useEffect } from "react";
-import { selectUserSlice, setHydrate, setLogout } from "@/store/userSlice";
+import { retrieve, selectUserSlice, setHydrate, setLogout } from "@/store/userSlice";
 import Footer from "@/components/Footer";
 import { useAccount } from "wagmi";
 import LeaderboardWrapper from "@/components/leaderboard/LeaderboardWrapper";
@@ -26,6 +26,12 @@ export default function Airdrop() {
       router.push("/");
     }
   }, [isHydrated, isUser, router])
+
+  useEffect(() => {
+    if (isUser) {
+      dispatch(retrieve());
+    }
+  }, [dispatch, isUser])
 
   useEffect(() => {
     if (isDisconnected) {
