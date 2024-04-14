@@ -85,6 +85,7 @@ const Dashboard = () => {
     {
       id: "liquidityVoltage",
       title: "Provide liquidity on Voltage",
+      heading: "Multiply your points by providing liquidity on Voltage DEX",
       point: "8 points per $1 in the Voltage liquidity pool daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by putting bridged funds in any V3 liquidity pool on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: liquidityVoltage,
@@ -96,8 +97,9 @@ const Dashboard = () => {
     {
       id: "staking-sFuse",
       title: "Stake sFuse on Voltage",
-      point: "2 points per sFuse Staked",
-      description: "Stake FUSE tokens to receive liquid staked sFuse tokens and get 2 points daily for each sFuse token. The longer funds remain in staking, the more points you receive.",
+      heading: "Multiply your points by staking FUSE token on Voltage DEX",
+      point: "8 points per $1 in the Voltage liquid staking",
+      description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a FUSE token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: stakeSfuse,
       isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
       completed: false,
@@ -107,8 +109,9 @@ const Dashboard = () => {
     {
       id: "staking-veVolt",
       title: "Stake VOLT on Voltage",
-      point: "2 points per staked VOLT",
-      description: "Stake VOLT tokens to get 2 points daily for each staked token.\nThe longer funds remain in staking, the more points you receive.",
+      heading: "Multiply your points by staking VOLT token on Voltage DEX",
+      point: "8 points per $1 in the Voltage liquid staking",
+      description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a VOLT token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: stakeVolt,
       isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
       completed: false,

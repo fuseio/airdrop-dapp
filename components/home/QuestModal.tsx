@@ -67,8 +67,8 @@ const QuestModal = (): JSX.Element => {
                     className="pt-2.5"
                   />
                 </div>
-                <p className="text-2xl xl:text-xl leading-none text-white font-bold mt-8">
-                  {selectedQuest.title}
+                <p className="text-2xl xl:text-xl leading-none text-white font-bold mt-8 max-w-md xl:max-w-xs">
+                  {selectedQuest.heading ?? selectedQuest.title}
                 </p>
                 <p className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-md xl:max-w-xs mt-5 whitespace-pre-wrap">
                   <Markdown>{selectedQuest.description}</Markdown>
