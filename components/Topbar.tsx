@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import fuseLogo from "@/assets/fuse-logo.svg";
 import NavMenu from "./NavMenu";
 import NavButton from "./NavButton";
 import { useAppSelector } from "@/store/store";
 import { selectNavbarSlice } from "@/store/navbarSlice";
 import Image from "next/image";
+import { selectUserSlice } from "@/store/userSlice";
 
-const menuItems = [
+const visitorMenuItems = [
+  {
+    title: "Airdrop",
+    link: "/",
+  },
+  {
+    title: "Fuse Home",
+    link: "https://www.fuse.io",
+  },
+]
+
+const userMenuItems = [
   {
     title: "Airdrop",
     link: "/",
@@ -24,6 +36,16 @@ const menuItems = [
 const Topbar = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const { selected } = useAppSelector(selectNavbarSlice);
+  const { isUser } = useAppSelector(selectUserSlice);
+  const [menuItems, setMenuItems] = useState(visitorMenuItems);
+
+  useEffect(() => {
+    if (isUser) {
+      setMenuItems(userMenuItems);
+    } else {
+      setMenuItems(visitorMenuItems);
+    }
+  }, [isUser]);
 
   return (
     <nav className="w-full h-20 top-0 flex justify-center py-7 md:h-[32px] md:mt-2 z-[60]">

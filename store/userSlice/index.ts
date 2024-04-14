@@ -308,9 +308,6 @@ const userSlice = createSlice({
       localStorage.removeItem("airdrop-accessToken");
       localStorage.removeItem("airdrop-isUser");
       localStorage.removeItem("airdrop-user");
-      localStorage.removeItem("airdrop-leaderboardUsers");
-      localStorage.removeItem("airdrop-lastLeaderboardUserId");
-      localStorage.removeItem("airdrop-isLeaderboardUsersFinished");
       localStorage.removeItem("airdrop-totalSignupStepCompleted");
       localStorage.removeItem("airdrop-signupStepCompleted");
       localStorage.removeItem("airdrop-retrieveTime");
@@ -320,9 +317,6 @@ const userSlice = createSlice({
       const accessToken = localStorage.getItem("airdrop-accessToken");
       const isUser = localStorage.getItem("airdrop-isUser");
       const user = localStorage.getItem("airdrop-user");
-      const leaderboardUsers = localStorage.getItem("airdrop-leaderboardUsers");
-      const lastLeaderboardUserId = localStorage.getItem("airdrop-lastLeaderboardUserId");
-      const isLeaderboardUsersFinished = localStorage.getItem("airdrop-isLeaderboardUsersFinished");
       const totalSignupStepCompleted = localStorage.getItem("airdrop-totalSignupStepCompleted");
       const signupStepCompleted = localStorage.getItem("airdrop-signupStepCompleted");
       const retrieveTime = localStorage.getItem("airdrop-retrieveTime");
@@ -331,9 +325,6 @@ const userSlice = createSlice({
       state.isAuthenticated = !!accessToken;
       state.isUser = isUser ? JSON.parse(isUser) : false;
       state.user = user ? JSON.parse(user) : initUser;
-      state.leaderboardUsers = leaderboardUsers ? JSON.parse(leaderboardUsers) : [];
-      state.lastLeaderboardUserId = lastLeaderboardUserId ?? "";
-      state.isLeaderboardUsersFinished = isLeaderboardUsersFinished ? JSON.parse(isLeaderboardUsersFinished) : false;
       state.totalSignupStepCompleted = totalSignupStepCompleted ? JSON.parse(totalSignupStepCompleted) : false;
       state.signupStepCompleted = signupStepCompleted ? JSON.parse(signupStepCompleted) : initSignupStepCompleted;
       state.retrieveTime = retrieveTime ? new Date(retrieveTime).toString() : new Date(0).toString();
@@ -391,12 +382,8 @@ const userSlice = createSlice({
 
           state.leaderboardUsers = leaderboardUsers
           state.lastLeaderboardUserId = lastLeaderboardUserId;
-
-          localStorage.setItem("airdrop-leaderboardUsers", JSON.stringify(leaderboardUsers));
-          localStorage.setItem("airdrop-lastLeaderboardUserId", lastLeaderboardUserId);
         } else {
           state.isLeaderboardUsersFinished = true;
-          localStorage.setItem("airdrop-isLeaderboardUsersFinished", "true");
         }
       })
       .addCase(fetchLeaderboardUsers.rejected, (state) => {

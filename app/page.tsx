@@ -4,7 +4,7 @@ import Topbar from "@/components/Topbar";
 import { setSelectedNavbar } from "@/store/navbarSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { useEffect } from "react";
-import { selectUserSlice, setCurrentComponent, setHydrate, setLogout } from "@/store/userSlice";
+import { retrieve, selectUserSlice, setCurrentComponent, setHydrate, setLogout } from "@/store/userSlice";
 import Footer from "@/components/Footer";
 import { useAccount } from "wagmi";
 import { AnimatePresence } from "framer-motion";
@@ -40,6 +40,12 @@ export default function Airdrop() {
       dispatch(setCurrentComponent("dashboard"));
     }
   }, [currentComponent, dispatch, isUser])
+
+  useEffect(() => {
+    if (isUser) {
+      dispatch(retrieve());
+    }
+  }, [dispatch, isUser])
 
   useEffect(() => {
     if (isDisconnected) {
