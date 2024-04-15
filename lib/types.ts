@@ -66,6 +66,7 @@ export type EcosystemApps = EcosystemApp[];
 export type Quest = {
   id: string;
   title: string;
+  heading?: string;
   point: string;
   description: string;
   image: string;
