@@ -84,7 +84,7 @@ const Dashboard = () => {
   const [multiplyQuests] = useState<Quests>([
     {
       id: "liquidityVoltage",
-      title: "Provide liquidity on Voltage",
+      title: "Provide Liquidity to Voltage v3",
       heading: "Multiply your points by providing liquidity on Voltage DEX",
       point: "8 points per $1 in the Voltage liquidity pool daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by putting bridged funds in any V3 liquidity pool on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
@@ -96,7 +96,7 @@ const Dashboard = () => {
     },
     {
       id: "staking-sFuse",
-      title: "Stake sFuse on Voltage",
+      title: "Stake FUSE to get s(FUSE)",
       heading: "Multiply your points by staking FUSE token on Voltage DEX",
       point: "8 points per $1 in the Voltage liquid staking",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a FUSE token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
@@ -108,7 +108,7 @@ const Dashboard = () => {
     },
     {
       id: "staking-veVolt",
-      title: "Stake VOLT on Voltage",
+      title: "Stake VOLT for veVOLT",
       heading: "Multiply your points by staking VOLT token on Voltage DEX",
       point: "8 points per $1 in the Voltage liquid staking",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a VOLT token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
