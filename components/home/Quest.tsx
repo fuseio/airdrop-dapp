@@ -30,7 +30,7 @@ function QuestItem({ quest }: QuestProps) {
           as="button"
           translateZ="40"
           disabled={!quest.isActive || quest.completed}
-          className="relative flex flex-col justify-between gap-2 w-full min-h-[346px] xl:min-h-[277px] p-6 md:p-[30px]"
+          className="relative flex flex-col justify-between gap-2 w-full min-h-[346px] xl:min-h-[277px] py-6 pl-6 pr-2 md:p-[30px]"
           onClick={() => {
             if (!quest.isActive || quest.completed) {
               return;
