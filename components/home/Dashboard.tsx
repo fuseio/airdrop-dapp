@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
-import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
+import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, isFloat, path, screenWidth } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { retrieve, selectUserSlice, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
 import Image from "next/image";
@@ -289,7 +289,7 @@ const Dashboard = () => {
                   className="mb-0.5"
                 />
                 <p className="text-5xl xl:text-4xl md:text-3xl leading-none text-white font-bold">
-                  {user.points}
+                  {isFloat(user.points) ? user.points.toFixed(2) : user.points}
                 </p>
               </div>
               <p className="text-sm xl:text-xs leading-none text-pale-slate font-medium">
