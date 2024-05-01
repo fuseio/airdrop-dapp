@@ -36,6 +36,7 @@ const config: Config = {
         "star-dust": "#9C9C9C",
         "cactus": "#566A57",
         "dune": "#333333",
+        "buff": "#F3F5A3",
       },
       fontFamily: {
         mona: ["var(--font-mona-sans)"],
