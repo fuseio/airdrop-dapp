@@ -21,6 +21,7 @@ import fireTransparent from "@/assets/fire-transparent.svg";
 import followX from "@/assets/follow-x.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
 import ogWallet from "@/assets/og-wallet.svg";
+import joinDiscord from "@/assets/join-discord.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVolt from "@/assets/stake-volt.svg";
 import liquidityVoltage from "@/assets/liquidity-voltage.svg";
@@ -84,6 +85,17 @@ const Dashboard = () => {
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
+    },
+    {
+      id: "joinDiscord",
+      title: "Join Fuse Discord",
+      point: "",
+      description: "",
+      image: joinDiscord,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
     },
   ])
 
