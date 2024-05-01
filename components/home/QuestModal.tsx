@@ -73,7 +73,7 @@ const QuestModal = (): JSX.Element => {
                 <p className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-md xl:max-w-xs mt-5 whitespace-pre-wrap">
                   <Markdown>{selectedQuest.description}</Markdown>
                 </p>
-                <div className="flex items-center gap-2 text-left mt-12 max-w-md xl:max-w-xs">
+                <div className="flex items-center self-start gap-2 text-left mt-12 ml-8 max-w-md xl:max-w-xs">
                   <Image
                     src={pointHexagon}
                     alt="point hexagon"
