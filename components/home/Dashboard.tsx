@@ -4,7 +4,7 @@ import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
 import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, isFloat, path, screenWidth } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { retrieve, selectUserSlice, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
+import { retrieve, selectUserSlice, setIsQuestModalOpen, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import AirdropLive from "./AirdropLive";
@@ -329,8 +329,8 @@ const Dashboard = () => {
         </h1>
         <AirdropLive />
       </div>
-      <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col justify-between items-center md:items-start md:gap-[74px] bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
-        <div className="flex flex-row justify-between items-center w-1/2 md:w-auto">
+      <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row lg:flex-col justify-between items-center lg:items-start lg:gap-[74px] bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+        <div className="flex flex-row justify-between items-center w-1/2 lg:w-auto">
           <div className="flex flex-row items-center gap-10">
             <div className="relative">
               <Avatar size={matches ? 95 : 77} />
@@ -366,8 +366,8 @@ const Dashboard = () => {
                   {isFloat(user.points) ? user.points.toFixed(2) : user.points}
                 </p>
               </div>
-              <div className="flex items-center gap-2">
-                <p className="text-sm xl:text-xs leading-none text-pale-slate font-medium">
+              <div className="flex md:flex-col items-center md:items-start gap-2">
+                <p className="text-sm xl:text-xs leading-none text-pale-slate font-medium xl:max-w-28">
                   Last update {convertTimestampToUTC(user.pointsLastUpdatedAt)}
                 </p>
                 <div className="group relative cursor-pointer flex justify-center items-center mb-1">
@@ -384,7 +384,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <p className="text-lg xl:text-base leading-none text-pale-slate font-medium">
               Your Rank
             </p>
@@ -431,6 +431,62 @@ const Dashboard = () => {
           Start earning points
         </p>
         <div ref={earningSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col gap-[30px] xl:gap-5 ${isEarningSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+          <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56" className="block h-full">
+            <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex md:flex-col justify-between md:gap-4 p-10 xl:p-[30px] w-auto h-full">
+              <div className="flex flex-col justify-between md:gap-2">
+                <div className="flex flex-col gap-4 xl:gap-3 md:gap-2">
+                  <CardItem
+                    as="p"
+                    translateZ="50"
+                    className="text-2xl xl:text-xl text-primary font-bold"
+                  >
+                    Bridge FUSE
+                  </CardItem>
+                  <CardItem
+                    as="p"
+                    translateZ="60"
+                    className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
+                  >
+                    Get 4 points daily on every 1 USD you bridge to Fuse
+                  </CardItem>
+                </div>
+                <div>
+                  <CardItem translateZ="80">
+                    <button
+                      className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-primary hover:text-black"
+                      onClick={() => {
+                        dispatch(setIsQuestModalOpen(true));
+                        dispatch(setSelectedQuest({
+                          id: "bridge",
+                          title: "Bridge FUSE",
+                          point: "4 point per 1 USD bridged",
+                          description: "Get 4 points daily on every 1 USD you bridge to Fuse  \n**Notice the points calculation is updated once every 24 hours**",
+                          image: bridgeFuse,
+                          isActive: true,
+                          completed: false,
+                          button: "Go to the Bridge",
+                          link: "https://console.fuse.io/bridge",
+                        }));
+                      }}
+                    >
+                      Learn More
+                    </button>
+                  </CardItem>
+                </div>
+              </div>
+              <CardItem
+                translateZ="40"
+                className="md:m-auto"
+              >
+                <Image
+                  src={bridgeFuse}
+                  alt="bridge Fuse"
+                  width={matches ? 284 : 227}
+                  height={matches ? 209 : 167}
+                />
+              </CardItem>
+            </CardBody>
+          </CardContainer>
           <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56 md:min-h-[430px]" className="block h-full md:min-h-[430px]">
             <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex flex-col justify-between md:justify-start xl:gap-2 md:gap-12 p-10 xl:p-[30px] w-auto h-full md:min-h-[430px] bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom xl:bg-contain">
               <div className="flex flex-col gap-4 xl:gap-3">
@@ -478,49 +534,6 @@ const Dashboard = () => {
               </div>
             </CardBody>
           </CardContainer>
-          <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56" className="block h-full">
-            <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex md:flex-col justify-between md:gap-4 p-10 xl:p-[30px] w-auto h-full">
-              <div className="flex flex-col justify-between md:gap-2">
-                <div className="flex flex-col gap-4 xl:gap-3 md:gap-2">
-                  <CardItem
-                    as="p"
-                    translateZ="50"
-                    className="text-2xl xl:text-xl text-primary font-bold"
-                  >
-                    Bridge FUSE
-                  </CardItem>
-                  <CardItem
-                    as="p"
-                    translateZ="60"
-                    className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
-                  >
-                    Get 4 points daily on every 1 USD you bridge to Fuse
-                  </CardItem>
-                </div>
-                <div>
-                  <CardItem translateZ="80">
-                    <button
-                      className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-primary hover:text-black"
-                      onClick={() => window.open(path.BRIDGE, "_blank")}
-                    >
-                      Go to Bridge
-                    </button>
-                  </CardItem>
-                </div>
-              </div>
-              <CardItem
-                translateZ="40"
-                className="md:m-auto"
-              >
-                <Image
-                  src={bridgeFuse}
-                  alt="bridge Fuse"
-                  width={matches ? 284 : 227}
-                  height={matches ? 209 : 167}
-                />
-              </CardItem>
-            </CardBody>
-          </CardContainer>
         </div>
       </div>
       <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
@@ -544,7 +557,7 @@ const Dashboard = () => {
             src={fireTransparent}
             alt="fire"
           />
-          <div className="flex gap-9 items-end">
+          <div className="flex md:flex-col items-end md:items-start gap-x-9">
             <p className="text-3xl xl:text-2xl text-white font-semibold">
               Multiply your points!
             </p>
