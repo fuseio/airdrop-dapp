@@ -30,7 +30,7 @@ function QuestItem({ quest }: QuestProps) {
           as="button"
           translateZ="40"
           disabled={!quest.isActive || quest.completed}
-          className="relative flex flex-col justify-between gap-2 w-full min-h-[346px] xl:min-h-[277px] py-6 pl-6 pr-2 md:p-[30px]"
+          className={`relative flex flex-col justify-between gap-2 w-full min-h-[346px] xl:min-h-[277px] md:p-[30px] ${quest.padding ?? "p-6"}`}
           onClick={() => {
             if (!quest.isActive || quest.completed) {
               return;
@@ -48,13 +48,21 @@ function QuestItem({ quest }: QuestProps) {
             </CardItem>
           </div>
           {quest.completed &&
-            <Image
-              src={checkBackground}
-              alt="check"
-              width={matches ? 47 : 38}
-              height={matches ? 47 : 38}
-              className="absolute top-[22px] right-5"
-            />
+            <CardItem translateZ="100" className="absolute top-[22px] right-5">
+              <div className="group relative cursor-pointer flex justify-center items-center">
+                <Image
+                  src={checkBackground}
+                  alt="check"
+                  width={matches ? 47 : 38}
+                  height={matches ? 47 : 38}
+                />
+                <div className="tooltip-text hidden bottom-16 absolute bg-white p-4 rounded-2xl w-[130px] shadow-lg group-hover:block text-black text-sm font-medium">
+                  <p>
+                    Task complete
+                  </p>
+                </div>
+              </div>
+            </CardItem>
           }
           <div className="flex flex-col gap-3.5">
             <CardItem

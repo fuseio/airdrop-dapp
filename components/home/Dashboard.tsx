@@ -24,12 +24,18 @@ import ogWallet from "@/assets/og-wallet.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVolt from "@/assets/stake-volt.svg";
 import liquidityVoltage from "@/assets/liquidity-voltage.svg";
+import sayGm from "@/assets/say-gm.svg";
 import meridian from "@/assets/meridian.svg";
 import logx from "@/assets/logx.svg";
+import bitazza from "@/assets/bitazza.svg";
+import zneakrz from "@/assets/zneakrz.svg";
 import mirakle from "@/assets/mirakle.svg";
+import joinTelegram from "@/assets/join-telegram.svg";
+import voltApp from "@/assets/volt-app.svg";
 import { Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
+import questionMarkCircle from "@/assets/question-mark-circle.svg";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -93,6 +99,7 @@ const Dashboard = () => {
       completed: false,
       button: "Go to Voltage",
       link: "https://voltage.finance/pool",
+      padding: "py-6 pl-6 pr-2",
     },
     {
       id: "staking-sFuse",
@@ -119,6 +126,17 @@ const Dashboard = () => {
       link: "https://app.voltage.finance/stake/veVOLT",
     },
     {
+      id: "say-gm",
+      title: "Say GM in Discord",
+      point: "",
+      description: "",
+      image: sayGm,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
       id: "meridian",
       title: "Lend on Meridian",
       point: "",
@@ -141,11 +159,55 @@ const Dashboard = () => {
       link: "",
     },
     {
+      id: "bitazza",
+      title: "Create a wallet on Bitazza",
+      point: "",
+      description: "",
+      image: bitazza,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "zneakrz",
+      title: "Create a wallet on Zneakrz",
+      point: "",
+      description: "",
+      image: zneakrz,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
       id: "mirakle",
       title: "Trade on Mirakle",
       point: "",
       description: "",
       image: mirakle,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "joinTelegram",
+      title: "Join Fuse Telegram",
+      point: "",
+      description: "",
+      image: joinTelegram,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "voltApp",
+      title: "Deposit at least 10$ to the Volt App",
+      point: "",
+      description: "",
+      image: voltApp,
       isActive: false,
       completed: false,
       button: "",
@@ -292,9 +354,22 @@ const Dashboard = () => {
                   {isFloat(user.points) ? user.points.toFixed(2) : user.points}
                 </p>
               </div>
-              <p className="text-sm xl:text-xs leading-none text-pale-slate font-medium">
-                Last update {convertTimestampToUTC(user.pointsLastUpdatedAt)}
-              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-sm xl:text-xs leading-none text-pale-slate font-medium">
+                  Last update {convertTimestampToUTC(user.pointsLastUpdatedAt)}
+                </p>
+                <div className="group relative cursor-pointer flex justify-center items-center mb-1">
+                  <Image
+                    src={questionMarkCircle}
+                    alt="question mark"
+                  />
+                  <div className="tooltip-text-up hidden top-8 absolute bg-white p-6 rounded-2xl w-[290px] shadow-lg group-hover:block text-black text-sm font-medium">
+                    <p>
+                      Points calculation updated every 24 hours. Next update 12:00 UTC
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="md:hidden">
@@ -457,9 +532,14 @@ const Dashboard = () => {
             src={fireTransparent}
             alt="fire"
           />
-          <p className="text-3xl xl:text-2xl text-white font-semibold">
-            Multiply your points!
-          </p>
+          <div className="flex gap-9 items-end">
+            <p className="text-3xl xl:text-2xl text-white font-semibold">
+              Multiply your points!
+            </p>
+            <p className="text-lg text-buff">
+              <span className="font-bold">Notice</span> you have 0 points to multiply! please bridge to receive points
+            </p>
+          </div>
         </div>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
           {multiplyQuests.map((multiplyQuest) =>
