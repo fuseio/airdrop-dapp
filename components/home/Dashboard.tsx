@@ -140,7 +140,7 @@ const Dashboard = () => {
       point: "8 points per $1 in pool daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by putting bridged funds in any V3 liquidity pool on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: liquidityVoltage,
-      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
+      isActive: true,
       completed: false,
       button: "Go to Voltage",
       link: "https://voltage.finance/pool",
@@ -153,7 +153,7 @@ const Dashboard = () => {
       point: "8 points per $1 staked daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a FUSE token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: stakeSfuse,
-      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
+      isActive: true,
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
@@ -165,7 +165,7 @@ const Dashboard = () => {
       point: "8 points per $1 staked daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a VOLT token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: stakeVolt,
-      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
+      isActive: true,
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/veVOLT",
@@ -370,17 +370,19 @@ const Dashboard = () => {
                 <p className="text-sm xl:text-xs leading-none text-pale-slate font-medium xl:max-w-28">
                   Last update {convertTimestampToUTC(user.pointsLastUpdatedAt)}
                 </p>
-                <div className="group relative cursor-pointer flex justify-center items-center mb-1">
-                  <Image
-                    src={questionMarkCircle}
-                    alt="question mark"
-                  />
-                  <div className="tooltip-text-up hidden top-8 absolute bg-white p-6 rounded-2xl w-[290px] shadow-lg group-hover:block text-black text-sm font-medium">
-                    <p>
-                      Points calculation updated every 24 hours. Next update 12:00 UTC
-                    </p>
+                {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
+                  <div className="group relative cursor-pointer flex justify-center items-center mb-1">
+                    <Image
+                      src={questionMarkCircle}
+                      alt="question mark"
+                    />
+                    <div className="tooltip-text-up hidden top-8 absolute bg-white p-6 rounded-2xl w-[290px] shadow-lg group-hover:block text-black text-sm font-medium">
+                      <p>
+                        Points calculation updated every 24 hours. Next update 12:00 UTC
+                      </p>
+                    </div>
                   </div>
-                </div>
+                }
               </div>
             </div>
           </div>
@@ -561,9 +563,11 @@ const Dashboard = () => {
             <p className="text-3xl xl:text-2xl text-white font-semibold">
               Multiply your points!
             </p>
-            <p className="text-lg text-buff">
-              <span className="font-bold">Notice</span> you have 0 points to multiply! please bridge to receive points
-            </p>
+            {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
+              <p className="text-lg text-buff">
+                <span className="font-bold">Notice</span> you have 0 points to multiply! please bridge to receive points
+              </p>
+            }
           </div>
         </div>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
