@@ -76,6 +76,7 @@ export type Quest = {
   link?: string;
   isFunction?: boolean;
   isLoading?: boolean;
+  padding?: string;
 }
 
 export type Quests = Quest[];

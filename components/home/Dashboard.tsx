@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
-import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, path, screenWidth } from "@/lib/helpers";
+import { IS_SERVER, convertTimestampToUTC, daysInYear, eclipseAddress, isFloat, path, screenWidth } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { retrieve, selectUserSlice, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
+import { retrieve, selectUserSlice, setIsQuestModalOpen, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import AirdropLive from "./AirdropLive";
@@ -21,15 +21,22 @@ import fireTransparent from "@/assets/fire-transparent.svg";
 import followX from "@/assets/follow-x.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
 import ogWallet from "@/assets/og-wallet.svg";
+import joinDiscord from "@/assets/join-discord.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVolt from "@/assets/stake-volt.svg";
 import liquidityVoltage from "@/assets/liquidity-voltage.svg";
+import sayGm from "@/assets/say-gm.svg";
 import meridian from "@/assets/meridian.svg";
 import logx from "@/assets/logx.svg";
+import bitazza from "@/assets/bitazza.svg";
+import zneakrz from "@/assets/zneakrz.svg";
 import mirakle from "@/assets/mirakle.svg";
+import joinTelegram from "@/assets/join-telegram.svg";
+import voltApp from "@/assets/volt-app.svg";
 import { Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
+import questionMarkCircle from "@/assets/question-mark-circle.svg";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -79,6 +86,50 @@ const Dashboard = () => {
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
     },
+    {
+      id: "joinDiscord",
+      title: "Join Fuse Discord",
+      point: "",
+      description: "",
+      image: joinDiscord,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "say-gm",
+      title: "Say GM in Discord",
+      point: "",
+      description: "",
+      image: sayGm,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "joinTelegram",
+      title: "Join Fuse Telegram",
+      point: "",
+      description: "",
+      image: joinTelegram,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "voltApp",
+      title: "Deposit at least 10$ to the Volt App",
+      point: "",
+      description: "",
+      image: voltApp,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
   ])
 
   const [multiplyQuests] = useState<Quests>([
@@ -86,22 +137,23 @@ const Dashboard = () => {
       id: "liquidityVoltage",
       title: "Provide Liquidity to Voltage v3",
       heading: "Multiply your points by providing liquidity on Voltage DEX",
-      point: "8 points per $1 in the Voltage liquidity pool daily",
+      point: "8 points per $1 in pool daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by putting bridged funds in any V3 liquidity pool on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: liquidityVoltage,
-      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
+      isActive: true,
       completed: false,
       button: "Go to Voltage",
       link: "https://voltage.finance/pool",
+      padding: "py-6 pl-6 pr-2",
     },
     {
       id: "staking-sFuse",
       title: "Stake FUSE to get s(FUSE)",
       heading: "Multiply your points by staking FUSE token on Voltage DEX",
-      point: "8 points per $1 in the Voltage liquid staking",
+      point: "8 points per $1 staked daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a FUSE token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: stakeSfuse,
-      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
+      isActive: true,
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
@@ -110,10 +162,10 @@ const Dashboard = () => {
       id: "staking-veVolt",
       title: "Stake VOLT for veVOLT",
       heading: "Multiply your points by staking VOLT token on Voltage DEX",
-      point: "8 points per $1 in the Voltage liquid staking",
+      point: "8 points per $1 staked daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a VOLT token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
       image: stakeVolt,
-      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging" ? true : false,
+      isActive: true,
       completed: false,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/veVOLT",
@@ -135,6 +187,28 @@ const Dashboard = () => {
       point: "",
       description: "",
       image: logx,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "bitazza",
+      title: "Create a wallet on Bitazza",
+      point: "",
+      description: "",
+      image: bitazza,
+      isActive: false,
+      completed: false,
+      button: "",
+      link: "",
+    },
+    {
+      id: "zneakrz",
+      title: "Create a wallet on Zneakrz",
+      point: "",
+      description: "",
+      image: zneakrz,
       isActive: false,
       completed: false,
       button: "",
@@ -255,8 +329,8 @@ const Dashboard = () => {
         </h1>
         <AirdropLive />
       </div>
-      <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col justify-between items-center md:items-start md:gap-[74px] bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
-        <div className="flex flex-row justify-between items-center w-1/2 md:w-auto">
+      <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row lg:flex-col justify-between items-center lg:items-start lg:gap-[74px] bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+        <div className="flex flex-row justify-between items-center w-1/2 lg:w-auto">
           <div className="flex flex-row items-center gap-10">
             <div className="relative">
               <Avatar size={matches ? 95 : 77} />
@@ -289,15 +363,30 @@ const Dashboard = () => {
                   className="mb-0.5"
                 />
                 <p className="text-5xl xl:text-4xl md:text-3xl leading-none text-white font-bold">
-                  {user.points}
+                  {isFloat(user.points) ? user.points.toFixed(2) : user.points}
                 </p>
               </div>
-              <p className="text-sm xl:text-xs leading-none text-pale-slate font-medium">
-                Last update {convertTimestampToUTC(user.pointsLastUpdatedAt)}
-              </p>
+              <div className="flex md:flex-col items-center md:items-start gap-2">
+                <p className="text-sm xl:text-xs leading-none text-pale-slate font-medium xl:max-w-28">
+                  Last update {convertTimestampToUTC(user.pointsLastUpdatedAt)}
+                </p>
+                {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
+                  <div className="group relative cursor-pointer flex justify-center items-center mb-1">
+                    <Image
+                      src={questionMarkCircle}
+                      alt="question mark"
+                    />
+                    <div className="tooltip-text-up hidden top-8 absolute bg-white p-6 rounded-2xl w-[290px] shadow-lg group-hover:block text-black text-sm font-medium">
+                      <p>
+                        Points calculation updated every 24 hours. Next update 12:00 UTC
+                      </p>
+                    </div>
+                  </div>
+                }
+              </div>
             </div>
           </div>
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <p className="text-lg xl:text-base leading-none text-pale-slate font-medium">
               Your Rank
             </p>
@@ -344,6 +433,62 @@ const Dashboard = () => {
           Start earning points
         </p>
         <div ref={earningSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col gap-[30px] xl:gap-5 ${isEarningSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+          <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56" className="block h-full">
+            <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex md:flex-col justify-between md:gap-4 p-10 xl:p-[30px] w-auto h-full">
+              <div className="flex flex-col justify-between md:gap-2">
+                <div className="flex flex-col gap-4 xl:gap-3 md:gap-2">
+                  <CardItem
+                    as="p"
+                    translateZ="50"
+                    className="text-2xl xl:text-xl text-primary font-bold"
+                  >
+                    Bridge FUSE
+                  </CardItem>
+                  <CardItem
+                    as="p"
+                    translateZ="60"
+                    className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
+                  >
+                    Get 4 points daily on every 1 USD you bridge to Fuse
+                  </CardItem>
+                </div>
+                <div>
+                  <CardItem translateZ="80">
+                    <button
+                      className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-primary hover:text-black"
+                      onClick={() => {
+                        dispatch(setIsQuestModalOpen(true));
+                        dispatch(setSelectedQuest({
+                          id: "bridge",
+                          title: "Bridge FUSE",
+                          point: "4 point per 1 USD bridged",
+                          description: "Get 4 points daily on every 1 USD you bridge to Fuse  \n**Notice the points calculation is updated once every 24 hours**",
+                          image: bridgeFuse,
+                          isActive: true,
+                          completed: false,
+                          button: "Go to the Bridge",
+                          link: "https://console.fuse.io/bridge",
+                        }));
+                      }}
+                    >
+                      Learn More
+                    </button>
+                  </CardItem>
+                </div>
+              </div>
+              <CardItem
+                translateZ="40"
+                className="md:m-auto"
+              >
+                <Image
+                  src={bridgeFuse}
+                  alt="bridge Fuse"
+                  width={matches ? 284 : 227}
+                  height={matches ? 209 : 167}
+                />
+              </CardItem>
+            </CardBody>
+          </CardContainer>
           <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56 md:min-h-[430px]" className="block h-full md:min-h-[430px]">
             <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex flex-col justify-between md:justify-start xl:gap-2 md:gap-12 p-10 xl:p-[30px] w-auto h-full md:min-h-[430px] bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom xl:bg-contain">
               <div className="flex flex-col gap-4 xl:gap-3">
@@ -391,49 +536,6 @@ const Dashboard = () => {
               </div>
             </CardBody>
           </CardContainer>
-          <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56" className="block h-full">
-            <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex md:flex-col justify-between md:gap-4 p-10 xl:p-[30px] w-auto h-full">
-              <div className="flex flex-col justify-between md:gap-2">
-                <div className="flex flex-col gap-4 xl:gap-3 md:gap-2">
-                  <CardItem
-                    as="p"
-                    translateZ="50"
-                    className="text-2xl xl:text-xl text-primary font-bold"
-                  >
-                    Bridge FUSE
-                  </CardItem>
-                  <CardItem
-                    as="p"
-                    translateZ="60"
-                    className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
-                  >
-                    Get 4 points daily on every 1 USD you bridge to Fuse
-                  </CardItem>
-                </div>
-                <div>
-                  <CardItem translateZ="80">
-                    <button
-                      className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-primary hover:text-black"
-                      onClick={() => window.open(path.BRIDGE, "_blank")}
-                    >
-                      Go to Bridge
-                    </button>
-                  </CardItem>
-                </div>
-              </div>
-              <CardItem
-                translateZ="40"
-                className="md:m-auto"
-              >
-                <Image
-                  src={bridgeFuse}
-                  alt="bridge Fuse"
-                  width={matches ? 284 : 227}
-                  height={matches ? 209 : 167}
-                />
-              </CardItem>
-            </CardBody>
-          </CardContainer>
         </div>
       </div>
       <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
@@ -457,9 +559,16 @@ const Dashboard = () => {
             src={fireTransparent}
             alt="fire"
           />
-          <p className="text-3xl xl:text-2xl text-white font-semibold">
-            Multiply your points!
-          </p>
+          <div className="flex md:flex-col items-end md:items-start gap-x-9">
+            <p className="text-3xl xl:text-2xl text-white font-semibold">
+              Multiply your points!
+            </p>
+            {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
+              <p className="text-lg text-buff">
+                <span className="font-bold">Notice</span> you have 0 points to multiply! please bridge to receive points
+              </p>
+            }
+          </div>
         </div>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
           {multiplyQuests.map((multiplyQuest) =>
