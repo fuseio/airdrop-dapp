@@ -565,7 +565,7 @@ const Dashboard = () => {
             </p>
             {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
               <p className="text-lg text-buff">
-                <span className="font-bold">Notice</span> you have 0 points to multiply! please bridge to receive points
+                <span className="font-bold">Notice</span> you have 0 points to multiply! Please bridge to receive points.
               </p>
             }
           </div>
