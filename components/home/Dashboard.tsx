@@ -378,7 +378,7 @@ const Dashboard = () => {
                     />
                     <div className="tooltip-text-up hidden top-8 absolute bg-white p-6 rounded-2xl w-[290px] shadow-lg group-hover:block text-black text-sm font-medium">
                       <p>
-                        Points calculation updated every 24 hours. Next update 12:00 UTC
+                        Points calculation updated every 24 hours. Next update {convertTimestampToUTC(user.nextRewardDistributionTime)}
                       </p>
                     </div>
                   </div>
@@ -565,7 +565,7 @@ const Dashboard = () => {
             </p>
             {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
               <p className="text-lg text-buff">
-                <span className="font-bold">Notice</span> you have 0 points to multiply! please bridge to receive points
+                <span className="font-bold">Notice</span> you have 0 points to multiply! Please bridge to receive points.
               </p>
             }
           </div>
