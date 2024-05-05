@@ -126,7 +126,7 @@ const Dashboard = () => {
       point: "500 points",
       description: "To get 500 points you need to take 3 simple steps:  \n**Step 1**\nInstall the Volt app to your mobile device  \n**Step 2**\nCreate a wallet  \n**Step 3**\nBuy at least $10 in USDC or FUSE tokens through one of the fiat-on-ramp services.",
       image: voltApp,
-      isActive: false,
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
       completed: false,
       button: "Get Volt app",
       link: "https://voltage.finance/mobile",
