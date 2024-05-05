@@ -15,6 +15,7 @@ const initUser: User = {
   pointsLastUpdatedAt: "",
   completedQuests: [],
   walletAgeInDays: 0,
+  nextRewardDistributionTime: "",
 }
 
 const initQuest: Quest = {

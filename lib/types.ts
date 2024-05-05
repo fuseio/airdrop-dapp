@@ -33,6 +33,7 @@ export interface User {
   pointsLastUpdatedAt: string;
   completedQuests: CompletedQuests;
   walletAgeInDays?: number;
+  nextRewardDistributionTime: string;
 }
 
 export interface LeaderboardUser {
