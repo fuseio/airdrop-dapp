@@ -60,7 +60,7 @@ const QuestModal = (): JSX.Element => {
                 />
               </div>
               <div className="flex flex-col items-center text-center">
-                <div className="flex justify-center items-center h-[210px] xl:h-auto">
+                <div className={`flex justify-center items-center ${selectedQuest.imageHeight ?? "h-[210px]"} xl:h-auto`}>
                   <Image
                     src={selectedQuest.image}
                     alt={selectedQuest.title}

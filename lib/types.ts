@@ -78,6 +78,7 @@ export type Quest = {
   isFunction?: boolean;
   isLoading?: boolean;
   padding?: string;
+  imageHeight?: string;
 }
 
 export type Quests = Quest[];
