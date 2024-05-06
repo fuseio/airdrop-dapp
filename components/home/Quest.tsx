@@ -11,6 +11,7 @@ import { screenWidth } from "@/lib/helpers";
 import { useAppDispatch } from "@/store/store";
 import { setIsQuestModalOpen, setSelectedQuest } from "@/store/userSlice";
 import checkBackground from "@/assets/check-background.svg";
+import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
 
 type QuestProps = {
   quest: Quest;
@@ -64,7 +65,7 @@ function QuestItem({ quest }: QuestProps) {
               </div>
             </CardItem>
           }
-          {Boolean(quest.accumulatedPoints) &&
+          {(NEXT_PUBLIC_ENVIRONMENT === "staging" && Boolean(quest.accumulatedPoints)) &&
             <CardItem translateZ="100" className="absolute top-[22px] right-5">
               <div className="group relative cursor-pointer flex justify-center items-center">
                 <div className="bg-white rounded-full flex justify-center items-center min-w-12 min-h-12 text-center text-sm leading-none text-secondary font-bold">
