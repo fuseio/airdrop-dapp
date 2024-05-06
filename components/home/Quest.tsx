@@ -64,6 +64,20 @@ function QuestItem({ quest }: QuestProps) {
               </div>
             </CardItem>
           }
+          {Boolean(quest.accumulatedPoints) &&
+            <CardItem translateZ="100" className="absolute top-[22px] right-5">
+              <div className="group relative cursor-pointer flex justify-center items-center">
+                <div className="bg-white rounded-full flex justify-center items-center min-w-12 min-h-12 text-center text-sm leading-none text-secondary font-bold">
+                  {quest.accumulatedPoints}
+                </div>
+                <div className="tooltip-text hidden bottom-14 absolute bg-white pl-4 py-3.5 pr-2.5 rounded-2xl w-48 shadow-lg group-hover:block text-black text-sm font-medium">
+                  <p>
+                    Your current daily points
+                  </p>
+                </div>
+              </div>
+            </CardItem>
+          }
           <div className="flex flex-col gap-3.5">
             <CardItem
               translateZ="50"

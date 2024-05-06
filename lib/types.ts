@@ -79,6 +79,7 @@ export type Quest = {
   isLoading?: boolean;
   padding?: string;
   imageHeight?: string;
+  accumulatedPoints?: number;
 }
 
 export type Quests = Quest[];

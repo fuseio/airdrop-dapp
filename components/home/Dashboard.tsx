@@ -146,6 +146,7 @@ const Dashboard = () => {
       button: "Go to Voltage",
       link: "https://voltage.finance/pool",
       padding: "py-6 pl-6 pr-2",
+      accumulatedPoints: 3256,
     },
     {
       id: "staking-sFuse",
