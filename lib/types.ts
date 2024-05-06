@@ -78,6 +78,8 @@ export type Quest = {
   isFunction?: boolean;
   isLoading?: boolean;
   padding?: string;
+  imageHeight?: string;
+  accumulatedPoints?: number;
 }
 
 export type Quests = Quest[];
