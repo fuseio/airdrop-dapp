@@ -175,13 +175,15 @@ const Dashboard = () => {
     {
       id: "meridian",
       title: "Lend on Meridian",
-      point: "",
-      description: "",
+      point: "8 points per $1 in pool daily",
+      heading: "Multiply your points by lend your funds on Meridian",
+      description: "To multiply you points you need to take 3 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nGo to Meridian Finance lending markets  \n**Step 3**\nDouble your points by lending bridged funds in any market = 8 points per $1 of the bridged funds, available once per day.",
       image: meridian,
-      isActive: false,
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
       completed: false,
-      button: "",
-      link: "",
+      button: "Go to Meridian Lend",
+      link: "https://lend.meridianfinance.net/markets/",
+      imageHeight: "h-[100px]"
     },
     {
       id: "logX",
