@@ -535,7 +535,6 @@ const Dashboard = () => {
                       className="transition ease-in-out cursor-pointer hover:opacity-60"
                     />
                   </CardItem>
-
                 </div>
               </div>
             </CardBody>
