@@ -122,13 +122,14 @@ const Dashboard = () => {
     {
       id: "voltApp",
       title: "Deposit at least 10$ to the Volt App",
-      point: "",
-      description: "",
+      heading: "Buy $10 or more through the fiat-on-ramp",
+      point: "500 points",
+      description: "To get 500 points you need to take 3 simple steps:  \n**Step 1**\nInstall the Volt app to your mobile device  \n**Step 2**\nCreate a wallet  \n**Step 3**\nBuy at least $10 in USDC or FUSE tokens through one of the fiat-on-ramp services.",
       image: voltApp,
-      isActive: false,
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
       completed: false,
-      button: "",
-      link: "",
+      button: "Get Volt app",
+      link: "https://voltage.finance/mobile",
     },
   ])
 
@@ -145,6 +146,7 @@ const Dashboard = () => {
       button: "Go to Voltage",
       link: "https://voltage.finance/pool",
       padding: "py-6 pl-6 pr-2",
+      accumulatedPoints: 3256,
     },
     {
       id: "staking-sFuse",
@@ -183,14 +185,16 @@ const Dashboard = () => {
     },
     {
       id: "logX",
-      title: "Trade on LogX",
-      point: "",
-      description: "",
+      title: "Provide Liquidity on LogX",
+      heading: "Multiply your points by providing Liquidity on LogX",
+      point: "8 points per $1 in pool daily",
+      description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge USDT to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nGo to LogX and buy LLP tokens  \n**Step 3**\nDouble your points by staking LLP on LogX Liquidity Pool  \n**Bonus**\nEarn protocol income and claimable USDT rewards.",
       image: logx,
-      isActive: false,
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
       completed: false,
-      button: "",
-      link: "",
+      button: "Go to LogX",
+      link: "https://app.logx.trade/liquidity",
+      imageHeight: "h-[100px]"
     },
     {
       id: "bitazza",
@@ -378,7 +382,7 @@ const Dashboard = () => {
                     />
                     <div className="tooltip-text-up hidden top-8 absolute bg-white p-6 rounded-2xl w-[290px] shadow-lg group-hover:block text-black text-sm font-medium">
                       <p>
-                        Points calculation updated every 24 hours. Next update 12:00 UTC
+                        Points calculation updated every 24 hours. Next update {convertTimestampToUTC(user.nextRewardDistributionTime)}
                       </p>
                     </div>
                   </div>
@@ -531,7 +535,6 @@ const Dashboard = () => {
                       className="transition ease-in-out cursor-pointer hover:opacity-60"
                     />
                   </CardItem>
-
                 </div>
               </div>
             </CardBody>
@@ -565,7 +568,7 @@ const Dashboard = () => {
             </p>
             {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
               <p className="text-lg text-buff">
-                <span className="font-bold">Notice</span> you have 0 points to multiply! please bridge to receive points
+                <span className="font-bold">Notice</span> you have 0 points to multiply! Please bridge to receive points.
               </p>
             }
           </div>

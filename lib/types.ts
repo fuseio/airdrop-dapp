@@ -33,6 +33,7 @@ export interface User {
   pointsLastUpdatedAt: string;
   completedQuests: CompletedQuests;
   walletAgeInDays?: number;
+  nextRewardDistributionTime: string;
 }
 
 export interface LeaderboardUser {
@@ -77,6 +78,8 @@ export type Quest = {
   isFunction?: boolean;
   isLoading?: boolean;
   padding?: string;
+  imageHeight?: string;
+  accumulatedPoints?: number;
 }
 
 export type Quests = Quest[];
