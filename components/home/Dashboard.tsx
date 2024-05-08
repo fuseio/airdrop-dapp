@@ -190,7 +190,7 @@ const Dashboard = () => {
       title: "Provide Liquidity on LogX",
       heading: "Multiply your points by providing Liquidity on LogX",
       point: "8 points per $1 in pool daily",
-      description: "Follow these steps:  \n**Step 1**\nBridge USDT to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nGo to Log and buy LLP tokens  \n**Step 3**\nDouble your points by staking LLP on LogX Liquidity Pool.  \n**Bonus**\nEarn protocol income and claimable USDT rewards.",
+      description: "Follow these steps:  \n**Step 1**\nBridge USDT to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nGo to LogX and buy LLP tokens  \n**Step 3**\nDouble your points by staking LLP on LogX Liquidity Pool.  \n**Bonus**\nEarn protocol income and claimable USDT rewards.",
       image: logx,
       isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
       completed: false,
