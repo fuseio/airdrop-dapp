@@ -527,7 +527,7 @@ const Dashboard = () => {
             <p className="text-3xl xl:text-2xl text-white font-semibold">
               Multiply your points!
             </p>
-            {user.points === 0 &&
+            {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
               <p className="text-lg text-buff">
                 <span className="font-bold">Notice</span> you have 0 points to multiply! Please bridge to receive points.
               </p>
