@@ -66,6 +66,20 @@ const Dashboard = () => {
       isFunction: true,
     },
     {
+      id: "joinTelegram",
+      title: "Join Fuse Telegram",
+      heading: "Join Fuse Telegram channel",
+      point: "5 points",
+      description: "Get 5 point for joining an official Fuse Network Telegram channel  \n**Verify the quest after completing it on Layer3**",
+      image: joinTelegram,
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
+      completed: false,
+      button: "Go to Quest",
+      link: "https://app.layer3.xyz/quests/join-fuse-telegram",
+      buttonTwo: "Verify Quest",
+      linkTwo: "",
+    },
+    {
       id: "numOfTokens",
       title: "Holding more than 2 different tokens",
       point: "10 points",
@@ -103,17 +117,6 @@ const Dashboard = () => {
       point: "",
       description: "",
       image: sayGm,
-      isActive: false,
-      completed: false,
-      button: "",
-      link: "",
-    },
-    {
-      id: "joinTelegram",
-      title: "Join Fuse Telegram",
-      point: "",
-      description: "",
-      image: joinTelegram,
       isActive: false,
       completed: false,
       button: "",
@@ -467,8 +470,10 @@ const Dashboard = () => {
                         dispatch(setSelectedQuest({
                           id: "bridge",
                           title: "Bridge FUSE",
+                          heading: "Bridge to Fuse Network",
                           point: "4 point per 1 USD bridged",
-                          description: "Get 4 points daily on every 1 USD you bridge to Fuse  \n**Notice the points calculation is updated once every 24 hours**",
+                          description: "Get 4 points daily for reach $1 bridged to Fuse  \n**Quest conditions**  \n * Bridge FUSE, USDC, UDST or ETH token  \n * Points begin accumulating after >24 hours pass from the bridging transaction  \n * Do not swap or stake bridged assets on Console dApp",
+                          descriptionClassName: "bridge-markdown",
                           image: bridgeFuse,
                           isActive: true,
                           completed: false,
@@ -568,7 +573,7 @@ const Dashboard = () => {
             <p className="text-3xl xl:text-2xl text-white font-semibold">
               Multiply your points!
             </p>
-            {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
+            {user.points === 0 &&
               <p className="text-lg text-buff">
                 <span className="font-bold">Notice</span> you have 0 points to multiply! Please bridge to receive points.
               </p>

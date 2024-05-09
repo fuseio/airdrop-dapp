@@ -70,6 +70,7 @@ export type Quest = {
   heading?: string;
   point: string;
   description: string;
+  descriptionClassName?: string;
   image: string;
   isActive: boolean;
   completed: boolean;
@@ -77,6 +78,10 @@ export type Quest = {
   link?: string;
   isFunction?: boolean;
   isLoading?: boolean;
+  buttonTwo?: string;
+  linkTwo?: string;
+  isFunctionTwo?: boolean;
+  isLoadingTwo?: boolean;
   padding?: string;
   imageHeight?: string;
   accumulatedPoints?: number;

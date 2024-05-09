@@ -8,6 +8,10 @@
   }
 }
 
+.bridge-markdown ul {
+  list-style-type: circle;
+}
+
 .tooltip-text::after {
   content: "";
   position: absolute;
