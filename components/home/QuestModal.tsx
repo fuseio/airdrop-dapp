@@ -10,6 +10,32 @@ import { screenWidth } from "@/lib/helpers";
 import Spinner from "../ui/Spinner";
 import Markdown from "react-markdown";
 
+type QuestDescriptions = {
+  [key: string]: React.ReactNode;
+}
+
+const BridgeDescription = () => {
+  return (
+    <div className="flex flex-col gap-[30px]">
+      <p>
+        Get 4 points daily for reach $1 bridged to Fuse
+      </p>
+      <div className="flex flex-col gap-2.5">
+        <p className="font-bold">Quest conditions:</p>
+        <ul className="list-disc max-w-[378px] text-left">
+          <li>Bridge FUSE, USDC, UDST or ETH token</li>
+          <li>{"Points begin accumulating after >24 hours pass from the bridging transaction"}</li>
+          <li>Do not swap or stake bridged assets on Console dApp</li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+const questDescriptions: QuestDescriptions = {
+  "bridge": <BridgeDescription />
+}
+
 const QuestModal = (): JSX.Element => {
   const { isQuestModalOpen, selectedQuest } = useAppSelector(selectUserSlice);
   const dispatch = useAppDispatch();
@@ -70,9 +96,12 @@ const QuestModal = (): JSX.Element => {
                 <p className="text-2xl xl:text-xl leading-none text-white font-bold mt-8 max-w-md xl:max-w-xs">
                   {selectedQuest.heading ?? selectedQuest.title}
                 </p>
-                <p className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-md xl:max-w-xs mt-5 whitespace-pre-wrap">
-                  <Markdown>{selectedQuest.description}</Markdown>
-                </p>
+                <div className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-md xl:max-w-xs mt-5 whitespace-pre-wrap">
+                  {
+                    questDescriptions[selectedQuest.id] ??
+                    <Markdown>{selectedQuest.description}</Markdown>
+                  }
+                </div>
                 <div className="flex items-center self-start gap-2 text-left mt-12 ml-8 max-w-md xl:max-w-xs">
                   <Image
                     src={pointHexagon}
@@ -87,7 +116,7 @@ const QuestModal = (): JSX.Element => {
               </div>
               <div className="min-h-[104px] xl:min-h-fit mt-10">
                 <hr className="border-[0.3px] border-davy-gray" />
-                <div className="flex justify-end items-center mt-7 mb-8 xl:mt-6 xl:mb-6.5 px-9 xl:px-7">
+                <div className={`flex items-center mt-7 mb-8 xl:mt-6 xl:mb-6.5 px-9 xl:px-7 ${selectedQuest.buttonTwo ? "justify-between" : "justify-end"}`}>
                   {selectedQuest.button &&
                     <button
                       className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
@@ -102,6 +131,24 @@ const QuestModal = (): JSX.Element => {
                     >
                       {selectedQuest.button}
                       {selectedQuest.isLoading &&
+                        <Spinner />
+                      }
+                    </button>
+                  }
+                  {selectedQuest.buttonTwo &&
+                    <button
+                      className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
+                      onClick={() => {
+                        if (selectedQuest.isFunctionTwo) {
+                          handleClick(selectedQuest.id);
+                        }
+                        if (selectedQuest.linkTwo) {
+                          window.open(selectedQuest.linkTwo, "_blank")
+                        }
+                      }}
+                    >
+                      {selectedQuest.buttonTwo}
+                      {selectedQuest.isLoadingTwo &&
                         <Spinner />
                       }
                     </button>
