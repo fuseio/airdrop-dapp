@@ -99,7 +99,7 @@ const QuestModal = (): JSX.Element => {
                 <div className="text-lg xl:text-base leading-6 text-pale-slate font-medium max-w-md xl:max-w-xs mt-5 whitespace-pre-wrap">
                   {
                     questDescriptions[selectedQuest.id] ??
-                    <Markdown className={selectedQuest.descriptionClassName}>{selectedQuest.description}</Markdown>
+                    <Markdown>{selectedQuest.description}</Markdown>
                   }
                 </div>
                 <div className="flex items-center self-start gap-2 text-left mt-12 ml-8 max-w-md xl:max-w-xs">
