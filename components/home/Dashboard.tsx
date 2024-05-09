@@ -458,7 +458,7 @@ const Dashboard = () => {
                     translateZ="60"
                     className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
                   >
-                    Get 4 points daily on every 1 USD you bridge to Fuse
+                    Get 4 points daily on every $1 you bridge to Fuse
                   </CardItem>
                 </div>
                 <div>
