@@ -467,8 +467,10 @@ const Dashboard = () => {
                         dispatch(setSelectedQuest({
                           id: "bridge",
                           title: "Bridge FUSE",
+                          heading: "Bridge to Fuse Network",
                           point: "4 point per 1 USD bridged",
-                          description: "Get 4 points daily on every 1 USD you bridge to Fuse  \n**Notice the points calculation is updated once every 24 hours**",
+                          description: "Get 4 points daily for reach $1 bridged to Fuse  \n**Quest conditions**  \n * Bridge FUSE, USDC, UDST or ETH token  \n * Points begin accumulating after >24 hours pass from the bridging transaction  \n * Do not swap or stake bridged assets on Console dApp",
+                          descriptionClassName: "bridge-markdown",
                           image: bridgeFuse,
                           isActive: true,
                           completed: false,
@@ -568,7 +570,7 @@ const Dashboard = () => {
             <p className="text-3xl xl:text-2xl text-white font-semibold">
               Multiply your points!
             </p>
-            {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
+            {user.points === 0 &&
               <p className="text-lg text-buff">
                 <span className="font-bold">Notice</span> you have 0 points to multiply! Please bridge to receive points.
               </p>

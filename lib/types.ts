@@ -70,6 +70,7 @@ export type Quest = {
   heading?: string;
   point: string;
   description: string;
+  descriptionClassName?: string;
   image: string;
   isActive: boolean;
   completed: boolean;
