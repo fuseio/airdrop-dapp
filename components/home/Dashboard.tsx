@@ -126,7 +126,7 @@ const Dashboard = () => {
       image: liquidityVoltage,
       isActive: true,
       button: "Go to Voltage",
-      link: "https://voltage.finance/pool",
+      link: "https://voltage.finance/pool?filter=v3",
       padding: "py-6 pl-6 pr-2",
       accumulatedPoints: 3256,
     },
