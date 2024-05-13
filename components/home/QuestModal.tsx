@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { generateTwitterAuthUrl, selectUserSlice, setIsQuestModalOpen } from "@/store/userSlice";
+import { generateTwitterAuthUrl, selectUserSlice, setIsQuestModalOpen, verifyTelegram } from "@/store/userSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import closeWhite from "@/assets/close-white.svg";
@@ -42,8 +42,13 @@ const QuestModal = (): JSX.Element => {
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
 
   function handleClick(id: string) {
-    if (id === "followFuseOnTwitter") {
-      dispatch(generateTwitterAuthUrl());
+    switch (id) {
+      case "followFuseOnTwitter":
+        dispatch(generateTwitterAuthUrl());
+        break;
+      case "joinTelegram":
+        dispatch(verifyTelegram());
+        break;
     }
   }
 

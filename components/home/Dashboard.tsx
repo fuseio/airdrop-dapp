@@ -75,6 +75,7 @@ const Dashboard = () => {
       button: "Go to Quest",
       link: "https://app.layer3.xyz/quests/join-fuse-telegram",
       buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
     },
     {
       id: "numOfTokens",
