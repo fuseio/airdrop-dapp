@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
 import { CreateUser, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
-import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser } from "@/lib/api";
+import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyTelegram } from "@/lib/api";
 import { RootState } from "../store";
 import { Address } from "viem";
 
@@ -62,7 +62,7 @@ export interface UserStateType {
   retrieveTime: string;
   isSubmittedComingSoonSubscribe: boolean;
   isErrorSubmittingComingSoonSubscribe: boolean;
-}
+  }
 
 const INIT_STATE: UserStateType = {
   isAuthenticating: false,
@@ -89,7 +89,7 @@ const INIT_STATE: UserStateType = {
   retrieveTime: new Date(0).toString(),
   isSubmittedComingSoonSubscribe: false,
   isErrorSubmittingComingSoonSubscribe: false,
-};
+  };
 
 export const authenticate = createAsyncThunk(
   "USER/AUTHENTICATE",
@@ -253,6 +253,31 @@ export const submitComingSoonSubscribe = createAsyncThunk(
   }
 );
 
+export const verifyTelegram = createAsyncThunk<
+  any,
+  undefined,
+  { state: RootState }
+>(
+  "USER/VERIFY_TELEGRAM",
+  async (
+    _,
+    thunkAPI
+  ) => {
+    try {
+      const state = thunkAPI.getState();
+      const userState: UserStateType = state.user;
+      const verifiedTelegram = await postVerifyTelegram(userState.accessToken);
+      return verifiedTelegram;
+    } catch (error: any) {
+      if (error?.response?.status === 409) {
+        thunkAPI.dispatch(retrieve());
+      }
+      console.error(error);
+      throw error?.response?.status;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "USER_STATE",
   initialState: INIT_STATE,
@@ -410,6 +435,23 @@ const userSlice = createSlice({
       .addCase(submitComingSoonSubscribe.rejected, (state) => {
         state.isSubmittingComingSoonSubscribe = false;
         state.isErrorSubmittingComingSoonSubscribe = true;
+      })
+      .addCase(verifyTelegram.pending, (state) => {
+        state.selectedQuest.isLoadingTwo = true;
+      })
+      .addCase(verifyTelegram.fulfilled, (state) => {
+        state.selectedQuest.isLoadingTwo = false;
+        state.selectedQuest.buttonTwo = "Verified";
+        state.isQuestModalOpen = false;
+      })
+      .addCase(verifyTelegram.rejected, (state, action) => {
+        state.selectedQuest.isLoadingTwo = false;
+        if(action.error.message === "409") {
+          state.selectedQuest.buttonTwo = "Already Verified";
+          state.isQuestModalOpen = false;
+        } else {
+          state.selectedQuest.buttonTwo = "Try Again Later";
+        }
       })
   },
 });
