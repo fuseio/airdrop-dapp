@@ -71,7 +71,7 @@ const Dashboard = () => {
       point: "50 points",
       description: "Get 50 point for joining an official Fuse Network Telegram channel  \n**Verify the quest 1 hour after completing it on Layer3**",
       image: joinTelegram,
-      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
+      isActive: true,
       button: "Go to Quest",
       link: "https://app.layer3.xyz/quests/join-fuse-telegram",
       buttonTwo: "Verify Quest",
