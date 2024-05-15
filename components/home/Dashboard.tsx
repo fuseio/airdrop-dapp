@@ -65,7 +65,7 @@ const Dashboard = () => {
       isFunction: true,
     },
     {
-      id: "joinTelegram",
+      id: "telegramSubscription",
       title: "Join Fuse Telegram",
       heading: "Join Fuse Telegram channel",
       point: "50 points",

@@ -46,7 +46,7 @@ const QuestModal = (): JSX.Element => {
       case "followFuseOnTwitter":
         dispatch(generateTwitterAuthUrl());
         break;
-      case "joinTelegram":
+      case "telegramSubscription":
         dispatch(verifyTelegram());
         break;
     }
