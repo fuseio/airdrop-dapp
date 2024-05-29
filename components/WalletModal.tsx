@@ -18,7 +18,7 @@ import ReactGA from "react-ga4";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { selectNavbarSlice, setIsWalletModalOpen } from "@/store/navbarSlice";
 import * as amplitude from "@amplitude/analytics-browser";
-import { walletType } from "@/lib/helpers";
+import { detectDevice, walletType } from "@/lib/helpers";
 import { selectUserSlice } from "@/store/userSlice";
 
 const WalletModal = (): JSX.Element => {
@@ -124,9 +124,9 @@ const WalletModal = (): JSX.Element => {
                 icon={metamask}
                 text="MetaMask"
                 className="w-[35px]"
-                id="injected"
+                id={detectDevice().isMobile ? "metaMaskSDK" : "injected"}
                 connectingWalletId={connectingWalletId}
-                onClick={() => connectWallet("injected")}
+                onClick={() => connectWallet(detectDevice().isMobile ? "metaMaskSDK" : "injected")}
               />
               <WalletButton
                 icon={wc}
