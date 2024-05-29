@@ -39,8 +39,8 @@
     "tailwind-merge": "^2.2.1",
     "three": "^0.162.0",
     "usehooks-ts": "^2.14.0",
-    "viem": "^2.7.15",
-    "wagmi": "^2.5.7"
+    "viem": "^2.13.1",
+    "wagmi": "^2.9.7"
   },
   "devDependencies": {
     "@types/color-convert": "^2.0.3",
