@@ -158,7 +158,7 @@ const Dashboard = () => {
       title: "Lend on Meridian",
       point: "8 points per $1 in pool daily",
       heading: "Multiply your points by lend your funds on Meridian",
-      description: "Lend on Meridian & Multiply your points easily with these quick steps  \n**Step 1**\nBridge funds to Fuse Network using the Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nvisit the Meridian Finance lending markets  \n**Step 3**\nDouble your points by lending bridged funds in any market = 8 points per $1 of the bridged funds, available once per day.",
+      description: "Lend on Meridian & Multiply your points easily with these quick steps  \n**Step 1**\nBridge funds to Fuse Network using the Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nVisit the Meridian Finance lending markets  \n**Step 3**\nDouble your points by lending bridged funds in any market = 8 points per $1 of the bridged funds, available once per day.",
       image: meridian,
       isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
       button: "Go to Meridian Lend",
