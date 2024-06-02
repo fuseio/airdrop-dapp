@@ -147,7 +147,7 @@ const ConnectWallet = ({
 
   useEffect(() => {
     refetch();
-  }, [blockNumber])
+  }, [blockNumber, refetch])
 
   return !isConnected ? (
     <div className={"flex justify-end " + containerClassName}>

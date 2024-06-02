@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import close from "@/assets/close.svg";
 import metamask from "@/public/metamask.png";
@@ -47,7 +47,7 @@ const WalletModal = (): JSX.Element => {
   useEffect(() => {
     if (address && connector && user.points) {
       amplitude.setUserId(address);
-      
+
       amplitude.track("Wallet connected", {
         walletType: walletType[connector.id],
         walletAddress: address,
@@ -56,15 +56,15 @@ const WalletModal = (): JSX.Element => {
     }
   }, [address, connector, user.points])
 
-  const connectionEvent = (id: string) => {
+  const connectionEvent = useCallback((id: string) => {
     ReactGA.event({
       category: "Connection",
       action: "Connecting wallet",
       label: id,
     });
-  };
+  }, []);
 
-  const connectWallet = (id: string) => {
+  const connectWallet = useCallback((id: string) => {
     connectionEvent(id);
     setConnectingWalletId(id);
     const selectedConnector = connectors.find((connector) => connector.id === id);
@@ -72,7 +72,7 @@ const WalletModal = (): JSX.Element => {
       localStorage.setItem("Fuse-selectedConnectorId", selectedConnector.id);
       connect({ connector: selectedConnector });
     }
-  }
+  }, [connect, connectors, connectionEvent])
 
   return (
     <AnimatePresence>

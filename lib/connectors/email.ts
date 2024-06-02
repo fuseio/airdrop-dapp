@@ -1,4 +1,4 @@
-import { ChainNotConfiguredError, createConnector, normalizeChainId } from "@wagmi/core";
+import { ChainNotConfiguredError, createConnector, normalizeChainId } from "wagmi";
 import type { IWeb3Auth } from "@web3auth/base";
 import * as pkg from "@web3auth/base";
 import type { IWeb3AuthModal } from "@web3auth/modal";
