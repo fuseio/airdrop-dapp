@@ -18,7 +18,7 @@ import ReactGA from "react-ga4";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { selectNavbarSlice, setIsWalletModalOpen } from "@/store/navbarSlice";
 import * as amplitude from "@amplitude/analytics-browser";
-import { detectDevice, walletType } from "@/lib/helpers";
+import { IS_ETHEREUM_OBJECT_DETECTED, walletType } from "@/lib/helpers";
 import { selectUserSlice } from "@/store/userSlice";
 
 const WalletModal = (): JSX.Element => {
@@ -124,9 +124,9 @@ const WalletModal = (): JSX.Element => {
                 icon={metamask}
                 text="MetaMask"
                 className="w-[35px]"
-                id={window.ethereum ? "injected": "metaMaskSDK"}
+                id={IS_ETHEREUM_OBJECT_DETECTED ? "injected": "metaMaskSDK"}
                 connectingWalletId={connectingWalletId}
-                onClick={() => connectWallet(window.ethereum ? "injected" : "metaMaskSDK")}
+                onClick={() => connectWallet(IS_ETHEREUM_OBJECT_DETECTED ? "injected" : "metaMaskSDK")}
               />
               <WalletButton
                 icon={wc}

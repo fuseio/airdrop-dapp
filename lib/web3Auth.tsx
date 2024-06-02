@@ -15,7 +15,7 @@ import {
 } from "./config";
 import { fuse, Chain } from "wagmi/chains";
 import { coinbaseWallet, injected, metaMask, walletConnect } from 'wagmi/connectors';
-import { detectDevice, hex } from "./helpers";
+import { IS_ETHEREUM_OBJECT_DETECTED, detectDevice, hex } from "./helpers";
 import { Web3AuthSocialConnector } from "./connectors/social";
 import { Web3AuthEmailConnector } from "./connectors/email";
 
@@ -26,7 +26,7 @@ const chains: readonly [Chain, ...Chain[]] = [
 export const config = createConfig({
   chains,
   connectors: [
-    window.ethereum
+    IS_ETHEREUM_OBJECT_DETECTED
       ? injected()
       : metaMask({
         dappMetadata: {
