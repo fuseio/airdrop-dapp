@@ -14,7 +14,7 @@ import {
   NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
 } from "./config";
 import { fuse, Chain } from "wagmi/chains";
-import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors';
+import { coinbaseWallet, injected, metaMask, walletConnect } from 'wagmi/connectors';
 import { detectDevice, hex } from "./helpers";
 import { Web3AuthSocialConnector } from "./connectors/social";
 import { Web3AuthEmailConnector } from "./connectors/email";
@@ -26,7 +26,13 @@ const chains: readonly [Chain, ...Chain[]] = [
 export const config = createConfig({
   chains,
   connectors: [
-    injected(),
+    window.ethereum
+      ? injected()
+      : metaMask({
+        dappMetadata: {
+          name: "wagmi",
+        }
+      }),
     walletConnect({
       projectId: NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
       showQrModal: true,

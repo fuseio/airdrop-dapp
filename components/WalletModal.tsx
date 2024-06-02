@@ -124,9 +124,9 @@ const WalletModal = (): JSX.Element => {
                 icon={metamask}
                 text="MetaMask"
                 className="w-[35px]"
-                id={"injected"}
+                id={window.ethereum ? "injected": "metaMaskSDK"}
                 connectingWalletId={connectingWalletId}
-                onClick={() => connectWallet("injected")}
+                onClick={() => connectWallet(window.ethereum ? "injected" : "metaMaskSDK")}
               />
               <WalletButton
                 icon={wc}
