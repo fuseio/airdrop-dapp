@@ -124,9 +124,9 @@ const WalletModal = (): JSX.Element => {
                 icon={metamask}
                 text="MetaMask"
                 className="w-[35px]"
-                id={detectDevice().isMobile ? "metaMaskSDK" : "injected"}
+                id={"injected"}
                 connectingWalletId={connectingWalletId}
-                onClick={() => connectWallet(detectDevice().isMobile ? "metaMaskSDK" : "injected")}
+                onClick={() => connectWallet("injected")}
               />
               <WalletButton
                 icon={wc}
