@@ -5,6 +5,7 @@ import fuseGray from "@/assets/fuse-gray.svg";
 import { useAccount, useDisconnect, useSwitchChain } from "wagmi";
 import { fuse } from "viem/chains";
 import Image from "next/image";
+import { resetConnection } from "@/lib/web3Auth";
 
 type ChainModalProps = {
   description?: string;
@@ -16,7 +17,13 @@ const SwitchChainModal = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { switchChain } = useSwitchChain()
   const { isConnected, chain } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { disconnect } = useDisconnect({
+    mutation: {
+      onSuccess() {
+        resetConnection();
+      }
+    }
+  });
 
   useEffect(() => {
     if (isConnected && chain?.id !== fuse.id) setIsOpen(true);

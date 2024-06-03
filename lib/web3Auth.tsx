@@ -8,7 +8,7 @@ import {
 } from "@web3auth/openlogin-adapter";
 import { WalletServicesPlugin } from "@web3auth/wallet-services-plugin";
 import { CHAIN_NAMESPACES, WEB3AUTH_NETWORK } from "@web3auth/base";
-import { createConfig, http } from "wagmi";
+import { Connection, createConfig, http } from "wagmi";
 import {
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
   NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
@@ -52,6 +52,17 @@ export const config = createConfig({
     [fuse.id]: http(),
   },
 })
+
+// Multiple connections are created, possibly due to multiInjectedProviderDiscovery.
+// After disconnecting, only one connection is terminated, while the others remain active.
+// Reset the config connections state to allow reconnection.
+export const resetConnection = () => {
+  config.setState((x) => ({
+    ...x,
+    connections: new Map<string, Connection>(),
+    current: "",
+  }))
+}
 
 export default function Web3AuthConnectorInstance(
   LoginConnector: any,
