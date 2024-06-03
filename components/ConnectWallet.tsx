@@ -33,6 +33,7 @@ import { usePathname } from "next/navigation";
 import Copy from "./ui/Copy";
 import { formatUnits } from "viem";
 import Spinner from "./ui/Spinner";
+import { resetConnection } from "@/lib/web3Auth";
 
 const menu: Variants = {
   closed: (isCenter) => ({
@@ -100,7 +101,13 @@ const ConnectWallet = ({
   const { address, isConnected, chain } = useAccount();
   const { chains } = useConfig();
   const { switchChain } = useSwitchChain();
-  const { disconnect, isPending } = useDisconnect();
+  const { disconnect, isPending } = useDisconnect({
+    mutation: {
+      onSuccess() {
+        resetConnection();
+      }
+    }
+  });
   const { data: blockNumber } = useBlockNumber({ watch: true });
   const { data: balance, refetch } = useBalance({
     address,
