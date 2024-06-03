@@ -30,7 +30,8 @@ export const config = createConfig({
       ? injected()
       : metaMask({
         dappMetadata: {
-          name: "wagmi",
+          name: "Fuse Airdrop",
+          url: "https://airdrop.fuse.io",
         }
       }),
     walletConnect({
