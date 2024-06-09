@@ -81,7 +81,7 @@ const EcosystemAppModal = (): JSX.Element => {
                             currentOpenQuestId === selectedEcosystemAppQuest.id ? "" : selectedEcosystemAppQuest.id
                           )}
                         >
-                          <div className="flex flex-col items-start gap-5">
+                          <div className="flex flex-col items-start text-start gap-5">
                             <p className="text-lg xl:text-base text-white font-semibold">
                               {selectedEcosystemAppQuest.title}
                             </p>
