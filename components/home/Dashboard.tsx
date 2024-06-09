@@ -108,6 +108,7 @@ const Dashboard = () => {
       description: "Trade, invest, and earn with just a few clicks",
       image: voltage,
       background: "bg-[url('/vectors/voltage-gradient.svg')]",
+      beforeBackground: "before:bg-[url('/vectors/voltage-gradient.svg')]",
       quests: [
         {
           id: "liquidityVoltage",
@@ -149,6 +150,7 @@ const Dashboard = () => {
       description: "Trade, invest, and earn with just a few clicks",
       image: meridian,
       background: "bg-[url('/vectors/meridian-gradient.svg')]",
+      beforeBackground: "before:bg-[url('/vectors/meridian-gradient.svg')]",
       quests: [
         {
           id: "meridian",
