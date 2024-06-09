@@ -37,6 +37,7 @@ const initEcosystemApp: EcosystemApp = {
   description: "",
   image: "",
   background: "",
+  beforeBackground: "",
   quests: [],
 }
 
