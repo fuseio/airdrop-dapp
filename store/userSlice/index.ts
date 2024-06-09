@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
-import { CreateUser, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
+import { CreateUser, EcosystemApp, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
 import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyTelegram } from "@/lib/api";
 import { RootState } from "../store";
 import { Address } from "viem";
@@ -32,6 +32,14 @@ const initQuest: Quest = {
   completed: false,
 }
 
+const initEcosystemApp: EcosystemApp = {
+  name: "",
+  description: "",
+  image: "",
+  background: "",
+  quests: [],
+}
+
 const initSignupStepCompleted: SignupStepCompleted = {
   1: false,
   2: false,
@@ -50,6 +58,8 @@ export interface UserStateType {
   isHydrated: boolean;
   isQuestModalOpen: boolean;
   selectedQuest: Quest;
+  isEcosystemAppModalOpen: boolean;
+  selectedEcosystemApp: EcosystemApp;
   currentComponent: string;
   signupStepCompleted: SignupStepCompleted;
   inviteCode: string;
@@ -77,6 +87,8 @@ const INIT_STATE: UserStateType = {
   isHydrated: false,
   isQuestModalOpen: false,
   selectedQuest: initQuest,
+  isEcosystemAppModalOpen: false,
+  selectedEcosystemApp: initEcosystemApp,
   currentComponent: "landing",
   signupStepCompleted: initSignupStepCompleted,
   inviteCode: "",
@@ -288,6 +300,12 @@ const userSlice = createSlice({
     setSelectedQuest: (state, action: PayloadAction<Quest>) => {
       state.selectedQuest = action.payload
     },
+    setIsEcosystemAppModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isEcosystemAppModalOpen = action.payload
+    },
+    setSelectedEcosystemApp: (state, action: PayloadAction<EcosystemApp>) => {
+      state.selectedEcosystemApp = action.payload
+    },
     setCurrentComponent: (state, action: PayloadAction<string>) => {
       state.currentComponent = action.payload
     },
@@ -461,6 +479,8 @@ export const selectUserSlice = (state: AppState): UserStateType => state.user;
 export const {
   setIsQuestModalOpen,
   setSelectedQuest,
+  setIsEcosystemAppModalOpen,
+  setSelectedEcosystemApp,
   setCurrentComponent,
   setSignupStepCompleted,
   setInviteCode,

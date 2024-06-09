@@ -6,7 +6,7 @@ const AirdropLive = () => {
         <span className="relative inline-flex rounded-full h-3.5 w-3.5 xl:h-3 xl:w-3 bg-gradient-to-br from-green-200 to-green-500"></span>
       </span>
       <p className="leading-none xl:text-xs text-primary font-bold text-nowrap">
-        Airdrop Live
+        Season 2 is live!
       </p>
     </div>
   )

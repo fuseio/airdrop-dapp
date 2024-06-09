@@ -17,6 +17,7 @@ import WalletModal from "./WalletModal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import QuestModal from "./home/QuestModal";
 import SwitchChainModal from "./SwitchChainModal";
+import EcosystemAppModal from "./home/EcosystemAppModal";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [isClient, setIsClient] = useState(false);
@@ -53,6 +54,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <WalletModal />
           <SwitchChainModal />
           <QuestModal />
+          <EcosystemAppModal />
           {children}
         </QueryClientProvider>
       </WagmiProvider>

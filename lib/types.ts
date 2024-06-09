@@ -60,6 +60,7 @@ export type EcosystemApp = {
   description: string;
   image: string;
   background: string;
+  quests: Quests;
 }
 
 export type EcosystemApps = EcosystemApp[];
