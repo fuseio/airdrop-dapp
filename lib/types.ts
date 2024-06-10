@@ -1,3 +1,4 @@
+import { StaticImageData } from "next/image";
 import { Address } from "viem";
 
 export type MenuItem = {
@@ -67,7 +68,7 @@ export type EcosystemApps = EcosystemApp[];
 export type Quest = {
   id: string;
   title: string;
-  image: string;
+  image: string | StaticImageData;
   heading?: string;
   point?: string;
   description?: string;
