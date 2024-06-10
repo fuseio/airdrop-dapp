@@ -20,6 +20,7 @@ import Quest from "./Quest";
 import followX from "@/assets/follow-x.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
 import ogWallet from "@/assets/og-wallet.svg";
+import joinDiscord from "@/assets/join-discord.svg";
 import stakeSfuse from "@/assets/stake-sfuse.svg";
 import stakeVolt from "@/assets/stake-volt.svg";
 import liquidityVoltage from "@/assets/liquidity-voltage.svg";
@@ -70,6 +71,18 @@ const Dashboard = () => {
       isActive: true,
       button: "Go to Quest",
       link: "https://app.layer3.xyz/quests/join-fuse-telegram",
+      buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
+    },
+    {
+      id: "joinDiscord",
+      title: "Join Fuse Discord",
+      image: joinDiscord,
+      point: "50 points",
+      description: "Get 50 point for joining an official Fuse network Discord channel  \n**Verify the quest 1 hour after completing it on Layer3**",
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
+      button: "Go to Quest",
+      link: "https://app.layer3.xyz/quests/join-fuse-discord",
       buttonTwo: "Verify Quest",
       isFunctionTwo: true,
     },
