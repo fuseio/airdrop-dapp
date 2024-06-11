@@ -55,7 +55,7 @@ export const signUpSteps = {
   WALLET: 1,
   TWITTER: 2,
   TOTAL: 2,
-  MANDATORY: 1
+  MANDATORY: 2
 }
 
 export const screenWidth = {

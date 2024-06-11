@@ -36,16 +36,16 @@ const userMenuItems = [
 const Topbar = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const { selected } = useAppSelector(selectNavbarSlice);
-  const { isUser } = useAppSelector(selectUserSlice);
+  const { isUser, user } = useAppSelector(selectUserSlice);
   const [menuItems, setMenuItems] = useState(visitorMenuItems);
 
   useEffect(() => {
-    if (isUser) {
+    if (isUser && user.twitterAccountId) {
       setMenuItems(userMenuItems);
     } else {
       setMenuItems(visitorMenuItems);
     }
-  }, [isUser]);
+  }, [isUser, user.twitterAccountId]);
 
   return (
     <nav className="w-full h-20 top-0 flex justify-center py-7 md:h-[32px] md:mt-2 z-[60]">

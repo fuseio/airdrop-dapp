@@ -10,7 +10,7 @@ import { useAccount } from "wagmi";
 
 const SignUpTwitter = () => {
   const dispatch = useAppDispatch();
-  const { isGeneratingTwitterAuthUrl, signupStepCompleted, twitterAuthUrl } = useAppSelector(selectUserSlice);
+  const { isGeneratingTwitterAuthUrl, isCreating, isRetrieving, signupStepCompleted, twitterAuthUrl } = useAppSelector(selectUserSlice);
   const searchParams = useSearchParams();
   const twitterConnected = searchParams.get('twitter-connected');
   const [isTwitterConnectedError, setIsTwitterConnectedError] = useState(false);
@@ -55,13 +55,16 @@ const SignUpTwitter = () => {
         </p>
       </div>
       <button
-        className={`transition ease-in-out bg-primary flex justify-center items-center gap-2 rounded-full w-[163px] text-xl leading-none font-semibold py-[15px] ${signupStepCompleted[signUpSteps.MANDATORY] && !signupStepCompleted[signUpSteps.TWITTER] ? "opacity-100 hover:bg-white" : "opacity-30"}`}
-        disabled={signupStepCompleted[signUpSteps.MANDATORY] && !signupStepCompleted[signUpSteps.TWITTER] ? false : true}
+        className={`transition ease-in-out bg-primary flex justify-center items-center gap-2 rounded-full w-[163px] text-xl leading-none font-semibold py-[15px] ${signupStepCompleted[signUpSteps.TWITTER - 1] && !signupStepCompleted[signUpSteps.TWITTER] ? "opacity-100 hover:bg-white" : "opacity-30"}`}
+        disabled={signupStepCompleted[signUpSteps.TWITTER - 1] && !signupStepCompleted[signUpSteps.TWITTER] ? false : true}
         onClick={() => dispatch(generateTwitterAuthUrl())}
       >
         {(isTwitterConnectedError && isConnected) && "Retry"}
         {!isTwitterConnectedError && "Follow"}
-        {isGeneratingTwitterAuthUrl &&
+        {(
+          isGeneratingTwitterAuthUrl ||
+          (signupStepCompleted[signUpSteps.TWITTER] && (isCreating || isRetrieving))
+        ) &&
           <Spinner />
         }
       </button>
