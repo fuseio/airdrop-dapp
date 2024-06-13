@@ -15,7 +15,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function Airdrop() {
   const dispatch = useAppDispatch();
-  const { currentComponent, isUser } = useAppSelector(selectUserSlice);
+  const { currentComponent, isUser, user } = useAppSelector(selectUserSlice);
   const { isDisconnected } = useAccount();
   const searchParams = useSearchParams();
   const twitterConnected = searchParams.get('twitter-connected');
@@ -36,10 +36,10 @@ export default function Airdrop() {
   }, [dispatch, isUser, twitterConnected])
 
   useEffect(() => {
-    if (isUser && currentComponent !== "signup") {
+    if (isUser && user.twitterAccountId) {
       dispatch(setCurrentComponent("dashboard"));
     }
-  }, [currentComponent, dispatch, isUser])
+  }, [dispatch, isUser, user.twitterAccountId])
 
   useEffect(() => {
     if (isUser) {
@@ -75,7 +75,7 @@ export default function Airdrop() {
             {currentComponent === "dashboard" && <Dashboard />}
           </AnimatePresence>
         </div>
-        {isUser && <Footer />}
+        {(isUser && user.twitterAccountId) && <Footer />}
       </div>
     </div>
   );

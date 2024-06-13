@@ -30,7 +30,7 @@ const icons: Icons = {
 
 const SignUpWallet = () => {
   const dispatch = useAppDispatch();
-  const { signupStepCompleted, isAuthenticating, isAuthenticated } = useAppSelector(selectUserSlice);
+  const { signupStepCompleted, isCreating, isRetrieving, isAuthenticating, isAuthenticated } = useAppSelector(selectUserSlice);
   const { isWalletModalOpen } = useAppSelector(selectNavbarSlice);
   const { address, isConnected, isConnecting, chain } = useAccount();
 
@@ -96,6 +96,9 @@ const SignUpWallet = () => {
           <p className="text-white opacity-70">
             {eclipseAddress(String(address))}
           </p>
+          {!signupStepCompleted[signUpSteps.WALLET + 1] && (isCreating || isRetrieving) &&
+            <Spinner />
+          }
         </div>
       }
       {(signupStepCompleted[signUpSteps.WALLET] && !address) &&

@@ -10,10 +10,10 @@ import { useAccount } from "wagmi";
 import LeaderboardWrapper from "@/components/leaderboard/LeaderboardWrapper";
 import { useRouter } from "next/navigation";
 
-export default function Airdrop() {
+export default function LeaderboardPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { isHydrated, isUser } = useAppSelector(selectUserSlice);
+  const { isHydrated, isUser, user } = useAppSelector(selectUserSlice);
   const { isDisconnected } = useAccount();
 
   useEffect(() => {
@@ -22,10 +22,10 @@ export default function Airdrop() {
   }, [dispatch])
 
   useEffect(() => {
-    if (isHydrated && !isUser) {
+    if (isHydrated && !(isUser || user.twitterAccountId)) {
       router.push("/");
     }
-  }, [isHydrated, isUser, router])
+  }, [isHydrated, isUser, router, user.twitterAccountId])
 
   useEffect(() => {
     if (isUser) {
@@ -44,7 +44,7 @@ export default function Airdrop() {
       <div className={`flex-col flex items-center min-h-screen bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top ${isUser ? "justify-start" : "relative justify-between"}`}>
         <Topbar />
         <LeaderboardWrapper />
-        {isUser && <Footer />}
+        {(isUser && user.twitterAccountId) && <Footer />}
       </div>
     </div>
   );
