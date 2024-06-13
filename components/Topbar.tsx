@@ -24,6 +24,10 @@ const userMenuItems = [
     link: "/",
   },
   {
+    title: "Claim",
+    link: "/claim",
+  },
+  {
     title: "Leaderboard",
     link: "/leaderboard",
   },
