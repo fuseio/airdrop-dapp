@@ -83,7 +83,10 @@ const EcosystemAppModal = (): JSX.Element => {
                         >
                           <div className="flex flex-col items-start text-start gap-5">
                             <p className="text-lg xl:text-base text-white font-semibold">
-                              {selectedEcosystemAppQuest.title}
+                              {openQuestId === selectedEcosystemAppQuest.id ?
+                                selectedEcosystemAppQuest.heading ?? selectedEcosystemAppQuest.title :
+                                selectedEcosystemAppQuest.title
+                              }
                             </p>
                             <div className="flex items-center gap-2">
                               <Image

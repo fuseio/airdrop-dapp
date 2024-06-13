@@ -21,13 +21,11 @@ import followX from "@/assets/follow-x.svg";
 import holdTokens from "@/assets/hold-tokens.svg";
 import ogWallet from "@/assets/og-wallet.svg";
 import joinDiscord from "@/assets/join-discord.svg";
-import stakeSfuse from "@/assets/stake-sfuse.svg";
-import stakeVolt from "@/assets/stake-volt.svg";
-import liquidityVoltage from "@/assets/liquidity-voltage.svg";
 import meridian from "@/assets/meridian.svg";
 import joinTelegram from "@/assets/join-telegram.svg";
 import voltApp from "@/assets/volt-app.svg";
 import goodDollar from "@/public/gooddollar.png";
+import voltWallet from "@/assets/volt-wallet.svg";
 import { EcosystemApps, Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
@@ -130,7 +128,6 @@ const Dashboard = () => {
           heading: "Multiply your points by providing liquidity on Voltage DEX",
           point: "8 points per $1 in pool daily",
           description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by putting bridged funds in any V3 liquidity pool on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
-          image: liquidityVoltage,
           isActive: true,
           button: "Go to Voltage",
           link: "https://voltage.finance/pool?filter=v3",
@@ -141,7 +138,6 @@ const Dashboard = () => {
           heading: "Multiply your points by staking FUSE token on Voltage DEX",
           point: "8 points per $1 staked daily",
           description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a FUSE token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
-          image: stakeSfuse,
           isActive: true,
           button: "Go to Voltage",
           link: "https://app.voltage.finance/stake/sFUSE",
@@ -152,7 +148,6 @@ const Dashboard = () => {
           heading: "Multiply your points by staking VOLT token on Voltage DEX",
           point: "8 points per $1 staked daily",
           description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a VOLT token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
-          image: stakeVolt,
           isActive: true,
           button: "Go to Voltage",
           link: "https://app.voltage.finance/stake/veVOLT",
@@ -172,7 +167,6 @@ const Dashboard = () => {
           point: "8 points per $1 in pool daily",
           heading: "Multiply your points by lend your funds on Meridian",
           description: "Lend on Meridian & Multiply your points easily with these quick steps  \n**Step 1**\nBridge funds to Fuse Network using the Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nVisit the Meridian Finance lending markets  \n**Step 3**\nDouble your points by lending bridged funds in any market = 8 points per $1 of the bridged funds, available once per day.",
-          image: meridian,
           isActive: true,
           button: "Go to Meridian Lend",
           link: "https://lend.meridianfinance.net/markets/",
@@ -192,13 +186,31 @@ const Dashboard = () => {
           heading: "Get points daily for G$ claiming",
           point: "30 points per claim",
           description: "To get 30 points daily, you need to take 6 simple steps:  \n**Step 1:**\nGo to quest on the Layer3 platform  \n**Step 2:**\nConnect to Layer3 a wallet participating in the airdrop  \n**Step 3:**\nGo to GoodDapp  \n**Step 4:**\nClaim G$ token on Fuse Network  \n**Step 5:**\nVerify quest completion on the Layer3  \n**Step 6:**\nRepeat every day. After 5 claims, the quest will renew automatically and allow you to claim more and more.",
-          image: goodDollar,
           isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
           button: "Go to Meridian Lend",
           link: "https://app.layer3.xyz/streaks/claim-dollarg",
           buttonTwo: "Verify Quest",
           isFunctionTwo: true,
           imageHeight: "h-[100px]"
+        },
+      ]
+    },
+    {
+      name: "Volt Wallet",
+      description: "Trade, invest, and earn with just a few clicks",
+      image: voltWallet,
+      background: "bg-[url('/vectors/voltage-gradient.svg')]",
+      beforeBackground: "before:bg-[url('/vectors/voltage-gradient.svg')]",
+      quests: [
+        {
+          id: "stakeFuseOnVolt",
+          title: "Stake FUSE on Volt",
+          heading: "Stake FUSE on Volt wallet",
+          point: "2 points per $1 staked daily",
+          description: "Get an additional benefits by participating in the Airdrop with the Volt wallet  \n**Step 1**\nJoin the Airdrop with Volt app  \n**Step 2**\nGo to Earn tab  \n**Step 3**\nStake any amount of FUSE tokens to get 2 points per $1 staked every day",
+          isActive: true,
+          button: "Go to Volt",
+          link: "https://get.voltage.finance/gBMb",
         },
       ]
     },

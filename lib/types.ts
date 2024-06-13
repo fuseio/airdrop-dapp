@@ -70,7 +70,7 @@ export type EcosystemApps = EcosystemApp[];
 export type Quest = {
   id: string;
   title: string;
-  image: string | StaticImageData;
+  image?: string | StaticImageData;
   heading?: string;
   point?: string;
   description?: string;
