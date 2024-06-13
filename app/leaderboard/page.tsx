@@ -10,7 +10,7 @@ import { useAccount } from "wagmi";
 import LeaderboardWrapper from "@/components/leaderboard/LeaderboardWrapper";
 import { useRouter } from "next/navigation";
 
-export default function Airdrop() {
+export default function LeaderboardPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { isHydrated, isUser, user } = useAppSelector(selectUserSlice);
@@ -22,7 +22,7 @@ export default function Airdrop() {
   }, [dispatch])
 
   useEffect(() => {
-    if (isHydrated && (!isUser || user.twitterAccountId)) {
+    if (isHydrated && !(isUser || user.twitterAccountId)) {
       router.push("/");
     }
   }, [isHydrated, isUser, router, user.twitterAccountId])
