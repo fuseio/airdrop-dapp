@@ -6,6 +6,7 @@ import { useAppSelector } from "@/store/store";
 import { selectNavbarSlice } from "@/store/navbarSlice";
 import Image from "next/image";
 import { selectUserSlice } from "@/store/userSlice";
+import { currentDate, season2LaunchDate } from "@/lib/helpers";
 
 const visitorMenuItems = [
   {
@@ -19,6 +20,21 @@ const visitorMenuItems = [
 ]
 
 const userMenuItems = [
+  {
+    title: "Airdrop",
+    link: "/",
+  },
+  {
+    title: "Leaderboard",
+    link: "/leaderboard",
+  },
+  {
+    title: "Fuse Home",
+    link: "https://www.fuse.io",
+  },
+]
+
+const userSeason2MenuItems = [
   {
     title: "Airdrop",
     link: "/",
@@ -44,8 +60,8 @@ const Topbar = () => {
   const [menuItems, setMenuItems] = useState(visitorMenuItems);
 
   useEffect(() => {
-    if (isUser && user.twitterAccountId) {
-      setMenuItems(userMenuItems);
+    if (isUser && (currentDate >= season2LaunchDate ? user.twitterAccountId : true)) {
+      setMenuItems(currentDate >= season2LaunchDate ? userSeason2MenuItems : userMenuItems);
     } else {
       setMenuItems(visitorMenuItems);
     }

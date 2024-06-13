@@ -1,6 +1,7 @@
 import { WalletType } from "./types";
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { NEXT_PUBLIC_SEASON_2_LAUNCH_TIME } from "./config";
 
 export const eclipseAddress = (address: string): string => {
   return (
@@ -51,13 +52,6 @@ export const path = {
 
 export const evmDecimals = 18;
 
-export const signUpSteps = {
-  WALLET: 1,
-  TWITTER: 2,
-  TOTAL: 2,
-  MANDATORY: 2
-}
-
 export const screenWidth = {
   MEDIUM: 768,
   EXTRA_LARGE: 1200,
@@ -84,4 +78,15 @@ export const defaultReferralCode = "FUSER";
 
 export function isFloat(value: unknown) {
   return !Number.isInteger(value) && Number.isFinite(value);
+}
+
+export const currentDate = new Date();
+
+export const season2LaunchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_LAUNCH_TIME));
+
+export const signUpSteps = {
+  WALLET: 1,
+  TWITTER: 2,
+  TOTAL: 2,
+  MANDATORY: currentDate >= season2LaunchDate ? 2 : 1
 }
