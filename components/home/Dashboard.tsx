@@ -33,6 +33,7 @@ import zneakrz from "@/assets/zneakrz.svg";
 import mirakle from "@/assets/mirakle.svg";
 import joinTelegram from "@/assets/join-telegram.svg";
 import voltApp from "@/assets/volt-app.svg";
+import goodDollar from "@/public/gooddollar.png";
 import { Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
@@ -78,6 +79,18 @@ const Dashboard = () => {
       isFunctionTwo: true,
     },
     {
+      id: "joinDiscord",
+      title: "Join Fuse Discord",
+      image: joinDiscord,
+      point: "50 points",
+      description: "Get 50 point for joining an official Fuse network Discord channel  \n**Verify the quest 1 hour after completing it on Layer3**",
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
+      button: "Go to Quest",
+      link: "https://app.layer3.xyz/quests/join-fuse-discord",
+      buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
+    },
+    {
       id: "numOfTokens",
       title: "Holding more than 2 different tokens",
       point: "10 points",
@@ -93,11 +106,6 @@ const Dashboard = () => {
       isActive: true,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
-    },
-    {
-      id: "joinDiscord",
-      title: "Join Fuse Discord",
-      image: joinDiscord,
     },
     {
       id: "say-gm",
@@ -163,6 +171,20 @@ const Dashboard = () => {
       isActive: true,
       button: "Go to Meridian Lend",
       link: "https://lend.meridianfinance.net/markets/",
+      imageHeight: "h-[100px]"
+    },
+    {
+      id: "goodDollar",
+      title: "Claim G$ on GoodDapp",
+      heading: "Get points daily for G$ claiming",
+      point: "30 points per claim",
+      description: "To get 30 points daily, you need to take 6 simple steps:  \n**Step 1:**\nGo to quest on the Layer3 platform  \n**Step 2:**\nConnect to Layer3 a wallet participating in the airdrop  \n**Step 3:**\nGo to GoodDapp  \n**Step 4:**\nClaim G$ token on Fuse Network  \n**Step 5:**\nVerify quest completion on the Layer3  \n**Step 6:**\nRepeat every day. After 5 claims, the quest will renew automatically and allow you to claim more and more.",
+      image: goodDollar,
+      isActive: NEXT_PUBLIC_ENVIRONMENT === "staging",
+      button: "Go to Meridian Lend",
+      link: "https://app.layer3.xyz/streaks/claim-dollarg",
+      buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
       imageHeight: "h-[100px]"
     },
     {

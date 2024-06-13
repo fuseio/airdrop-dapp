@@ -77,7 +77,7 @@ const QuestModal = (): JSX.Element => {
             transition={{
               duration: 0.3,
             }}
-            className="bg-tertiary min-h-[572px] xl:min-h-[458px] w-[519px] xl:w-[415px] max-w-[95%] z-[80] absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rounded-2xl"
+            className="bg-tertiary h-fit max-h-[98%] overflow-y-auto w-[519px] xl:w-[415px] max-w-[95%] z-[80] absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rounded-2xl"
           >
             <div className="relative flex flex-col justify-between min-h-[inherit] pt-9 xl:pt-7">
               <div className="absolute right-9 xl:right-7">
@@ -121,7 +121,7 @@ const QuestModal = (): JSX.Element => {
               </div>
               <div className="min-h-[104px] xl:min-h-fit mt-10">
                 <hr className="border-[0.3px] border-davy-gray" />
-                <div className={`flex items-center mt-7 mb-8 xl:mt-6 xl:mb-6.5 px-9 xl:px-7 ${selectedQuest.buttonTwo ? "justify-between" : "justify-end"}`}>
+                <div className={`flex items-center gap-2 mt-7 mb-8 xl:mt-6 xl:mb-6.5 px-9 xl:px-7 ${selectedQuest.buttonTwo ? "justify-between" : "justify-end"}`}>
                   {selectedQuest.button &&
                     <button
                       className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
