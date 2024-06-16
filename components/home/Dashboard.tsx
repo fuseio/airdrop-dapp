@@ -117,6 +117,21 @@ const Dashboard = () => {
       imageHeight: "h-[100px]"
     },
     {
+      id: "mirakleFuse",
+      title: "Explore Mirakle on Fuse",
+      heading: "Explore Mirakle on Fuse Network",
+      point: "100 points per claim",
+      description: "Explore Mirakle DEX capabilities and get 100 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
+      image: mirakle,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
+      button: "Go to Quest",
+      link: "https://app.layer3.xyz/quests/explore-mirakle-on-fuse-network",
+      buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
+      imageHeight: "h-[100px]"
+    },
+    {
       id: "joinDiscord",
       title: "Join Fuse Discord",
       image: joinDiscord,
