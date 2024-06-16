@@ -1,7 +1,7 @@
 import { WalletType } from "./types";
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { NEXT_PUBLIC_SEASON_2_LAUNCH_TIME } from "./config";
+import { NEXT_PUBLIC_SEASON_2_LAUNCH_TIME, NEXT_PUBLIC_SEASON_2_TWITTER_LAUNCH_TIME } from "./config";
 
 export const eclipseAddress = (address: string): string => {
   return (
@@ -83,10 +83,11 @@ export function isFloat(value: unknown) {
 export const currentDate = new Date();
 
 export const season2LaunchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_LAUNCH_TIME));
+export const season2TwitterLaunchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_TWITTER_LAUNCH_TIME));
 
 export const signUpSteps = {
   WALLET: 1,
   TWITTER: 2,
   TOTAL: 2,
-  MANDATORY: currentDate >= season2LaunchDate ? 2 : 1
+  MANDATORY: currentDate >= season2TwitterLaunchDate ? 2 : 1
 }
