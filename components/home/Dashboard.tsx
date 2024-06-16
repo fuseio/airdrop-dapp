@@ -184,7 +184,7 @@ const Dashboard = () => {
       image: voltWalletTwoLines,
       isActive: true,
       button: "Go to Volt",
-      link: "https://get.voltage.finance/gBMb",
+      link: "https://get.voltage.finance/ThLA",
       imageHeight: "h-[100px]"
     },
     {
