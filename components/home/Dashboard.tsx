@@ -123,7 +123,7 @@ const Dashboard = () => {
       point: "50 points",
       description: "Get 50 point for joining an official Fuse network Discord channel  \n**Verify the quest 1 hour after completing it on Layer3**",
       isActive: false,
-      isHidden: currentDate >= season2LaunchDate || NEXT_PUBLIC_ENVIRONMENT === "staging",
+      isHidden: currentDate >= season2LaunchDate,
       button: "Go to Quest",
       link: "https://app.layer3.xyz/quests/join-fuse-discord",
       buttonTwo: "Verify Quest",
@@ -133,7 +133,7 @@ const Dashboard = () => {
       id: "say-gm",
       title: "Say GM in Discord",
       image: sayGm,
-      isHidden: currentDate >= season2LaunchDate || NEXT_PUBLIC_ENVIRONMENT === "staging",
+      isHidden: currentDate >= season2LaunchDate,
     },
     {
       id: "voltApp",
@@ -143,7 +143,7 @@ const Dashboard = () => {
       description: "To get 500 points you need to take 3 simple steps:  \n**Step 1**\nInstall the Volt app to your mobile device  \n**Step 2**\nCreate a wallet  \n**Step 3**\nBuy at least $10 in USDC or FUSE tokens through one of the fiat-on-ramp services.",
       image: voltApp,
       isActive: false,
-      isHidden: currentDate >= season2LaunchDate || NEXT_PUBLIC_ENVIRONMENT === "staging",
+      isHidden: currentDate >= season2LaunchDate,
       button: "Get Volt app",
       link: "https://voltage.finance/mobile",
     },
@@ -161,7 +161,7 @@ const Dashboard = () => {
       button: "Go to Voltage",
       link: "https://voltage.finance/pool?filter=v3",
       padding: "py-6 pl-6 pr-2",
-      imageHeight: "h-[100px]",
+      imageHeight: currentDate >= season2LaunchDate ? "h-[100px]" : undefined,
     },
     {
       id: "staking-sFuse",
@@ -173,7 +173,7 @@ const Dashboard = () => {
       isActive: true,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
-      imageHeight: "h-[100px]"
+      imageHeight: currentDate >= season2LaunchDate ? "h-[100px]" : undefined,
     },
     {
       id: "staking-veVolt",
@@ -185,7 +185,7 @@ const Dashboard = () => {
       isActive: true,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/veVOLT",
-      imageHeight: "h-[100px]"
+      imageHeight: currentDate >= season2LaunchDate ? "h-[100px]" : undefined,
     },
     {
       id: "stakeFuseOnVolt",
@@ -220,7 +220,7 @@ const Dashboard = () => {
       description: "Follow these steps:  \n**Step 1**\nBridge USDT to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nGo to LogX and buy LLP tokens  \n**Step 3**\nDouble your points by staking LLP on LogX Liquidity Pool.  \n**Bonus**\nEarn protocol income and claimable USDT rewards.",
       image: logx,
       isActive: false,
-      isHidden: currentDate >= season2LaunchDate || NEXT_PUBLIC_ENVIRONMENT === "staging",
+      isHidden: currentDate >= season2LaunchDate,
       button: "Go to LogX",
       link: "https://app.logx.trade/liquidity",
       imageHeight: "h-[100px]"
@@ -229,19 +229,19 @@ const Dashboard = () => {
       id: "bitazza",
       title: "Create a wallet on Bitazza",
       image: bitazza,
-      isHidden: currentDate >= season2LaunchDate || NEXT_PUBLIC_ENVIRONMENT === "staging",
+      isHidden: currentDate >= season2LaunchDate,
     },
     {
       id: "zneakrz",
       title: "Create a wallet on Zneakrz",
       image: zneakrz,
-      isHidden: currentDate >= season2LaunchDate || NEXT_PUBLIC_ENVIRONMENT === "staging",
+      isHidden: currentDate >= season2LaunchDate,
     },
     {
       id: "mirakle",
       title: "Trade on Mirakle",
       image: mirakle,
-      isHidden: currentDate >= season2LaunchDate || NEXT_PUBLIC_ENVIRONMENT === "staging",
+      isHidden: currentDate >= season2LaunchDate,
     },
   ])
 
@@ -695,7 +695,7 @@ const Dashboard = () => {
       </div>
       <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
         <div className="flex items-center gap-2.5">
-          {(currentDate < season2LaunchDate && NEXT_PUBLIC_ENVIRONMENT === "production") &&
+          {currentDate < season2LaunchDate &&
             <Image
               src={fireTransparent}
               alt="fire"
