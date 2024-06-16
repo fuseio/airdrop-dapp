@@ -16,6 +16,7 @@ const visitorMenuItems = [
   {
     title: "Fuse Home",
     link: "https://www.fuse.io",
+    isNewTab: true,
   },
 ]
 
@@ -31,6 +32,7 @@ const userMenuItems = [
   {
     title: "Fuse Home",
     link: "https://www.fuse.io",
+    isNewTab: true,
   },
 ]
 
@@ -50,6 +52,7 @@ const userSeason2MenuItems = [
   {
     title: "Fuse Home",
     link: "https://www.fuse.io",
+    isNewTab: true,
   },
 ]
 
