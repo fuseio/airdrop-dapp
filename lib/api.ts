@@ -95,9 +95,22 @@ export const postComingSoonSubscribe = async (email: string) => {
   return response.data
 }
 
-export const postVerifyTelegram = async (token: string): Promise<{message: string}> => {
+export const postVerifyTelegram = async (token: string): Promise<{ message: string }> => {
   const response = await axios.post(
     `${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/telegram`,
+    {},
+    {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+  )
+  return response.data
+}
+
+export const postVerifyGoodDollar = async (token: string): Promise<{ message: string, numOfNewRewardsCreated: number }> => {
+  const response = await axios.post(
+    `${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/gooddollar`,
     {},
     {
       headers: {
