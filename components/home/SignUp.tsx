@@ -4,7 +4,7 @@ import SignUpWallet from "./SignUpWallet";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { create, selectUserSlice, setCurrentComponent } from "@/store/userSlice";
 import { useAccount } from "wagmi";
-import { currentDate, season2LaunchDate, signUpSteps } from "@/lib/helpers";
+import { currentDate, season2TwitterLaunchDate, signUpSteps } from "@/lib/helpers";
 import { useEffect } from "react";
 import SignUpSkip from "./SignUpSkip";
 
@@ -33,7 +33,7 @@ const SignUp = () => {
     if (
       isUser &&
       user.twitterAccountId &&
-      currentDate < season2LaunchDate
+      currentDate < season2TwitterLaunchDate
     ) {
       dispatch(setCurrentComponent("dashboard"));
     }
@@ -54,7 +54,7 @@ const SignUp = () => {
         <SignUpWallet />
         <SignUpTwitter />
       </div>
-      {(signupStepCompleted[signUpSteps.MANDATORY] && currentDate < season2LaunchDate) && <SignUpSkip />}
+      {(signupStepCompleted[signUpSteps.MANDATORY] && currentDate < season2TwitterLaunchDate) && <SignUpSkip />}
     </motion.div>
   )
 }

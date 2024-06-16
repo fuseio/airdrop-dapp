@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { generateTwitterAuthUrl, retrieve, selectUserSlice, setSignupStepCompleted, setTotalSignupStepCompleted } from "@/store/userSlice";
 import Image from "next/image";
 import check from "@/assets/check.svg";
-import { currentDate, path, season2LaunchDate, signUpSteps } from "@/lib/helpers";
+import { currentDate, path, season2TwitterLaunchDate, signUpSteps } from "@/lib/helpers";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Spinner from "../ui/Spinner";
@@ -55,14 +55,14 @@ const SignUpTwitter = () => {
         </p>
       </div>
       <button
-        className={`transition ease-in-out bg-primary flex justify-center items-center gap-2 rounded-full w-[163px] text-xl leading-none font-semibold py-[15px] ${(currentDate >= season2LaunchDate ? signupStepCompleted[signUpSteps.TWITTER - 1] : signupStepCompleted[signUpSteps.MANDATORY]) && !signupStepCompleted[signUpSteps.TWITTER] ? "opacity-100 hover:bg-white" : "opacity-30"}`}
-        disabled={(currentDate >= season2LaunchDate ? signupStepCompleted[signUpSteps.TWITTER - 1] : signupStepCompleted[signUpSteps.MANDATORY]) && !signupStepCompleted[signUpSteps.TWITTER] ? false : true}
+        className={`transition ease-in-out bg-primary flex justify-center items-center gap-2 rounded-full w-[163px] text-xl leading-none font-semibold py-[15px] ${(currentDate >= season2TwitterLaunchDate ? signupStepCompleted[signUpSteps.TWITTER - 1] : signupStepCompleted[signUpSteps.MANDATORY]) && !signupStepCompleted[signUpSteps.TWITTER] ? "opacity-100 hover:bg-white" : "opacity-30"}`}
+        disabled={(currentDate >= season2TwitterLaunchDate ? signupStepCompleted[signUpSteps.TWITTER - 1] : signupStepCompleted[signUpSteps.MANDATORY]) && !signupStepCompleted[signUpSteps.TWITTER] ? false : true}
         onClick={() => dispatch(generateTwitterAuthUrl())}
       >
         {(isTwitterConnectedError && isConnected) && "Retry"}
         {!isTwitterConnectedError && "Follow"}
         {(
-          currentDate >= season2LaunchDate &&
+          currentDate >= season2TwitterLaunchDate &&
           (
             isGeneratingTwitterAuthUrl ||
             (signupStepCompleted[signUpSteps.TWITTER] && (isCreating || isRetrieving))

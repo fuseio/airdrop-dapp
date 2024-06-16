@@ -12,7 +12,7 @@ import Landing from "@/components/home/Landing";
 import SignUp from "@/components/home/SignUp";
 import Dashboard from "@/components/home/Dashboard";
 import { useSearchParams } from "next/navigation";
-import { currentDate, season2LaunchDate } from "@/lib/helpers";
+import { currentDate, season2TwitterLaunchDate } from "@/lib/helpers";
 
 export default function Airdrop() {
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ export default function Airdrop() {
   }, [dispatch, isUser, twitterConnected])
 
   useEffect(() => {
-    if (isUser && (currentDate >= season2LaunchDate ? user.twitterAccountId : currentComponent !== "signup")) {
+    if (isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : currentComponent !== "signup")) {
       dispatch(setCurrentComponent("dashboard"));
     }
   }, [currentComponent, dispatch, isUser, user.twitterAccountId])
@@ -76,7 +76,7 @@ export default function Airdrop() {
             {currentComponent === "dashboard" && <Dashboard />}
           </AnimatePresence>
         </div>
-        {(isUser && (currentDate >= season2LaunchDate ? user.twitterAccountId : true)) && <Footer />}
+        {(isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : true)) && <Footer />}
       </div>
     </div>
   );
