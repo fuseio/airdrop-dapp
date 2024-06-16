@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { generateTwitterAuthUrl, selectUserSlice, setIsQuestModalOpen, verifyTelegram } from "@/store/userSlice";
+import { generateTwitterAuthUrl, selectUserSlice, setIsQuestModalOpen, verifyGoodDollar, verifyTelegram } from "@/store/userSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import closeWhite from "@/assets/close-white.svg";
@@ -48,6 +48,9 @@ const QuestModal = (): JSX.Element => {
         break;
       case "telegramSubscription":
         dispatch(verifyTelegram());
+        break;
+      case "goodDollar":
+        dispatch(verifyGoodDollar());
         break;
     }
   }

@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
 import { CreateUser, EcosystemApp, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
-import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyTelegram } from "@/lib/api";
+import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyGoodDollar, postVerifyTelegram } from "@/lib/api";
 import { RootState } from "../store";
 import { Address } from "viem";
 
@@ -291,6 +291,28 @@ export const verifyTelegram = createAsyncThunk<
   }
 );
 
+export const verifyGoodDollar = createAsyncThunk<
+  any,
+  undefined,
+  { state: RootState }
+>(
+  "USER/VERIFY_GOODDOLLAR",
+  async (
+    _,
+    thunkAPI
+  ) => {
+    try {
+      const state = thunkAPI.getState();
+      const userState: UserStateType = state.user;
+      const verifiedGoodDollar = await postVerifyGoodDollar(userState.accessToken);
+      return verifiedGoodDollar;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "USER_STATE",
   initialState: INIT_STATE,
@@ -471,6 +493,17 @@ const userSlice = createSlice({
         } else {
           state.selectedQuest.buttonTwo = "Try Again Later";
         }
+      })
+      .addCase(verifyGoodDollar.pending, (state) => {
+        state.selectedQuest.isLoadingTwo = true;
+      })
+      .addCase(verifyGoodDollar.fulfilled, (state) => {
+        state.selectedQuest.isLoadingTwo = false;
+        state.selectedQuest.buttonTwo = "Verified";
+      })
+      .addCase(verifyGoodDollar.rejected, (state) => {
+        state.selectedQuest.isLoadingTwo = false;
+        state.selectedQuest.buttonTwo = "Try Again Later";
       })
   },
 });
