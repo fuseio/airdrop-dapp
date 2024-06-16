@@ -34,7 +34,13 @@ const NavMenu = ({
                     ? "page"
                     : "false"
                 }
-                onClick={() => router.push(item.link)}
+                onClick={() => {
+                  if (item.isNewTab) {
+                    window.open(item.link, "_blank");
+                  } else {
+                    router.push(item.link);
+                  }
+                }}
               >
                 <div className="block relative">
                   {item.title}
