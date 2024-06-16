@@ -169,7 +169,7 @@ const Dashboard = () => {
       heading: "Multiply your points by staking VOLT token on Voltage DEX",
       point: "8 points per $1 staked daily",
       description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a VOLT token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
-      image: voltWalletTwoLines,
+      image: voltage,
       isActive: true,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/veVOLT",
