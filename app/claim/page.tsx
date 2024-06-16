@@ -7,26 +7,29 @@ import { useEffect } from "react";
 import { retrieve, selectUserSlice, setHydrate, setLogout } from "@/store/userSlice";
 import Footer from "@/components/Footer";
 import { useAccount } from "wagmi";
-import LeaderboardWrapper from "@/components/leaderboard/LeaderboardWrapper";
+import Claim from "@/components/claim/Claim";
 import { useRouter } from "next/navigation";
-import { currentDate, season2TwitterLaunchDate } from "@/lib/helpers";
+import { path } from "@/lib/helpers";
+import NotEligible from "@/components/claim/NotEligible";
 
-export default function LeaderboardPage() {
+const isEligible = true;
+
+export default function ClaimPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { isHydrated, isUser, user } = useAppSelector(selectUserSlice);
+  const { isHydrated, isUser } = useAppSelector(selectUserSlice);
   const { isDisconnected } = useAccount();
 
   useEffect(() => {
     dispatch(setHydrate());
-    dispatch(setSelectedNavbar("leaderboard"));
+    dispatch(setSelectedNavbar("claim"));
   }, [dispatch])
 
   useEffect(() => {
-    if (isHydrated && !(isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : true))) {
-      router.push("/");
+    if (isHydrated && !isUser) {
+      router.push(path.HOME);
     }
-  }, [isHydrated, isUser, router, user.twitterAccountId])
+  }, [isHydrated, isUser, router])
 
   useEffect(() => {
     if (isUser) {
@@ -42,10 +45,13 @@ export default function LeaderboardPage() {
 
   return (
     <div className="w-full font-mona justify-end min-h-screen bg-secondary bg-radial-gradient-green">
-      <div className={`flex-col flex items-center min-h-screen bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top ${isUser ? "justify-start" : "relative justify-between"}`}>
+      <div className={`flex flex-col justify-between items-center relative min-h-screen bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top`}>
         <Topbar />
-        <LeaderboardWrapper />
-        {(isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : true)) && <Footer />}
+        {isEligible ?
+          <Claim /> :
+          <NotEligible />
+        }
+        {isUser && <Footer />}
       </div>
     </div>
   );

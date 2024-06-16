@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { generateTwitterAuthUrl, selectUserSlice, setIsQuestModalOpen, verifyTelegram } from "@/store/userSlice";
+import { generateTwitterAuthUrl, selectUserSlice, setIsQuestModalOpen, verifyGoodDollar, verifyTelegram } from "@/store/userSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import closeWhite from "@/assets/close-white.svg";
@@ -49,6 +49,9 @@ const QuestModal = (): JSX.Element => {
       case "telegramSubscription":
         dispatch(verifyTelegram());
         break;
+      case "goodDollar":
+        dispatch(verifyGoodDollar());
+        break;
     }
   }
 
@@ -91,13 +94,15 @@ const QuestModal = (): JSX.Element => {
                 />
               </div>
               <div className="flex flex-col items-center text-center">
-                <div className={`flex justify-center items-center ${selectedQuest.imageHeight ?? "h-[210px]"} xl:h-auto`}>
-                  <Image
-                    src={selectedQuest.image}
-                    alt={selectedQuest.title}
-                    className="pt-2.5"
-                  />
-                </div>
+                {selectedQuest.image &&
+                  <div className={`flex justify-center items-center ${selectedQuest.imageHeight ?? "h-[210px]"} xl:h-auto`}>
+                    <Image
+                      src={selectedQuest.image}
+                      alt={selectedQuest.title}
+                      className="pt-2.5"
+                    />
+                  </div>
+                }
                 <p className="text-2xl xl:text-xl leading-none text-white font-bold mt-8 max-w-md xl:max-w-xs">
                   {selectedQuest.heading ?? selectedQuest.title}
                 </p>

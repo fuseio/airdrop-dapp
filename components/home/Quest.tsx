@@ -40,14 +40,16 @@ function QuestItem({ quest }: QuestProps) {
             dispatch(setSelectedQuest(quest));
           }}
         >
-          <div ref={ref} className="flex justify-center items-center w-full min-h-[260px] xl:min-h-[208px]">
-            <CardItem translateZ="40">
-              <Image
-                src={quest.image}
-                alt={quest.title}
-              />
-            </CardItem>
-          </div>
+          {quest.image &&
+            <div ref={ref} className="flex justify-center items-center w-full min-h-[260px] xl:min-h-[208px]">
+              <CardItem translateZ="40">
+                <Image
+                  src={quest.image}
+                  alt={quest.title}
+                />
+              </CardItem>
+            </div>
+          }
           {quest.completed &&
             <CardItem translateZ="100" className="absolute top-[22px] right-5">
               <div className="group relative cursor-pointer flex justify-center items-center">

@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
-import { CreateUser, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
-import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyTelegram } from "@/lib/api";
+import { CreateUser, EcosystemApp, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
+import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyGoodDollar, postVerifyTelegram } from "@/lib/api";
 import { RootState } from "../store";
 import { Address } from "viem";
 
@@ -32,6 +32,15 @@ const initQuest: Quest = {
   completed: false,
 }
 
+const initEcosystemApp: EcosystemApp = {
+  name: "",
+  description: "",
+  image: "",
+  background: "",
+  beforeBackground: "",
+  quests: [],
+}
+
 const initSignupStepCompleted: SignupStepCompleted = {
   1: false,
   2: false,
@@ -50,6 +59,8 @@ export interface UserStateType {
   isHydrated: boolean;
   isQuestModalOpen: boolean;
   selectedQuest: Quest;
+  isEcosystemAppModalOpen: boolean;
+  selectedEcosystemApp: EcosystemApp;
   currentComponent: string;
   signupStepCompleted: SignupStepCompleted;
   inviteCode: string;
@@ -77,6 +88,8 @@ const INIT_STATE: UserStateType = {
   isHydrated: false,
   isQuestModalOpen: false,
   selectedQuest: initQuest,
+  isEcosystemAppModalOpen: false,
+  selectedEcosystemApp: initEcosystemApp,
   currentComponent: "landing",
   signupStepCompleted: initSignupStepCompleted,
   inviteCode: "",
@@ -278,6 +291,28 @@ export const verifyTelegram = createAsyncThunk<
   }
 );
 
+export const verifyGoodDollar = createAsyncThunk<
+  any,
+  undefined,
+  { state: RootState }
+>(
+  "USER/VERIFY_GOODDOLLAR",
+  async (
+    _,
+    thunkAPI
+  ) => {
+    try {
+      const state = thunkAPI.getState();
+      const userState: UserStateType = state.user;
+      const verifiedGoodDollar = await postVerifyGoodDollar(userState.accessToken);
+      return verifiedGoodDollar;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "USER_STATE",
   initialState: INIT_STATE,
@@ -287,6 +322,12 @@ const userSlice = createSlice({
     },
     setSelectedQuest: (state, action: PayloadAction<Quest>) => {
       state.selectedQuest = action.payload
+    },
+    setIsEcosystemAppModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isEcosystemAppModalOpen = action.payload
+    },
+    setSelectedEcosystemApp: (state, action: PayloadAction<EcosystemApp>) => {
+      state.selectedEcosystemApp = action.payload
     },
     setCurrentComponent: (state, action: PayloadAction<string>) => {
       state.currentComponent = action.payload
@@ -453,6 +494,17 @@ const userSlice = createSlice({
           state.selectedQuest.buttonTwo = "Try Again Later";
         }
       })
+      .addCase(verifyGoodDollar.pending, (state) => {
+        state.selectedQuest.isLoadingTwo = true;
+      })
+      .addCase(verifyGoodDollar.fulfilled, (state) => {
+        state.selectedQuest.isLoadingTwo = false;
+        state.selectedQuest.buttonTwo = "Verified";
+      })
+      .addCase(verifyGoodDollar.rejected, (state) => {
+        state.selectedQuest.isLoadingTwo = false;
+        state.selectedQuest.buttonTwo = "Try Again Later";
+      })
   },
 });
 
@@ -461,6 +513,8 @@ export const selectUserSlice = (state: AppState): UserStateType => state.user;
 export const {
   setIsQuestModalOpen,
   setSelectedQuest,
+  setIsEcosystemAppModalOpen,
+  setSelectedEcosystemApp,
   setCurrentComponent,
   setSignupStepCompleted,
   setInviteCode,

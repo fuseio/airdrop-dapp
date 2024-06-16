@@ -4,6 +4,7 @@ import { Address } from "viem";
 export type MenuItem = {
   title: string;
   link: string;
+  isNewTab?: boolean;
 }
 
 export type MenuItems = MenuItem[];
@@ -59,8 +60,10 @@ export type SignupStepCompleted = {
 export type EcosystemApp = {
   name: string;
   description: string;
-  image: string;
+  image: string | StaticImageData;
   background: string;
+  beforeBackground: string;
+  quests: Quests;
 }
 
 export type EcosystemApps = EcosystemApp[];
@@ -68,11 +71,12 @@ export type EcosystemApps = EcosystemApp[];
 export type Quest = {
   id: string;
   title: string;
-  image: string | StaticImageData;
+  image?: string | StaticImageData;
   heading?: string;
   point?: string;
   description?: string;
   isActive?: boolean;
+  isHidden?: boolean;
   completed?: boolean;
   button?: string;
   link?: string;

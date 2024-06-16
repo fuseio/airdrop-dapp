@@ -13,7 +13,7 @@ import optimismIcon from "@/assets/optimism-icon.svg";
 import arbitrumIcon from "@/assets/arbitrum-icon.svg";
 import bscLogo from "@/assets/bnb-icon.svg";
 import ethLogo from "@/assets/ethereum-icon.svg";
-import { eclipseAddress, signUpSteps } from "@/lib/helpers";
+import { currentDate, eclipseAddress, season2TwitterLaunchDate, signUpSteps } from "@/lib/helpers";
 
 type Icons = {
   [key: string]: string | StaticImageData;
@@ -96,7 +96,7 @@ const SignUpWallet = () => {
           <p className="text-white opacity-70">
             {eclipseAddress(String(address))}
           </p>
-          {!signupStepCompleted[signUpSteps.WALLET + 1] && (isCreating || isRetrieving) &&
+          {currentDate >= season2TwitterLaunchDate && !signupStepCompleted[signUpSteps.WALLET + 1] && (isCreating || isRetrieving) &&
             <Spinner />
           }
         </div>
