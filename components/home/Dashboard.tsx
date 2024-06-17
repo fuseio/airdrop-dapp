@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
-import { IS_SERVER, convertTimestampToUTC, currentDate, daysInYear, eclipseAddress, isFloat, path, screenWidth, season2LaunchDate } from "@/lib/helpers";
+import { IS_SERVER, convertTimestampToUTC, currentDate, daysInYear, eclipseAddress, isFloat, path, screenWidth, season2ClaimLaunchDate, season2LaunchDate } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { retrieve, selectUserSlice, setIsQuestModalOpen, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
 import Image from "next/image";
@@ -550,7 +550,21 @@ const Dashboard = () => {
             width={matches ? 94 : 75}
             height={matches ? 128 : 102}
           />
-          {currentDate >= season2LaunchDate ?
+          {currentDate >= season2ClaimLaunchDate ?
+            <div className="flex flex-col justify-between items-start gap-2.5">
+              <p className="text-2xl xl:text-xl leading-none text-white font-bold">
+                Claim reward for Season 1
+              </p>
+              <p className="text-sm text-pale-slate font-medium max-w-[254px]">
+                You can claim your tokens now!
+              </p>
+              <button
+                className="transition ease-in-out bg-primary border border-primary rounded-full xl:text-sm text-black leading-none font-semibold mt-[5px] px-9 py-4 xl:px-7 xl:py-2.5 md:px-5 hover:bg-transparent hover:text-primary"
+                onClick={() => router.push(path.CLAIM)}
+              >
+                Claim your tokens
+              </button>
+            </div> :
             <div className="flex flex-col justify-between items-start gap-2.5">
               <p className="text-2xl xl:text-xl leading-none text-white font-bold">
                 Reward for the Season 1 is coming
@@ -563,17 +577,6 @@ const Dashboard = () => {
                 disabled
               >
                 Coming Soon
-              </button>
-            </div> :
-            <div className="flex flex-col justify-between items-start gap-4">
-              <p className="text-2xl xl:text-xl leading-none text-white font-bold max-w-64 md:max-w-full">
-                Welcome to the Fuse Airdrop program
-              </p>
-              <button
-                className="transition ease-in-out border border-primary rounded-full xl:text-sm text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 md:px-5 hover:bg-primary hover:text-black"
-                onClick={() => window.open("https://news.fuse.io/fuse-airdrop-program-is-live/", "_blank")}
-              >
-                Learn More
               </button>
             </div>
           }

@@ -7,17 +7,15 @@ import { useEffect } from "react";
 import { retrieve, selectUserSlice, setHydrate, setLogout } from "@/store/userSlice";
 import Footer from "@/components/Footer";
 import { useAccount } from "wagmi";
-import Claim from "@/components/claim/Claim";
+import Eligible from "@/components/claim/Eligible";
 import { useRouter } from "next/navigation";
-import { path } from "@/lib/helpers";
+import { isEligibleToClaimSeason1Reward, path } from "@/lib/helpers";
 import NotEligible from "@/components/claim/NotEligible";
-
-const isEligible = true;
 
 export default function ClaimPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { isHydrated, isUser } = useAppSelector(selectUserSlice);
+  const { isHydrated, isUser, user } = useAppSelector(selectUserSlice);
   const { isDisconnected } = useAccount();
 
   useEffect(() => {
@@ -47,8 +45,8 @@ export default function ClaimPage() {
     <div className="w-full font-mona justify-end min-h-screen bg-secondary bg-radial-gradient-green">
       <div className={`flex flex-col justify-between items-center relative min-h-screen bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top`}>
         <Topbar />
-        {isEligible ?
-          <Claim /> :
+        {isEligibleToClaimSeason1Reward(user) ?
+          <Eligible /> :
           <NotEligible />
         }
         {isUser && <Footer />}

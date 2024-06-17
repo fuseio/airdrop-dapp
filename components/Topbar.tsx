@@ -6,7 +6,7 @@ import { useAppSelector } from "@/store/store";
 import { selectNavbarSlice } from "@/store/navbarSlice";
 import Image from "next/image";
 import { selectUserSlice } from "@/store/userSlice";
-import { currentDate, season2TwitterLaunchDate } from "@/lib/helpers";
+import { currentDate, season2ClaimLaunchDate, season2TwitterLaunchDate } from "@/lib/helpers";
 
 const visitorMenuItems = [
   {
@@ -64,7 +64,7 @@ const Topbar = () => {
 
   useEffect(() => {
     if (isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : true)) {
-      setMenuItems(userMenuItems);
+      setMenuItems(currentDate >= season2ClaimLaunchDate ? userSeason2MenuItems : userMenuItems);
     } else {
       setMenuItems(visitorMenuItems);
     }
