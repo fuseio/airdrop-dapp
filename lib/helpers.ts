@@ -109,10 +109,16 @@ export const isVoltagePoolBannedUser = (walletAddress: Address) => {
 export const isSignedUpOnSeason2LaunchDate = (userCreatedAt: Date) => {
   const launchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_LAUNCH_TIME));
 
-  userCreatedAt.setUTCHours(0, 0, 0, 0);
-  launchDate.setUTCHours(0, 0, 0, 0);
+  // Offset for UTC+3 in milliseconds
+  const offset = 3 * 60 * 60 * 1000;
 
-  return userCreatedAt.getTime() === launchDate.getTime();
+  const adjustedUserCreatedAt = new Date(userCreatedAt.getTime() + offset);
+  const adjustedLaunchDate = new Date(launchDate.getTime() + offset);
+
+  adjustedUserCreatedAt.setUTCHours(0, 0, 0, 0);
+  adjustedLaunchDate.setUTCHours(0, 0, 0, 0);
+
+  return adjustedUserCreatedAt.getTime() === adjustedLaunchDate.getTime();
 }
 
 export const season1Tier = (points: number) => {
