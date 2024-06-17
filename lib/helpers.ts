@@ -107,10 +107,7 @@ export const isVoltagePoolBannedUser = (walletAddress: Address) => {
 }
 
 export const isUserEligibleByTime = (userCreatedAt: Date) => {
-  const lastEligibleDate = new Date(1718485199 * 1000); // Convert to milliseconds
-  console.log(`Usertime: ${userCreatedAt.getTime()}`);
-  console.log(`lastEligibleDate: ${lastEligibleDate.getTime()}`);
-
+  const lastEligibleDate = new Date(1718485199999); //June15,2024 11:59:59.999PM UTC+03:00 DST
   return userCreatedAt.getTime() <= lastEligibleDate.getTime();
 }
 
