@@ -106,13 +106,9 @@ export const isVoltagePoolBannedUser = (walletAddress: Address) => {
   return bannedUsers.includes(walletAddress.toLowerCase());
 }
 
-export const isSignedUpOnSeason2LaunchDate = (userCreatedAt: Date) => {
-  const launchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_LAUNCH_TIME));
-
-  userCreatedAt.setUTCHours(0, 0, 0, 0);
-  launchDate.setUTCHours(0, 0, 0, 0);
-
-  return userCreatedAt.getTime() === launchDate.getTime();
+export const isUserEligibleByTime = (userCreatedAt: Date) => {
+  const lastEligibleDate = new Date(1718485199999); //June15,2024 11:59:59.999PM UTC+03:00 DST
+  return userCreatedAt.getTime() <= lastEligibleDate.getTime();
 }
 
 export const season1Tier = (points: number) => {
@@ -140,7 +136,7 @@ export const isEligibleToClaimSeason1Reward = (user: User): boolean => {
     return false;
   }
 
-  if (isSignedUpOnSeason2LaunchDate(new Date(user.createdAt))) {
+  if (!isUserEligibleByTime(new Date(user.createdAt))) {
     return false;
   }
 
