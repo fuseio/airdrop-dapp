@@ -112,7 +112,7 @@ export const isUserEligibleByTime = (userCreatedAt: Date) => {
 }
 
 export const season1Tier = (points: number) => {
-  if (points >= 1_000_000 && points <= 25_000_000) {
+  if (points >= 1_000_000 && points <= 40_000_000) {
     return 1
   } else if (points >= 500_000 && points <= 999_999) {
     return 2
@@ -122,7 +122,7 @@ export const season1Tier = (points: number) => {
     return 4
   } else if (points >= 1_000 && points <= 9_999) {
     return 5
-  } else if (points >= 100 && points <= 999) {
+  } else if (points >= 101 && points <= 999) {
     return 6
   } else if (points >= 51 && points <= 100) {
     return 7
