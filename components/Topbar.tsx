@@ -63,12 +63,12 @@ const Topbar = () => {
   const [menuItems, setMenuItems] = useState(visitorMenuItems);
 
   useEffect(() => {
-    if (isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : true)) {
+    if (isUser && (new Date(user.createdAt) >= season2TwitterLaunchDate ? user.twitterAccountId : true)) {
       setMenuItems(currentDate >= season2ClaimLaunchDate ? userSeason2MenuItems : userMenuItems);
     } else {
       setMenuItems(visitorMenuItems);
     }
-  }, [isUser, user.twitterAccountId]);
+  }, [isUser, user.createdAt, user.twitterAccountId]);
 
   return (
     <nav className="w-full h-20 top-0 flex justify-center py-7 md:h-[32px] md:mt-2 z-[60]">

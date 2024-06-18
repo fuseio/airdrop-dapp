@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import { useAccount } from "wagmi";
 import Eligible from "@/components/claim/Eligible";
 import { useRouter } from "next/navigation";
-import { isEligibleToClaimSeason1Reward, path } from "@/lib/helpers";
+import { isEligibleToClaimSeason1Reward, path, season2TwitterLaunchDate } from "@/lib/helpers";
 import NotEligible from "@/components/claim/NotEligible";
 
 export default function ClaimPage() {
@@ -24,10 +24,10 @@ export default function ClaimPage() {
   }, [dispatch])
 
   useEffect(() => {
-    if (isHydrated && !isUser) {
+    if (isHydrated && !(isUser && (new Date(user.createdAt) >= season2TwitterLaunchDate ? user.twitterAccountId : true))) {
       router.push(path.HOME);
     }
-  }, [isHydrated, isUser, router])
+  }, [isHydrated, isUser, router, user.createdAt, user.twitterAccountId])
 
   useEffect(() => {
     if (isUser) {

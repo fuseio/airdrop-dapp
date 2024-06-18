@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import { useAccount } from "wagmi";
 import LeaderboardWrapper from "@/components/leaderboard/LeaderboardWrapper";
 import { useRouter } from "next/navigation";
-import { currentDate, season2TwitterLaunchDate } from "@/lib/helpers";
+import { season2TwitterLaunchDate } from "@/lib/helpers";
 
 export default function LeaderboardPage() {
   const router = useRouter();
@@ -23,10 +23,10 @@ export default function LeaderboardPage() {
   }, [dispatch])
 
   useEffect(() => {
-    if (isHydrated && !(isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : true))) {
+    if (isHydrated && !(isUser && (new Date(user.createdAt) >= season2TwitterLaunchDate ? user.twitterAccountId : true))) {
       router.push("/");
     }
-  }, [isHydrated, isUser, router, user.twitterAccountId])
+  }, [isHydrated, isUser, router, user.createdAt, user.twitterAccountId])
 
   useEffect(() => {
     if (isUser) {
@@ -45,7 +45,7 @@ export default function LeaderboardPage() {
       <div className={`flex-col flex items-center min-h-screen bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top ${isUser ? "justify-start" : "relative justify-between"}`}>
         <Topbar />
         <LeaderboardWrapper />
-        {(isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : true)) && <Footer />}
+        {(isUser && (new Date(user.createdAt) >= season2TwitterLaunchDate ? user.twitterAccountId : true)) && <Footer />}
       </div>
     </div>
   );

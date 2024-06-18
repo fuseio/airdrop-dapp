@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { motion } from "framer-motion";
-import { authenticate, retrieve, selectUserSlice } from "@/store/userSlice";
+import { authenticate, retrieve, selectUserSlice, setCurrentComponent, setInviteCode } from "@/store/userSlice";
 import { defaultReferralCode } from "@/lib/helpers";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -13,7 +13,7 @@ const Landing = () => {
   const searchParams = useSearchParams();
   const referralCode = searchParams.get('ref');
   const { isHydrated, isAuthenticated, isUser } = useAppSelector(selectUserSlice);
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
 
   useEffect(() => {
     if (referralCode) {
@@ -36,6 +36,13 @@ const Landing = () => {
       }
     }
   }, [address, dispatch, isAuthenticated, isHydrated, isUser])
+
+  useEffect(() => {
+    if (isConnected && !isUser) {
+      dispatch(setInviteCode(defaultReferralCode));
+      dispatch(setCurrentComponent("signup"));
+    }
+  }, [dispatch, isConnected, isUser])
 
   return (
     <motion.div

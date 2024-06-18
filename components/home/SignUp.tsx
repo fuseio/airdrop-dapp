@@ -4,7 +4,7 @@ import SignUpWallet from "./SignUpWallet";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { create, selectUserSlice, setCurrentComponent } from "@/store/userSlice";
 import { useAccount } from "wagmi";
-import { currentDate, season2TwitterLaunchDate, signUpSteps } from "@/lib/helpers";
+import { season2TwitterLaunchDate, signUpSteps } from "@/lib/helpers";
 import { useEffect } from "react";
 import SignUpSkip from "./SignUpSkip";
 
@@ -15,7 +15,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (
-      totalSignupStepCompleted === signUpSteps.MANDATORY &&
+      totalSignupStepCompleted === signUpSteps.WALLET &&
       isAuthenticated &&
       address &&
       inviteCode
@@ -27,17 +27,17 @@ const SignUp = () => {
         },
       }));
     }
-  }, [address, dispatch, inviteCode, isAuthenticated, totalSignupStepCompleted])
+  }, [address, dispatch, inviteCode, isAuthenticated, totalSignupStepCompleted, user.createdAt])
 
   useEffect(() => {
     if (
       isUser &&
       user.twitterAccountId &&
-      currentDate < season2TwitterLaunchDate
+      new Date(user.createdAt) < season2TwitterLaunchDate
     ) {
       dispatch(setCurrentComponent("dashboard"));
     }
-  }, [dispatch, isUser, user.twitterAccountId])
+  }, [dispatch, isUser, user.createdAt, user.twitterAccountId])
 
   return (
     <motion.div
@@ -54,7 +54,7 @@ const SignUp = () => {
         <SignUpWallet />
         <SignUpTwitter />
       </div>
-      {(signupStepCompleted[signUpSteps.MANDATORY] && currentDate < season2TwitterLaunchDate) && <SignUpSkip />}
+      {(signupStepCompleted[signUpSteps.MANDATORY] && new Date(user.createdAt) < season2TwitterLaunchDate) && <SignUpSkip />}
     </motion.div>
   )
 }
