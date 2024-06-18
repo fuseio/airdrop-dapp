@@ -37,6 +37,8 @@ const Init = () => {
         (new Date(user.createdAt) >= season2TwitterLaunchDate ? user.twitterAccountId : currentComponent !== "signup")
       ) {
         dispatch(setCurrentComponent("dashboard"));
+      } else {
+        dispatch(setCurrentComponent("signup"));
       }
     } else {
       if (authenticatedRoutes.includes(pathname)) {
