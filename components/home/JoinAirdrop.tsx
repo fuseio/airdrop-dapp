@@ -13,7 +13,7 @@ type JoinAirdropProps = {
 const JoinAirdrop = ({ invite, setInvite }: JoinAirdropProps) => {
   const dispatch = useAppDispatch();
   const [isInputClicked, setIsInputClicked] = useState(false);
-  const { isRetrieving } = useAppSelector(selectUserSlice);
+  const { isAuthenticating, isRetrieving, isCreating } = useAppSelector(selectUserSlice);
 
   return (
     <form
@@ -56,7 +56,7 @@ const JoinAirdrop = ({ invite, setInvite }: JoinAirdropProps) => {
         className="transition ease-in-out bg-primary flex justify-center items-center gap-2 rounded-full text-xl leading-none font-semibold px-12 py-4 md:w-full hover:bg-white"
       >
         Join Airdrop
-        {isRetrieving &&
+        {(isAuthenticating || isRetrieving || isCreating) &&
           <Spinner />
         }
       </button>

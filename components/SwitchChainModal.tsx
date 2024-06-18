@@ -6,6 +6,8 @@ import { useAccount, useDisconnect, useSwitchChain } from "wagmi";
 import { fuse } from "viem/chains";
 import Image from "next/image";
 import { resetConnection } from "@/lib/web3Auth";
+import { useAppDispatch } from "@/store/store";
+import { setLogout } from "@/store/userSlice";
 
 type ChainModalProps = {
   description?: string;
@@ -17,9 +19,11 @@ const SwitchChainModal = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { switchChain } = useSwitchChain()
   const { isConnected, chain } = useAccount();
+  const dispatch = useAppDispatch();
   const { disconnect } = useDisconnect({
     mutation: {
       onSuccess() {
+        dispatch(setLogout());
         resetConnection();
       }
     }
