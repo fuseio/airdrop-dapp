@@ -37,6 +37,7 @@ import goodDollar from "@/public/gooddollar.png";
 import goodDollarCircle from "@/assets/gooddollar-circle.svg";
 import voltWallet from "@/assets/volt-wallet.svg";
 import voltWalletTwoLines from "@/assets/volt-wallet-two-lines.svg";
+import dementedRoulette from "@/assets/demented-roulette.svg";
 import { EcosystemApps, Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
@@ -225,6 +226,20 @@ const Dashboard = () => {
       isActive: true,
       button: "Go to Meridian Lend",
       link: "https://lend.meridianfinance.net/markets/",
+      imageHeight: "h-[100px]"
+    },
+    {
+      id: "dementedRoulette",
+      title: "Play Demented Roulette",
+      point: "More play - more points",
+      pointModal: "The more play, the more points get",
+      description: "Earn tons of points and win WFUSE by playing the Demented Roulette!  \n**Step 1**\nGo to Demented Roulette  \n**Step 2**\nWin WFUSE and earn unlimited points by playing every round  \n**Step 3**\nPoints earned in roulette will be added to Airdrop points in a 1:1 ratio  \n**You can claim your points from roulette at any time**",
+      image: dementedRoulette,
+      isActive: true,
+      button: "Let's Play",
+      link: "https://demented.games/",
+      buttonTwo: "Claim points",
+      isFunctionTwo: true,
       imageHeight: "h-[100px]"
     },
     {

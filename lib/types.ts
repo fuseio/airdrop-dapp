@@ -76,6 +76,7 @@ export type Quest = {
   image?: string | StaticImageData;
   heading?: string;
   point?: string;
+  pointModal?: string;
   description?: string;
   isActive?: boolean;
   isHidden?: boolean;
