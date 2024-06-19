@@ -120,7 +120,7 @@ const QuestModal = (): JSX.Element => {
                     height={matches ? 23 : 19}
                   />
                   <p className="text-lg xl:text-base text-success font-bold">
-                    {selectedQuest.point}
+                    {selectedQuest.pointModal ?? selectedQuest.point}
                   </p>
                 </div>
               </div>
