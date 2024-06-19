@@ -13,7 +13,7 @@ import optimismIcon from "@/assets/optimism-icon.svg";
 import arbitrumIcon from "@/assets/arbitrum-icon.svg";
 import bscLogo from "@/assets/bnb-icon.svg";
 import ethLogo from "@/assets/ethereum-icon.svg";
-import { currentDate, eclipseAddress, season2TwitterLaunchDate, signUpSteps } from "@/lib/helpers";
+import { eclipseAddress, season2TwitterLaunchDate, signUpSteps } from "@/lib/helpers";
 
 type Icons = {
   [key: string]: string | StaticImageData;
@@ -30,7 +30,7 @@ const icons: Icons = {
 
 const SignUpWallet = () => {
   const dispatch = useAppDispatch();
-  const { signupStepCompleted, isCreating, isRetrieving, isAuthenticating, isAuthenticated } = useAppSelector(selectUserSlice);
+  const { signupStepCompleted, isCreating, isRetrieving, isAuthenticating, isAuthenticated, user } = useAppSelector(selectUserSlice);
   const { isWalletModalOpen } = useAppSelector(selectNavbarSlice);
   const { address, isConnected, isConnecting, chain } = useAccount();
 
@@ -86,7 +86,7 @@ const SignUpWallet = () => {
         </button>
       }
       {(signupStepCompleted[signUpSteps.WALLET] && address) &&
-        <div className="flex justify-center items-center gap-2 border border-smokey-gray rounded-full w-[163px] py-2.5">
+        <div className="flex justify-center items-center gap-2 border border-smokey-gray rounded-full min-w-[163px] p-2.5">
           <Image
             src={icons[chain?.id ?? 122]}
             alt={chain?.name ?? "Fuse"}
@@ -96,7 +96,7 @@ const SignUpWallet = () => {
           <p className="text-white opacity-70">
             {eclipseAddress(String(address))}
           </p>
-          {currentDate >= season2TwitterLaunchDate && !signupStepCompleted[signUpSteps.WALLET + 1] && (isCreating || isRetrieving) &&
+          {new Date(user.createdAt) >= season2TwitterLaunchDate && !signupStepCompleted[signUpSteps.WALLET + 1] && (isCreating || isRetrieving || isAuthenticating) &&
             <Spinner />
           }
         </div>

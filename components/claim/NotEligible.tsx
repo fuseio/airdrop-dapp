@@ -4,12 +4,16 @@ import { useRouter } from "next/navigation";
 import { useDisconnect } from "wagmi";
 import { resetConnection } from "@/lib/web3Auth";
 import Spinner from "../ui/Spinner";
+import { useAppDispatch } from "@/store/store";
+import { setLogout } from "@/store/userSlice";
 
 const NotEligible = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { disconnect, isPending } = useDisconnect({
     mutation: {
       onSuccess() {
+        dispatch(setLogout());
         resetConnection();
       }
     }

@@ -4,55 +4,40 @@ import Topbar from "@/components/Topbar";
 import { setSelectedNavbar } from "@/store/navbarSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { useEffect } from "react";
-import { retrieve, selectUserSlice, setCurrentComponent, setHydrate, setLogout } from "@/store/userSlice";
+import { create, selectUserSlice } from "@/store/userSlice";
 import Footer from "@/components/Footer";
-import { useAccount } from "wagmi";
 import { AnimatePresence } from "framer-motion";
 import Landing from "@/components/home/Landing";
 import SignUp from "@/components/home/SignUp";
 import Dashboard from "@/components/home/Dashboard";
-import { useSearchParams } from "next/navigation";
-import { currentDate, season2TwitterLaunchDate } from "@/lib/helpers";
+import { season2TwitterLaunchDate, signUpSteps } from "@/lib/helpers";
+import { useAccount } from "wagmi";
 
 export default function Airdrop() {
   const dispatch = useAppDispatch();
-  const { currentComponent, isUser, user } = useAppSelector(selectUserSlice);
-  const { isDisconnected } = useAccount();
-  const searchParams = useSearchParams();
-  const twitterConnected = searchParams.get('twitter-connected');
+  const { currentComponent, totalSignupStepCompleted, isAuthenticated, inviteCode, isUser, user } = useAppSelector(selectUserSlice);
+  const { address } = useAccount();
 
   useEffect(() => {
-    dispatch(setHydrate());
     dispatch(setSelectedNavbar("airdrop"));
   }, [dispatch])
 
   useEffect(() => {
-    if (twitterConnected === "true" && isUser) {
-      dispatch(setCurrentComponent("dashboard"));
-    } else if (twitterConnected && !isUser) {
-      dispatch(setCurrentComponent("signup"));
-    } else if (!isUser) {
-      dispatch(setCurrentComponent("landing"));
+    if (
+      totalSignupStepCompleted === signUpSteps.WALLET &&
+      isAuthenticated &&
+      address &&
+      inviteCode &&
+      currentComponent !== "dashboard"
+    ) {
+      dispatch(create({
+        createUserDetail: {
+          walletAddress: address,
+          referralCode: inviteCode
+        },
+      }));
     }
-  }, [dispatch, isUser, twitterConnected])
-
-  useEffect(() => {
-    if (isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : currentComponent !== "signup")) {
-      dispatch(setCurrentComponent("dashboard"));
-    }
-  }, [currentComponent, dispatch, isUser, user.twitterAccountId])
-
-  useEffect(() => {
-    if (isUser) {
-      dispatch(retrieve());
-    }
-  }, [dispatch, isUser])
-
-  useEffect(() => {
-    if (isDisconnected) {
-      dispatch(setLogout());
-    }
-  }, [isDisconnected, dispatch])
+  }, [address, currentComponent, dispatch, inviteCode, isAuthenticated, totalSignupStepCompleted, user.createdAt])
 
   return (
     <div className={`w-full font-mona bg-secondary ${currentComponent === "landing" ? "h-screen" : "min-h-screen bg-radial-gradient-green"}`}>
@@ -76,7 +61,7 @@ export default function Airdrop() {
             {currentComponent === "dashboard" && <Dashboard />}
           </AnimatePresence>
         </div>
-        {(isUser && (currentDate >= season2TwitterLaunchDate ? user.twitterAccountId : true)) && <Footer />}
+        {(isUser && (new Date(user.createdAt) >= season2TwitterLaunchDate ? user.twitterAccountId : true)) && <Footer />}
       </div>
     </div>
   );

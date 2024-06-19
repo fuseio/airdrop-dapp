@@ -1,13 +1,13 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { selectUserSlice, setCurrentComponent } from "@/store/userSlice";
 import Spinner from "../ui/Spinner";
-import { currentDate, season2TwitterLaunchDate } from "@/lib/helpers";
+import { season2TwitterLaunchDate } from "@/lib/helpers";
 
 const SignUpSkip = () => {
   const dispatch = useAppDispatch();
-  const { isCreating, isRetrieving } = useAppSelector(selectUserSlice);
+  const { isCreating, isRetrieving, user } = useAppSelector(selectUserSlice);
 
-  if(currentDate >= season2TwitterLaunchDate) {
+  if(new Date(user.createdAt) >= season2TwitterLaunchDate) {
     return;
   }
 

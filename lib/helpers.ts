@@ -91,7 +91,7 @@ export const signUpSteps = {
   WALLET: 1,
   TWITTER: 2,
   TOTAL: 2,
-  MANDATORY: currentDate >= season2TwitterLaunchDate ? 2 : 1
+  MANDATORY: 1
 }
 
 export const isVoltagePoolBannedUser = (walletAddress: Address) => {
