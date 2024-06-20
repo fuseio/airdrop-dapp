@@ -118,7 +118,7 @@ const Dashboard = () => {
       imageHeight: "h-[100px]"
     },
     {
-      id: "mirakle",
+      id: "exploreMirakle",
       title: "Explore Mirakle on Fuse",
       heading: "Explore Mirakle on Fuse Network",
       point: "100 points",
