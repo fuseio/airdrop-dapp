@@ -121,7 +121,7 @@ const Dashboard = () => {
       id: "mirakle",
       title: "Explore Mirakle on Fuse",
       heading: "Explore Mirakle on Fuse Network",
-      point: "100 points per claim",
+      point: "100 points",
       description: "Explore Mirakle DEX capabilities and get 100 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
       image: mirakle,
       isActive: true,
