@@ -145,7 +145,8 @@ const QuestModal = (): JSX.Element => {
                   }
                   {selectedQuest.buttonTwo &&
                     <button
-                      className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
+                      className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 enabled:hover:bg-transparent enabled:hover:text-primary disabled:grayscale"
+                      disabled={selectedQuest.isDisabledTwo}
                       onClick={() => {
                         if (selectedQuest.isFunctionTwo) {
                           handleClick(selectedQuest.id, selectedQuest.endpointTwo);

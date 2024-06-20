@@ -88,6 +88,7 @@ export type Quest = {
   buttonTwo?: string;
   linkTwo?: string;
   isFunctionTwo?: boolean;
+  isDisabledTwo?: boolean;
   isLoadingTwo?: boolean;
   endpointTwo?: string;
   padding?: string;
