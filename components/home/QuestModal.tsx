@@ -52,7 +52,7 @@ const QuestModal = (): JSX.Element => {
       case "goodDollar":
         dispatch(verifyGoodDollar());
         break;
-      case "mirakle":
+      case "exploreMirakle":
         dispatch(verifyMirakle());
         break;
     }
