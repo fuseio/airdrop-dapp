@@ -135,6 +135,22 @@ const Dashboard = () => {
       imageHeight: "h-[100px]"
     },
     {
+      id: "exploreVoltWallet",
+      title: "Explore Volt wallet",
+      heading: "Explore Volt mobile wallet",
+      point: "200 points",
+      description: "The Volt wallet is the best mobile solution for interacting with the Fuse network, as it is built and developed by the Fuse team. Explore its features and get 200 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
+      image: voltWalletTwoLines,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
+      button: "Go to Quest",
+      link: "https://app.layer3.xyz/quests/discover-volt-wallet",
+      buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
+      endpointTwo: "explore-volt-wallet",
+      imageHeight: "h-[100px]"
+    },
+    {
       id: "joinDiscord",
       title: "Join Fuse Discord",
       image: joinDiscord,
