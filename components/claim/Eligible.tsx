@@ -67,6 +67,7 @@ const Eligible = () => {
         </div>
         <button
           className="transition ease-in-out bg-primary flex justify-center items-center gap-2 w-full max-w-[268px] border border-primary rounded-full text-black font-semibold px-5 py-[15px] hover:bg-transparent hover:text-primary"
+          onClick={() => window.open("https://app.layer3.xyz/collections/fuse-airdrop-rewards", "_blank")}
         >
           Claim on Layer3
         </button>
