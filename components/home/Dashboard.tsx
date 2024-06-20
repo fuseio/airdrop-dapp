@@ -84,6 +84,7 @@ const Dashboard = () => {
       link: "https://app.layer3.xyz/quests/join-fuse-telegram",
       buttonTwo: "Verify Quest",
       isFunctionTwo: true,
+      endpointTwo: "telegram",
     },
     {
       id: "numOfTokens",
@@ -115,6 +116,7 @@ const Dashboard = () => {
       link: "https://app.layer3.xyz/streaks/claim-dollarg",
       buttonTwo: "Verify Quest",
       isFunctionTwo: true,
+      endpointTwo: "gooddollar",
       imageHeight: "h-[100px]"
     },
     {
@@ -129,6 +131,23 @@ const Dashboard = () => {
       link: "https://app.layer3.xyz/quests/explore-mirakle-on-fuse-network",
       buttonTwo: "Verify Quest",
       isFunctionTwo: true,
+      endpointTwo: "mirakle",
+      imageHeight: "h-[100px]"
+    },
+    {
+      id: "exploreVoltWallet",
+      title: "Explore Volt wallet",
+      heading: "Explore Volt mobile wallet",
+      point: "200 points",
+      description: "The Volt wallet is the best mobile solution for interacting with the Fuse network, as it is built and developed by the Fuse team. Explore its features and get 200 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
+      image: voltWalletTwoLines,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
+      button: "Go to Quest",
+      link: "https://app.layer3.xyz/quests/discover-volt-wallet",
+      buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
+      endpointTwo: "explore-volt-wallet",
       imageHeight: "h-[100px]"
     },
     {
@@ -235,10 +254,10 @@ const Dashboard = () => {
       description: "Earn tons of points and win WFUSE by playing the Demented Roulette!  \n**Step 1**\nGo to Demented Roulette  \n**Step 2**\nWin WFUSE and earn unlimited points by playing every round  \n**Step 3**\nPoints earned in roulette will be added to Airdrop points in a 1:1 ratio  \n**You can claim your points from roulette at any time**",
       image: dementedRoulette,
       isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
       button: "Let's Play",
       link: "https://demented.games/",
-      buttonTwo: "Claim points",
+      buttonTwo: "Claim coming soon",
+      isDisabledTwo: true,
       isFunctionTwo: true,
       imageHeight: "h-[100px]"
     },

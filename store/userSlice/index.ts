@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
 import { CreateUser, EcosystemApp, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
-import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyGoodDollar, postVerifyMirakle, postVerifyTelegram } from "@/lib/api";
+import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyQuest } from "@/lib/api";
 import { RootState } from "../store";
 import { Address } from "viem";
 
@@ -268,71 +268,33 @@ export const submitComingSoonSubscribe = createAsyncThunk(
   }
 );
 
-export const verifyTelegram = createAsyncThunk<
+export const verifyQuest = createAsyncThunk<
   any,
-  undefined,
+  {
+    endpoint: string;
+  },
   { state: RootState }
 >(
-  "USER/VERIFY_TELEGRAM",
+  "USER/VERIFY_QUEST",
   async (
-    _,
+    {
+      endpoint
+    }: {
+      endpoint: string;
+    },
     thunkAPI
   ) => {
     try {
       const state = thunkAPI.getState();
       const userState: UserStateType = state.user;
-      const verifiedTelegram = await postVerifyTelegram(userState.accessToken);
-      return verifiedTelegram;
+      const verified = await postVerifyQuest(userState.accessToken, endpoint);
+      return verified;
     } catch (error: any) {
       if (error?.response?.status === 409) {
         thunkAPI.dispatch(retrieve());
       }
       console.error(error);
       throw error?.response?.status;
-    }
-  }
-);
-
-export const verifyGoodDollar = createAsyncThunk<
-  any,
-  undefined,
-  { state: RootState }
->(
-  "USER/VERIFY_GOODDOLLAR",
-  async (
-    _,
-    thunkAPI
-  ) => {
-    try {
-      const state = thunkAPI.getState();
-      const userState: UserStateType = state.user;
-      const verifiedGoodDollar = await postVerifyGoodDollar(userState.accessToken);
-      return verifiedGoodDollar;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-);
-
-export const verifyMirakle = createAsyncThunk<
-  any,
-  undefined,
-  { state: RootState }
->(
-  "USER/VERIFY_MIRAKLE",
-  async (
-    _,
-    thunkAPI
-  ) => {
-    try {
-      const state = thunkAPI.getState();
-      const userState: UserStateType = state.user;
-      const verified = await postVerifyMirakle(userState.accessToken);
-      return verified;
-    } catch (error) {
-      console.error(error);
-      throw error;
     }
   }
 );
@@ -501,15 +463,14 @@ const userSlice = createSlice({
         state.isSubmittingComingSoonSubscribe = false;
         state.isErrorSubmittingComingSoonSubscribe = true;
       })
-      .addCase(verifyTelegram.pending, (state) => {
+      .addCase(verifyQuest.pending, (state) => {
         state.selectedQuest.isLoadingTwo = true;
       })
-      .addCase(verifyTelegram.fulfilled, (state) => {
+      .addCase(verifyQuest.fulfilled, (state) => {
         state.selectedQuest.isLoadingTwo = false;
         state.selectedQuest.buttonTwo = "Verified";
-        state.isQuestModalOpen = false;
       })
-      .addCase(verifyTelegram.rejected, (state, action) => {
+      .addCase(verifyQuest.rejected, (state, action) => {
         state.selectedQuest.isLoadingTwo = false;
         if(action.error.message === "409") {
           state.selectedQuest.buttonTwo = "Already Verified";
@@ -517,28 +478,6 @@ const userSlice = createSlice({
         } else {
           state.selectedQuest.buttonTwo = "Try Again Later";
         }
-      })
-      .addCase(verifyGoodDollar.pending, (state) => {
-        state.selectedQuest.isLoadingTwo = true;
-      })
-      .addCase(verifyGoodDollar.fulfilled, (state) => {
-        state.selectedQuest.isLoadingTwo = false;
-        state.selectedQuest.buttonTwo = "Verified";
-      })
-      .addCase(verifyGoodDollar.rejected, (state) => {
-        state.selectedQuest.isLoadingTwo = false;
-        state.selectedQuest.buttonTwo = "Try Again Later";
-      })
-      .addCase(verifyMirakle.pending, (state) => {
-        state.selectedQuest.isLoadingTwo = true;
-      })
-      .addCase(verifyMirakle.fulfilled, (state) => {
-        state.selectedQuest.isLoadingTwo = false;
-        state.selectedQuest.buttonTwo = "Verified";
-      })
-      .addCase(verifyMirakle.rejected, (state) => {
-        state.selectedQuest.isLoadingTwo = false;
-        state.selectedQuest.buttonTwo = "Try Again Later";
       })
   },
 });
