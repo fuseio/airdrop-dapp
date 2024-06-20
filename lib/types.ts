@@ -89,6 +89,7 @@ export type Quest = {
   linkTwo?: string;
   isFunctionTwo?: boolean;
   isLoadingTwo?: boolean;
+  endpointTwo?: string;
   padding?: string;
   imageHeight?: string;
   accumulatedPoints?: number;
