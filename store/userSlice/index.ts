@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppState } from "../rootReducer";
 import { CreateUser, EcosystemApp, LeaderboardUsers, Quest, SignupStepCompleted, User } from "@/lib/types";
-import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyGoodDollar, postVerifyTelegram } from "@/lib/api";
+import { fetchLeaderboard, fetchTwitterAuthUrl, fetchUser, postAuthenticateUser, postComingSoonSubscribe, postCreateUser, postVerifyGoodDollar, postVerifyMirakle, postVerifyTelegram } from "@/lib/api";
 import { RootState } from "../store";
 import { Address } from "viem";
 
@@ -315,6 +315,28 @@ export const verifyGoodDollar = createAsyncThunk<
   }
 );
 
+export const verifyMirakle = createAsyncThunk<
+  any,
+  undefined,
+  { state: RootState }
+>(
+  "USER/VERIFY_MIRAKLE",
+  async (
+    _,
+    thunkAPI
+  ) => {
+    try {
+      const state = thunkAPI.getState();
+      const userState: UserStateType = state.user;
+      const verified = await postVerifyMirakle(userState.accessToken);
+      return verified;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "USER_STATE",
   initialState: INIT_STATE,
@@ -504,6 +526,17 @@ const userSlice = createSlice({
         state.selectedQuest.buttonTwo = "Verified";
       })
       .addCase(verifyGoodDollar.rejected, (state) => {
+        state.selectedQuest.isLoadingTwo = false;
+        state.selectedQuest.buttonTwo = "Try Again Later";
+      })
+      .addCase(verifyMirakle.pending, (state) => {
+        state.selectedQuest.isLoadingTwo = true;
+      })
+      .addCase(verifyMirakle.fulfilled, (state) => {
+        state.selectedQuest.isLoadingTwo = false;
+        state.selectedQuest.buttonTwo = "Verified";
+      })
+      .addCase(verifyMirakle.rejected, (state) => {
         state.selectedQuest.isLoadingTwo = false;
         state.selectedQuest.buttonTwo = "Try Again Later";
       })

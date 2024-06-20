@@ -118,14 +118,13 @@ const Dashboard = () => {
       imageHeight: "h-[100px]"
     },
     {
-      id: "mirakleFuse",
+      id: "mirakle",
       title: "Explore Mirakle on Fuse",
       heading: "Explore Mirakle on Fuse Network",
       point: "100 points per claim",
       description: "Explore Mirakle DEX capabilities and get 100 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
       image: mirakle,
       isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
       button: "Go to Quest",
       link: "https://app.layer3.xyz/quests/explore-mirakle-on-fuse-network",
       buttonTwo: "Verify Quest",
@@ -266,12 +265,6 @@ const Dashboard = () => {
       id: "zneakrz",
       title: "Create a wallet on Zneakrz",
       image: zneakrz,
-      isHidden: currentDate >= season2LaunchDate,
-    },
-    {
-      id: "mirakle",
-      title: "Trade on Mirakle",
-      image: mirakle,
       isHidden: currentDate >= season2LaunchDate,
     },
   ])

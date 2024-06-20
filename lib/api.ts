@@ -120,3 +120,16 @@ export const postVerifyGoodDollar = async (token: string): Promise<{ message: st
   )
   return response.data
 }
+
+export const postVerifyMirakle = async (token: string): Promise<{ message: string }> => {
+  const response = await axios.post(
+    `${NEXT_PUBLIC_AIRDROP_API_BASE_URL}/mirakle`,
+    {},
+    {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+  )
+  return response.data
+}
