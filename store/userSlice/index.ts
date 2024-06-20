@@ -7,14 +7,16 @@ import { Address } from "viem";
 
 const initUser: User = {
   id: "",
-  walletAddress: "",
+  walletAddress: "0x",
   twitterAccountId: "",
   points: 0,
   referralCode: "",
   leaderboardPosition: 0,
   pointsLastUpdatedAt: "",
+  createdAt: "",
   completedQuests: [],
   walletAgeInDays: 0,
+  seasonOnePoints: 0,
   nextRewardDistributionTime: "",
 }
 

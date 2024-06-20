@@ -34,6 +34,7 @@ import Copy from "./ui/Copy";
 import { formatUnits } from "viem";
 import Spinner from "./ui/Spinner";
 import { resetConnection } from "@/lib/web3Auth";
+import { setLogout } from "@/store/userSlice";
 
 const menu: Variants = {
   closed: (isCenter) => ({
@@ -104,6 +105,7 @@ const ConnectWallet = ({
   const { disconnect, isPending } = useDisconnect({
     mutation: {
       onSuccess() {
+        dispatch(setLogout());
         resetConnection();
       }
     }

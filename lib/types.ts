@@ -27,20 +27,22 @@ export type CompletedQuests = CompletedQuest[];
 
 export interface User {
   id: string,
-  walletAddress: string,
+  walletAddress: Address,
   twitterAccountId: string,
   points: number,
   referralCode: string,
   leaderboardPosition: number
   pointsLastUpdatedAt: string;
+  createdAt: string;
   completedQuests: CompletedQuests;
   walletAgeInDays?: number;
+  seasonOnePoints: number;
   nextRewardDistributionTime: string;
 }
 
 export interface LeaderboardUser {
   id: string;
-  walletAddress: string;
+  walletAddress: Address;
   twitterAccountId: string;
   points: number;
   referralCode: string;
@@ -74,6 +76,7 @@ export type Quest = {
   image?: string | StaticImageData;
   heading?: string;
   point?: string;
+  pointModal?: string;
   description?: string;
   isActive?: boolean;
   isHidden?: boolean;

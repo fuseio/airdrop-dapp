@@ -1,12 +1,23 @@
 import { path } from "@/lib/helpers";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useDisconnect } from "wagmi";
+import { resetConnection } from "@/lib/web3Auth";
+import Spinner from "../ui/Spinner";
 import { useAppDispatch } from "@/store/store";
-import { setIsWalletModalOpen } from "@/store/navbarSlice";
+import { setLogout } from "@/store/userSlice";
 
 const NotEligible = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { disconnect, isPending } = useDisconnect({
+    mutation: {
+      onSuccess() {
+        dispatch(setLogout());
+        resetConnection();
+      }
+    }
+  });
 
   return (
     <motion.div
@@ -38,9 +49,12 @@ const NotEligible = () => {
       </p>
       <button
         className="transition ease-in-out bg-primary flex justify-center items-center gap-2 w-full max-w-[268px] border border-primary rounded-full text-black font-semibold mt-12 xl:mt-10 px-5 py-[15px] hover:bg-transparent hover:text-primary"
-        onClick={() => dispatch(setIsWalletModalOpen(true))}
+        onClick={() => disconnect()}
       >
         Try another wallet
+        {isPending &&
+          <Spinner />
+        }
       </button>
       <button
         className="transition ease-in-out flex justify-center items-center gap-2 bg-ironside-gray/30 rounded-full leading-none text-white font-bold mt-[136px] xl:mt-28 px-9 py-4 hover:bg-success hover:text-black"

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
-import { IS_SERVER, convertTimestampToUTC, currentDate, daysInYear, eclipseAddress, isFloat, path, screenWidth, season2LaunchDate } from "@/lib/helpers";
+import { IS_SERVER, convertTimestampToUTC, currentDate, daysInYear, eclipseAddress, isFloat, path, screenWidth, season2ClaimLaunchDate, season2LaunchDate } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { retrieve, selectUserSlice, setIsQuestModalOpen, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
 import Image from "next/image";
@@ -37,6 +37,7 @@ import goodDollar from "@/public/gooddollar.png";
 import goodDollarCircle from "@/assets/gooddollar-circle.svg";
 import voltWallet from "@/assets/volt-wallet.svg";
 import voltWalletTwoLines from "@/assets/volt-wallet-two-lines.svg";
+import dementedRoulette from "@/assets/demented-roulette.svg";
 import { EcosystemApps, Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
@@ -112,6 +113,21 @@ const Dashboard = () => {
       isHidden: currentDate < season2LaunchDate,
       button: "Go to Quest",
       link: "https://app.layer3.xyz/streaks/claim-dollarg",
+      buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
+      imageHeight: "h-[100px]"
+    },
+    {
+      id: "mirakleFuse",
+      title: "Explore Mirakle on Fuse",
+      heading: "Explore Mirakle on Fuse Network",
+      point: "100 points per claim",
+      description: "Explore Mirakle DEX capabilities and get 100 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
+      image: mirakle,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
+      button: "Go to Quest",
+      link: "https://app.layer3.xyz/quests/explore-mirakle-on-fuse-network",
       buttonTwo: "Verify Quest",
       isFunctionTwo: true,
       imageHeight: "h-[100px]"
@@ -210,6 +226,21 @@ const Dashboard = () => {
       isActive: true,
       button: "Go to Meridian Lend",
       link: "https://lend.meridianfinance.net/markets/",
+      imageHeight: "h-[100px]"
+    },
+    {
+      id: "dementedRoulette",
+      title: "Play Demented Roulette",
+      point: "More play - more points",
+      pointModal: "The more play, the more points get",
+      description: "Earn tons of points and win WFUSE by playing the Demented Roulette!  \n**Step 1**\nGo to Demented Roulette  \n**Step 2**\nWin WFUSE and earn unlimited points by playing every round  \n**Step 3**\nPoints earned in roulette will be added to Airdrop points in a 1:1 ratio  \n**You can claim your points from roulette at any time**",
+      image: dementedRoulette,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
+      button: "Let's Play",
+      link: "https://demented.games/",
+      buttonTwo: "Claim points",
+      isFunctionTwo: true,
       imageHeight: "h-[100px]"
     },
     {
@@ -535,7 +566,21 @@ const Dashboard = () => {
             width={matches ? 94 : 75}
             height={matches ? 128 : 102}
           />
-          {currentDate >= season2LaunchDate ?
+          {currentDate >= season2ClaimLaunchDate ?
+            <div className="flex flex-col justify-between items-start gap-2.5">
+              <p className="text-2xl xl:text-xl leading-none text-white font-bold">
+                Claim reward for Season 1
+              </p>
+              <p className="text-sm text-pale-slate font-medium max-w-[254px]">
+                You can claim your tokens now!
+              </p>
+              <button
+                className="transition ease-in-out bg-primary border border-primary rounded-full xl:text-sm text-black leading-none font-semibold mt-[5px] px-9 py-4 xl:px-7 xl:py-2.5 md:px-5 hover:bg-transparent hover:text-primary"
+                onClick={() => router.push(path.CLAIM)}
+              >
+                Claim your tokens
+              </button>
+            </div> :
             <div className="flex flex-col justify-between items-start gap-2.5">
               <p className="text-2xl xl:text-xl leading-none text-white font-bold">
                 Reward for the Season 1 is coming
@@ -548,17 +593,6 @@ const Dashboard = () => {
                 disabled
               >
                 Coming Soon
-              </button>
-            </div> :
-            <div className="flex flex-col justify-between items-start gap-4">
-              <p className="text-2xl xl:text-xl leading-none text-white font-bold max-w-64 md:max-w-full">
-                Welcome to the Fuse Airdrop program
-              </p>
-              <button
-                className="transition ease-in-out border border-primary rounded-full xl:text-sm text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 md:px-5 hover:bg-primary hover:text-black"
-                onClick={() => window.open("https://news.fuse.io/fuse-airdrop-program-is-live/", "_blank")}
-              >
-                Learn More
               </button>
             </div>
           }
