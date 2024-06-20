@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { generateTwitterAuthUrl, selectUserSlice, setIsQuestModalOpen, verifyGoodDollar, verifyMirakle, verifyTelegram } from "@/store/userSlice";
+import { generateTwitterAuthUrl, selectUserSlice, setIsQuestModalOpen, verifyQuest } from "@/store/userSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import closeWhite from "@/assets/close-white.svg";
@@ -41,19 +41,14 @@ const QuestModal = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
 
-  function handleClick(id: string) {
+  function handleClick(id: string, endpoint?: string) {
+    if (endpoint) {
+      return dispatch(verifyQuest({ endpoint }));
+    }
+
     switch (id) {
       case "followFuseOnTwitter":
         dispatch(generateTwitterAuthUrl());
-        break;
-      case "telegramSubscription":
-        dispatch(verifyTelegram());
-        break;
-      case "goodDollar":
-        dispatch(verifyGoodDollar());
-        break;
-      case "exploreMirakle":
-        dispatch(verifyMirakle());
         break;
     }
   }
@@ -153,7 +148,7 @@ const QuestModal = (): JSX.Element => {
                       className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
                       onClick={() => {
                         if (selectedQuest.isFunctionTwo) {
-                          handleClick(selectedQuest.id);
+                          handleClick(selectedQuest.id, selectedQuest.endpointTwo);
                         }
                         if (selectedQuest.linkTwo) {
                           window.open(selectedQuest.linkTwo, "_blank")

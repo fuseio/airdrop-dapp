@@ -84,6 +84,7 @@ const Dashboard = () => {
       link: "https://app.layer3.xyz/quests/join-fuse-telegram",
       buttonTwo: "Verify Quest",
       isFunctionTwo: true,
+      endpointTwo: "telegram",
     },
     {
       id: "numOfTokens",
@@ -115,6 +116,7 @@ const Dashboard = () => {
       link: "https://app.layer3.xyz/streaks/claim-dollarg",
       buttonTwo: "Verify Quest",
       isFunctionTwo: true,
+      endpointTwo: "gooddollar",
       imageHeight: "h-[100px]"
     },
     {
@@ -129,6 +131,7 @@ const Dashboard = () => {
       link: "https://app.layer3.xyz/quests/explore-mirakle-on-fuse-network",
       buttonTwo: "Verify Quest",
       isFunctionTwo: true,
+      endpointTwo: "mirakle",
       imageHeight: "h-[100px]"
     },
     {
