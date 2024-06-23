@@ -151,6 +151,22 @@ const Dashboard = () => {
       imageHeight: "h-[100px]"
     },
     {
+      id: "depositInVoltApp",
+      title: "Top-up Volt with $10",
+      point: "500 points",
+      heading: "Top-up Volt with 10 USDC using fiat-on-ramp",
+      description: "Get 500 points by topping up your Volt wallet directly from your bank account or credit card  \n**Verify the quest 1 hour after completing it on Layer3**",
+      image: voltWalletTwoLines,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
+      button: "Go to Quest",
+      link: "https://app.layer3.xyz/quests/deposit-10-usdc-on-volt-app",
+      buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
+      endpointTwo: "deposit-in-volt-app",
+      imageHeight: "h-[100px]"
+    },
+    {
       id: "joinDiscord",
       title: "Join Fuse Discord",
       image: joinDiscord,
