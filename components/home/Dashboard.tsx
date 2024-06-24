@@ -93,7 +93,6 @@ const Dashboard = () => {
       point: "50 points",
       description: "Get 50 point for joining an official Fuse network Discord channel  \n**Verify the quest 1 hour after completing it on Layer3**",
       isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
       button: "Go to Quest",
       link: "https://app.layer3.xyz/quests/join-fuse-discord",
       buttonTwo: "Verify Quest",
