@@ -261,6 +261,19 @@ const Dashboard = () => {
       imageHeight: "h-[100px]"
     },
     {
+      id: "borrowOnMeridian",
+      title: "Borrow on Meridian",
+      point: "12 points per $1 borrowed",
+      heading: "Triple your points by borrowing funds on Meridian",
+      description: "Borrow any asset on Meridian to get 12 points per $1 borrowed every day.  \n**Points will begin to accrue 24 hours after the borrow transaction.**",
+      image: meridian,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
+      button: "Go to Meridian Borrow",
+      link: "https://lend.meridianfinance.net/borrow/",
+      imageHeight: "h-[100px]"
+    },
+    {
       id: "dementedRoulette",
       title: "Play Demented Roulette",
       point: "More play - more points",
