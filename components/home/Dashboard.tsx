@@ -148,6 +148,22 @@ const Dashboard = () => {
       imageHeight: "h-[100px]"
     },
     {
+      id: "exploreLogXOnFuse",
+      title: "Explore LogX on Fuse",
+      heading: "Explore LogX on Fuse Network",
+      point: "200 points",
+      description: "Explore the earning and trading capabilities of LogX DEX and get 200 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
+      image: logx,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
+      button: "Go to Quest",
+      link: "https://app.layer3.xyz/quests/logx-on-fuse",
+      buttonTwo: "Verify Quest",
+      isFunctionTwo: true,
+      endpointTwo: "explore-logx-on-fuse",
+      imageHeight: "h-[100px]"
+    },
+    {
       id: "exploreVoltWallet",
       title: "Explore Volt wallet",
       heading: "Explore Volt mobile wallet",
@@ -261,6 +277,19 @@ const Dashboard = () => {
       imageHeight: "h-[100px]"
     },
     {
+      id: "borrowOnMeridian",
+      title: "Borrow on Meridian",
+      point: "12 points per $1 borrowed",
+      heading: "Triple your points by borrowing funds on Meridian",
+      description: "Borrow any asset on Meridian to get 12 points per $1 borrowed every day.  \n**Points will begin to accrue 24 hours after the borrow transaction.**",
+      image: meridian,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
+      button: "Go to Meridian Borrow",
+      link: "https://lend.meridianfinance.net/borrow/",
+      imageHeight: "h-[100px]"
+    },
+    {
       id: "dementedRoulette",
       title: "Play Demented Roulette",
       point: "More play - more points",
@@ -268,11 +297,12 @@ const Dashboard = () => {
       description: "Earn tons of points and win WFUSE by playing the Demented Roulette!  \n**Step 1**\nGo to Demented Roulette  \n**Step 2**\nWin WFUSE and earn unlimited points by playing every round  \n**Step 3**\nPoints earned in roulette will be added to Airdrop points in a 1:1 ratio  \n**You can claim your points from roulette at any time**",
       image: dementedRoulette,
       isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
       button: "Let's Play",
       link: "https://demented.games/",
-      buttonTwo: "Claim coming soon",
-      isDisabledTwo: true,
+      buttonTwo: "Verify Quest",
       isFunctionTwo: true,
+      endpointTwo: "demented-roulette",
       imageHeight: "h-[100px]"
     },
     {
