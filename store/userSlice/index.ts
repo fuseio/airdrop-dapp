@@ -468,7 +468,7 @@ const userSlice = createSlice({
       })
       .addCase(verifyQuest.fulfilled, (state) => {
         state.selectedQuest.isLoadingTwo = false;
-        state.selectedQuest.buttonTwo = "Verified";
+        state.selectedQuest.buttonTwo = state.selectedQuest.successButtonTwo ?? "Verified";
       })
       .addCase(verifyQuest.rejected, (state, action) => {
         state.selectedQuest.isLoadingTwo = false;
