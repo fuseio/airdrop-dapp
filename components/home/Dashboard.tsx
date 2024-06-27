@@ -284,7 +284,6 @@ const Dashboard = () => {
       description: "Borrow any asset on Meridian to get 12 points per $1 borrowed every day.  \n**Points will begin to accrue 24 hours after the borrow transaction.**",
       image: meridian,
       isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
       button: "Go to Meridian Borrow",
       link: "https://lend.meridianfinance.net/borrow/",
       imageHeight: "h-[100px]"
