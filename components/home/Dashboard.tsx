@@ -155,7 +155,6 @@ const Dashboard = () => {
       description: "Explore the earning and trading capabilities of LogX DEX and get 200 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
       image: logx,
       isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
       button: "Go to Quest",
       link: "https://app.layer3.xyz/quests/logx-on-fuse",
       buttonTwo: "Verify Quest",
