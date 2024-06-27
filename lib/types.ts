@@ -86,6 +86,7 @@ export type Quest = {
   isFunction?: boolean;
   isLoading?: boolean;
   buttonTwo?: string;
+  successButtonTwo?: string
   linkTwo?: string;
   isFunctionTwo?: boolean;
   isDisabledTwo?: boolean;

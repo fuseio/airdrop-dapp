@@ -292,17 +292,19 @@ const Dashboard = () => {
     {
       id: "dementedRoulette",
       title: "Play Demented Roulette",
-      point: "More play - more points",
+      point: "Play to earn unlimited points",
       pointModal: "The more play, the more points get",
       description: "Earn tons of points and win WFUSE by playing the Demented Roulette!  \n**Step 1**\nGo to Demented Roulette  \n**Step 2**\nWin WFUSE and earn unlimited points by playing every round  \n**Step 3**\nPoints earned in roulette will be added to Airdrop points in a 1:1 ratio  \n**You can claim your points from roulette at any time**",
       image: dementedRoulette,
       isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
       button: "Let's Play",
       link: "https://demented.games/",
-      buttonTwo: "Verify Quest",
+      buttonTwo: NEXT_PUBLIC_ENVIRONMENT === "production" ? "Claim coming soon" : "Claim points",
+      successButtonTwo: "Successfully claimed",
+      isDisabledTwo: NEXT_PUBLIC_ENVIRONMENT === "production",
       isFunctionTwo: true,
       endpointTwo: "demented-roulette",
+      padding: "py-6 pl-6 pr-2",
       imageHeight: "h-[100px]"
     },
     {
