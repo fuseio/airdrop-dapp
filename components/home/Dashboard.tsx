@@ -306,14 +306,14 @@ const Dashboard = () => {
       imageHeight: "h-[100px]"
     },
     {
-      id: "logX",
+      id: "provideLogXLiquidity",
       title: "Provide Liquidity on LogX",
       heading: "Multiply your points by providing Liquidity on LogX",
       point: "8 points per $1 in pool daily",
       description: "Follow these steps:  \n**Step 1**\nBridge USDT to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nGo to LogX and buy LLP tokens  \n**Step 3**\nDouble your points by staking LLP on LogX Liquidity Pool.  \n**Bonus**\nEarn protocol income and claimable USDT rewards.",
       image: logx,
-      isActive: false,
-      isHidden: currentDate >= season2LaunchDate,
+      isActive: true,
+      isHidden: NEXT_PUBLIC_ENVIRONMENT === "production",
       button: "Go to LogX",
       link: "https://app.logx.trade/liquidity",
       imageHeight: "h-[100px]"
