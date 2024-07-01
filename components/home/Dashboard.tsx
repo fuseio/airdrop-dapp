@@ -292,7 +292,7 @@ const Dashboard = () => {
       title: "Play Demented Roulette",
       point: "Play to earn unlimited points",
       pointModal: "The more play, the more points get",
-      description: "Earn tons of points and win WFUSE by playing the Demented Roulette!  \n**Step 1**\nGo to Demented Roulette  \n**Step 2**\nWin WFUSE and earn unlimited points by playing every round  \n**Step 3**\nPoints earned in roulette will be added to Airdrop points in a 1:1 ratio  \n**You can claim your points from roulette at any time**",
+      description: "Earn tons of points and win WFUSE by playing the Demented Roulette!  \n**Step 1**\nGo to Demented Roulette  \n**Step 2**\nWin WFUSE and earn unlimited points by playing every round  \n**Step 3**\nPoints earned in roulette are added to Airdrop points in a 1:10 ratio - 1 airdrop point for every 10 roulette points.  \n**You can claim your points from roulette at any time**",
       image: dementedRoulette,
       isActive: true,
       button: "Let's Play",
