@@ -59,6 +59,16 @@ import mirakleColor from "@/public/mirakle-color.png";
 import EcosystemAppItem from "./EcosystemApp";
 
 const isMultiplyPointNotice = false;
+const ecosystemAppBackgrounds = {
+  green: {
+    background: "bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
+    beforeBackground: "before:bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
+  },
+  blue: {
+    background: "bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
+    beforeBackground: "before:bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
+  }
+}
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -323,8 +333,6 @@ const Dashboard = () => {
       name: "Voltage",
       description: "Trade, invest, and earn with just a few clicks",
       image: voltageColor,
-      background: "bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
-      beforeBackground: "before:bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
       quests: [
         {
           id: "liquidityVoltage",
@@ -362,8 +370,6 @@ const Dashboard = () => {
       name: "Meridian",
       description: "Lending and borrowing have never been so easy",
       image: meridianColor,
-      background: "bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
-      beforeBackground: "before:bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
       quests: [
         {
           id: "meridian",
@@ -391,8 +397,6 @@ const Dashboard = () => {
       name: "Volt Wallet",
       description: "Discover the best non-custodial smart-contract wallet",
       image: voltWalletColor,
-      background: "bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
-      beforeBackground: "before:bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
       quests: [
         {
           id: "exploreVoltWallet",
@@ -436,8 +440,6 @@ const Dashboard = () => {
       name: "LogX",
       description: "Seamless perpetual trading",
       image: logxColor,
-      background: "bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
-      beforeBackground: "before:bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
       quests: [
         {
           id: "exploreLogXOnFuse",
@@ -468,8 +470,6 @@ const Dashboard = () => {
       name: "Mirakle",
       description: "Spot and perpetual futures trading for traders",
       image: mirakleColor,
-      background: "bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
-      beforeBackground: "before:bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
       quests: [
         {
           id: "exploreMirakle",
@@ -490,8 +490,6 @@ const Dashboard = () => {
       name: "Demented Games",
       description: "Play, win WFUSE and get unlimited points",
       image: dementedGamesColor,
-      background: "bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
-      beforeBackground: "before:bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
       quests: [
         {
           id: "dementedRoulette",
@@ -513,8 +511,6 @@ const Dashboard = () => {
       name: "GoodDollar",
       description: "Meet one of the largest communities at Fuse",
       image: goodDollarColor,
-      background: "bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
-      beforeBackground: "before:bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
       quests: [
         {
           id: "goodDollar",
@@ -906,12 +902,19 @@ const Dashboard = () => {
         </div>
         {NEXT_PUBLIC_ENVIRONMENT === "staging" ?
           <div className="grid grid-cols-2 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
-            {ecosystemApps.map((ecosystemApp) => {
+            {ecosystemApps.map((ecosystemApp, i) => {
               if (ecosystemApp.isHidden) {
                 return
               }
               return (
-                <EcosystemAppItem key={ecosystemApp.name} ecosystemApp={ecosystemApp} />
+                <EcosystemAppItem
+                  key={ecosystemApp.name}
+                  ecosystemApp={{
+                    background: i % 2 === 0 ? ecosystemAppBackgrounds.green.background : ecosystemAppBackgrounds.blue.background,
+                    beforeBackground: i % 2 === 0 ? ecosystemAppBackgrounds.blue.beforeBackground : ecosystemAppBackgrounds.blue.beforeBackground,
+                    ...ecosystemApp
+                  }}
+                />
               )
             })}
           </div> :
