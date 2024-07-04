@@ -20,7 +20,7 @@ const initUser: User = {
   nextRewardDistributionTime: "",
 }
 
-const initQuest: Quest = {
+export const initQuest: Quest = {
   id: "",
   title: "",
   point: "",
