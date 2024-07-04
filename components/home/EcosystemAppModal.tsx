@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { selectUserSlice, setIsEcosystemAppModalOpen } from "@/store/userSlice";
+import { setSelectedQuest, selectUserSlice, setIsEcosystemAppModalOpen, verifyQuest, initQuest } from "@/store/userSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import closeWhite from "@/assets/close-white.svg";
@@ -13,10 +13,15 @@ import plus from "@/assets/plus.svg";
 import minus from "@/assets/minus.svg";
 
 const EcosystemAppModal = (): JSX.Element => {
-  const { isEcosystemAppModalOpen, selectedEcosystemApp } = useAppSelector(selectUserSlice);
+  const { isEcosystemAppModalOpen, selectedEcosystemApp, selectedQuest } = useAppSelector(selectUserSlice);
   const dispatch = useAppDispatch();
   const matches = useMediaQuery(`(min-width: ${screenWidth.EXTRA_LARGE + 1}px)`);
-  const [openQuestId, setOpenQuestId] = useState("");
+
+  function handleClick(id: string, endpoint?: string) {
+    if (endpoint) {
+      return dispatch(verifyQuest({ endpoint }));
+    }
+  }
 
   useEffect(() => {
     window.addEventListener("click", (e) => {
@@ -68,95 +73,129 @@ const EcosystemAppModal = (): JSX.Element => {
                   {selectedEcosystemApp.quests.length} quests
                 </p>
                 <div className="flex flex-col gap-5">
-                  {selectedEcosystemApp.quests.map((selectedEcosystemAppQuest) => (
-                    <AnimatePresence
-                      key={selectedEcosystemAppQuest.id}
-                    >
-                      <div
-                        className="bg-oslo-gray/[0.22] rounded-[20px]"
+                  {selectedEcosystemApp.quests.map((ecosystemAppQuest) => {
+                    if (ecosystemAppQuest.isHidden) {
+                      return;
+                    }
+                    return (
+                      <AnimatePresence
+                        key={ecosystemAppQuest.id}
                       >
-                        <button
-                          className="flex justify-between items-center w-full pt-8 px-8 pb-6 xl:p-6 hover:opacity-90"
-                          onClick={() => setOpenQuestId((currentOpenQuestId) =>
-                            currentOpenQuestId === selectedEcosystemAppQuest.id ? "" : selectedEcosystemAppQuest.id
-                          )}
+                        <div
+                          className="bg-oslo-gray/[0.22] rounded-[20px]"
                         >
-                          <div className="flex flex-col items-start text-start gap-5">
-                            <p className="text-lg xl:text-base text-white font-semibold">
-                              {openQuestId === selectedEcosystemAppQuest.id ?
-                                selectedEcosystemAppQuest.heading ?? selectedEcosystemAppQuest.title :
-                                selectedEcosystemAppQuest.title
-                              }
-                            </p>
-                            <div className="flex items-center gap-2">
-                              <Image
-                                src={pointHexagon}
-                                alt="point hexagon"
-                                width={matches ? 12 : 10}
-                                height={matches ? 14 : 12}
-                              />
-                              <p className="text-lg xl:text-base text-success font-bold">
-                                {selectedEcosystemAppQuest.point}
+                          <button
+                            className="flex justify-between items-center w-full pt-8 px-8 pb-6 xl:p-6 hover:opacity-90"
+                            onClick={() => dispatch(setSelectedQuest(
+                              selectedQuest.id === ecosystemAppQuest.id ?
+                                initQuest :
+                                ecosystemAppQuest
+                            ))}
+                          >
+                            <div className="flex flex-col items-start text-start gap-5">
+                              <p className="text-lg xl:text-base text-white font-semibold">
+                                {selectedQuest.id === ecosystemAppQuest.id ?
+                                  selectedQuest.heading ?? selectedQuest.title :
+                                  ecosystemAppQuest.title
+                                }
                               </p>
+                              <div className="flex items-center gap-2">
+                                <Image
+                                  src={pointHexagon}
+                                  alt="point hexagon"
+                                  width={matches ? 12 : 10}
+                                  height={matches ? 14 : 12}
+                                />
+                                <p className="text-lg xl:text-base text-success font-bold">
+                                  {selectedQuest.id === ecosystemAppQuest.id ?
+                                    ecosystemAppQuest.pointModal ?? ecosystemAppQuest.point :
+                                    ecosystemAppQuest.point
+                                  }
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                          {openQuestId === selectedEcosystemAppQuest.id ?
+                            {selectedQuest.id === ecosystemAppQuest.id ?
+                              <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="flex items-center"
+                              >
+                                <Image
+                                  src={minus}
+                                  alt="minus"
+                                />
+                              </motion.div>
+                              :
+                              <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="flex items-center"
+                              >
+                                <Image
+                                  src={plus}
+                                  alt="plus"
+                                />
+                              </motion.div>
+                            }
+                          </button>
+                          {selectedQuest.id === ecosystemAppQuest.id &&
                             <motion.div
+                              key={selectedQuest.id}
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
-                              className="flex items-center"
+                              className="flex flex-col items-start gap-10 pt-6 px-8 pb-8 xl:p-6"
                             >
-                              <Image
-                                src={minus}
-                                alt="minus"
-                              />
-                            </motion.div>
-                            :
-                            <motion.div
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              className="flex items-center"
-                            >
-                              <Image
-                                src={plus}
-                                alt="plus"
-                              />
+                              <div className="text-lg xl:text-base leading-6 text-pale-slate font-medium whitespace-pre-wrap">
+                                <Markdown>{selectedQuest.description}</Markdown>
+                              </div>
+                              <div className="flex md:flex-col items-center md:items-start gap-[26px] md:gap-4">
+                                {selectedQuest.button &&
+                                  <button
+                                    className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
+                                    onClick={() => {
+                                      if (selectedQuest.isFunction) {
+                                        handleClick(selectedQuest.id);
+                                      }
+                                      if (selectedQuest.link) {
+                                        window.open(selectedQuest.link, "_blank")
+                                      }
+                                    }}
+                                  >
+                                    {selectedQuest.button}
+                                    {selectedQuest.isLoading &&
+                                      <Spinner />
+                                    }
+                                  </button>
+                                }
+                                {selectedQuest.buttonTwo &&
+                                  <button
+                                    className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
+                                    disabled={selectedQuest.isDisabledTwo}
+                                    onClick={() => {
+                                      if (selectedQuest.isFunctionTwo) {
+                                        handleClick(selectedQuest.id, selectedQuest.endpointTwo);
+                                      }
+                                      if (selectedQuest.linkTwo) {
+                                        window.open(selectedQuest.linkTwo, "_blank")
+                                      }
+                                    }}
+                                  >
+                                    {selectedQuest.buttonTwo}
+                                    {selectedQuest.isLoadingTwo &&
+                                      <Spinner />
+                                    }
+                                  </button>
+                                }
+                              </div>
                             </motion.div>
                           }
-                        </button>
-                        {openQuestId === selectedEcosystemAppQuest.id &&
-                          <motion.div
-                            key={openQuestId}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="flex flex-col items-start gap-10 pt-6 px-8 pb-8 xl:p-6"
-                          >
-                            <div className="text-lg xl:text-base leading-6 text-pale-slate font-medium whitespace-pre-wrap">
-                              <Markdown>{selectedEcosystemAppQuest.description}</Markdown>
-                            </div>
-                            {selectedEcosystemAppQuest.button &&
-                              <button
-                                className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
-                                onClick={() => {
-                                  if (selectedEcosystemAppQuest.link) {
-                                    window.open(selectedEcosystemAppQuest.link, "_blank")
-                                  }
-                                }}
-                              >
-                                {selectedEcosystemAppQuest.button}
-                                {selectedEcosystemAppQuest.isLoading &&
-                                  <Spinner />
-                                }
-                              </button>
-                            }
-                          </motion.div>
-                        }
-                      </div>
-                    </AnimatePresence>
-                  ))}
+                        </div>
+                      </AnimatePresence>
+                    )
+                  })}
                 </div>
               </div>
             </div>

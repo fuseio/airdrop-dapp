@@ -66,6 +66,7 @@ export type EcosystemApp = {
   background: string;
   beforeBackground: string;
   quests: Quests;
+  isHidden?: boolean;
 }
 
 export type EcosystemApps = EcosystemApp[];
