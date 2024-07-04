@@ -91,7 +91,7 @@ const Dashboard = () => {
       title: "Follow Fuse on X",
       point: "50 points",
       description: "Get 50 point for following an official Fuse Network X account",
-      image: NEXT_PUBLIC_ENVIRONMENT === "staging" ? followXColor : followX,
+      image: followXColor,
       isActive: true,
       button: "Go to X",
       isFunction: true,
@@ -102,7 +102,7 @@ const Dashboard = () => {
       heading: "Join Fuse Telegram channel",
       point: "50 points",
       description: "Get 50 point for joining an official Fuse Network Telegram channel  \n**Verify the quest 1 hour after completing it on Layer3**",
-      image: NEXT_PUBLIC_ENVIRONMENT === "staging" ? joinTelegramColor : joinTelegram,
+      image: joinTelegramColor,
       isActive: true,
       button: "Go to Quest",
       link: "https://app.layer3.xyz/quests/join-fuse-telegram",
@@ -113,7 +113,7 @@ const Dashboard = () => {
     {
       id: "joinFuseDiscord",
       title: "Join Fuse Discord",
-      image: NEXT_PUBLIC_ENVIRONMENT === "staging" ? joinDiscordColor : joinDiscord,
+      image: joinDiscordColor,
       point: "50 points",
       description: "Get 50 point for joining an official Fuse network Discord channel  \n**Verify the quest 1 hour after completing it on Layer3**",
       isActive: true,
@@ -128,203 +128,17 @@ const Dashboard = () => {
       title: "Holding more than 2 different tokens",
       point: "10 points",
       description: "Get 10 point by holding more than 2 different tokens on your wallet.\nPoints are awarded automatically when the conditions are met.",
-      image: NEXT_PUBLIC_ENVIRONMENT === "staging" ? holdTokensColor : holdTokens,
+      image: holdTokensColor,
       isActive: true,
     },
     {
       id: "walletAge",
       title: "You're an OG! - Wallet older then a year",
       point: "10 points",
-      image: NEXT_PUBLIC_ENVIRONMENT === "staging" ? ogWalletColor : ogWallet,
+      image: ogWalletColor,
       isActive: true,
       button: "Go to Voltage",
       link: "https://app.voltage.finance/stake/sFUSE",
-    },
-    {
-      id: "goodDollar",
-      title: "Claim G$ on GoodDapp",
-      heading: "Get points daily for G$ claiming",
-      point: "30 points per claim",
-      description: "To get 30 points daily, you need to take 6 steps:  \n**Step 1:**\nGo to quest on the Layer3 platform  \n**Step 2:**\nConnect to Layer3 a wallet participating in the airdrop  \n**Step 3:**\nGo to GoodDapp  \n**Step 4:**\nClaim G$ token on Fuse Network  \n**Step 5:**\nVerify quest completion on the Layer3  \n**Step 6:**\nRepeat every day. After 5 claims, the quest will renew automatically and allow you to claim more and more.  \n**Verify the quest 1 hour after completing it on Layer3**",
-      image: goodDollarCircle,
-      isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "staging",
-      button: "Go to Quest",
-      link: "https://app.layer3.xyz/streaks/claim-dollarg",
-      buttonTwo: "Verify Quest",
-      isFunctionTwo: true,
-      endpointTwo: "gooddollar",
-      imageHeight: "h-[100px]"
-    },
-    {
-      id: "exploreMirakle",
-      title: "Explore Mirakle on Fuse",
-      heading: "Explore Mirakle on Fuse Network",
-      point: "100 points",
-      description: "Explore Mirakle DEX capabilities and get 100 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
-      image: mirakle,
-      isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "staging",
-      button: "Go to Quest",
-      link: "https://app.layer3.xyz/quests/explore-mirakle-on-fuse-network",
-      buttonTwo: "Verify Quest",
-      isFunctionTwo: true,
-      endpointTwo: "mirakle",
-      imageHeight: "h-[100px]"
-    },
-    {
-      id: "exploreLogXOnFuse",
-      title: "Explore LogX on Fuse",
-      heading: "Explore LogX on Fuse Network",
-      point: "200 points",
-      description: "Explore the earning and trading capabilities of LogX DEX and get 200 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
-      image: logx,
-      isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "staging",
-      button: "Go to Quest",
-      link: "https://app.layer3.xyz/quests/logx-on-fuse",
-      buttonTwo: "Verify Quest",
-      isFunctionTwo: true,
-      endpointTwo: "explore-logx-on-fuse",
-      imageHeight: "h-[100px]"
-    },
-    {
-      id: "exploreVoltWallet",
-      title: "Explore Volt wallet",
-      heading: "Explore Volt mobile wallet",
-      point: "200 points",
-      description: "The Volt wallet is the best mobile solution for interacting with the Fuse network, as it is built and developed by the Fuse team. Explore its features and get 200 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
-      image: voltWalletTwoLines,
-      isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "staging",
-      button: "Go to Quest",
-      link: "https://app.layer3.xyz/quests/discover-volt-wallet",
-      buttonTwo: "Verify Quest",
-      isFunctionTwo: true,
-      endpointTwo: "explore-volt-wallet",
-      imageHeight: "h-[100px]"
-    },
-    {
-      id: "depositInVoltApp",
-      title: "Top-up Volt with $10",
-      point: "500 points",
-      heading: "Top-up Volt with 10 USDC using fiat-on-ramp",
-      description: "Get 500 points by topping up your Volt wallet directly from your bank account or credit card  \n**Verify the quest 1 hour after completing it on Layer3**",
-      image: voltWalletTwoLines,
-      isActive: true,
-      isHidden: NEXT_PUBLIC_ENVIRONMENT === "staging",
-      button: "Go to Quest",
-      link: "https://app.layer3.xyz/quests/deposit-10-usdc-on-volt-app",
-      buttonTwo: "Verify Quest",
-      isFunctionTwo: true,
-      endpointTwo: "deposit-in-volt-app",
-      imageHeight: "h-[100px]"
-    },
-  ])
-
-  const [multiplyQuests] = useState<Quests>([
-    {
-      id: "liquidityVoltage",
-      title: "Provide Liquidity to Voltage v3",
-      heading: "Multiply your points by providing liquidity on Voltage DEX",
-      point: "8 points per $1 in pool daily",
-      description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by putting bridged funds in any V3 liquidity pool on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
-      image: currentDate >= season2LaunchDate ? voltage : liquidityVoltage,
-      isActive: true,
-      button: "Go to Voltage",
-      link: "https://voltage.finance/pool?filter=v3",
-      padding: "py-6 pl-6 pr-2",
-      imageHeight: currentDate >= season2LaunchDate ? "h-[100px]" : undefined,
-    },
-    {
-      id: "staking-sFuse",
-      title: "Stake FUSE to get s(FUSE)",
-      heading: "Multiply your points by staking FUSE token on Voltage DEX",
-      point: "8 points per $1 staked daily",
-      description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a FUSE token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
-      image: currentDate >= season2LaunchDate ? voltage : stakeSfuse,
-      isActive: true,
-      button: "Go to Voltage",
-      link: "https://app.voltage.finance/stake/sFUSE",
-      imageHeight: currentDate >= season2LaunchDate ? "h-[100px]" : undefined,
-    },
-    {
-      id: "staking-veVolt",
-      title: "Stake VOLT for veVOLT",
-      heading: "Multiply your points by staking VOLT token on Voltage DEX",
-      point: "8 points per $1 staked daily",
-      description: "To multiply you points you need to take 2 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nDouble your points by staking bridged funds in a VOLT token liquid staking on Voltage DEX = 8 points per $1 of the bridged funds, available once per day.",
-      image: currentDate >= season2LaunchDate ? voltage : stakeVolt,
-      isActive: true,
-      button: "Go to Voltage",
-      link: "https://app.voltage.finance/stake/veVOLT",
-      imageHeight: currentDate >= season2LaunchDate ? "h-[100px]" : undefined,
-    },
-    {
-      id: "stakeFuseOnVolt",
-      title: "Stake FUSE on Volt",
-      heading: "Stake FUSE on Volt wallet",
-      point: "2 points per $1 staked daily",
-      description: "Get an additional benefits by participating in the Airdrop with the Volt wallet  \n**Step 1**\nJoin the Airdrop with Volt app  \n**Step 2**\nGo to Earn tab  \n**Step 3**\nStake any amount of FUSE tokens to get 2 points per $1 staked every day",
-      image: voltWalletTwoLines,
-      isActive: true,
-      isHidden: currentDate < season2LaunchDate,
-      button: "Go to Volt",
-      link: "https://get.voltage.finance/ThLA",
-      imageHeight: "h-[100px]"
-    },
-    {
-      id: "meridian",
-      title: "Lend on Meridian",
-      point: "8 points per $1 in pool daily",
-      heading: "Multiply your points by lend your funds on Meridian",
-      description: "Lend on Meridian & Multiply your points easily with these quick steps  \n**Step 1**\nBridge funds to Fuse Network using the Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nVisit the Meridian Finance lending markets  \n**Step 3**\nDouble your points by lending bridged funds in any market = 8 points per $1 of the bridged funds, available once per day.",
-      image: meridian,
-      isActive: true,
-      button: "Go to Meridian Lend",
-      link: "https://lend.meridianfinance.net/markets/",
-      imageHeight: "h-[100px]"
-    },
-    {
-      id: "borrowOnMeridian",
-      title: "Borrow on Meridian",
-      point: "12 points per $1 borrowed",
-      heading: "Triple your points by borrowing funds on Meridian",
-      description: "Borrow any asset on Meridian to get 12 points per $1 borrowed every day.  \n**Points will begin to accrue 24 hours after the borrow transaction.**",
-      image: meridian,
-      isActive: true,
-      button: "Go to Meridian Borrow",
-      link: "https://lend.meridianfinance.net/borrow/",
-      imageHeight: "h-[100px]"
-    },
-    {
-      id: "dementedRoulette",
-      title: "Play Demented Roulette",
-      point: "Play to earn unlimited points",
-      pointModal: "The more play, the more points get",
-      description: "Earn tons of points and win WFUSE by playing the Demented Roulette!  \n**Step 1**\nGo to Demented Roulette  \n**Step 2**\nWin WFUSE and earn unlimited points by playing every round  \n**Step 3**\nPoints earned in roulette are added to Airdrop points in a 1:10 ratio - 1 airdrop point for every 10 roulette points.  \n**You can claim your points from roulette at any time**",
-      image: dementedRoulette,
-      isActive: true,
-      button: "Let's Play",
-      link: "https://demented.games/",
-      buttonTwo: "Claim points",
-      successButtonTwo: "Successfully claimed",
-      isFunctionTwo: true,
-      endpointTwo: "demented-roulette",
-      padding: "py-6 pl-6 pr-2",
-      imageHeight: "h-[100px]"
-    },
-    {
-      id: "provideLogXLiquidity",
-      title: "Provide Liquidity on LogX",
-      heading: "Multiply your points by providing Liquidity on LogX",
-      point: "8 points per $1 in pool daily",
-      description: "Follow these steps:  \n**Step 1**\nBridge USDT to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nGo to LogX and buy LLP tokens  \n**Step 3**\nDouble your points by staking LLP on LogX Liquidity Pool.  \n**Bonus**\nEarn protocol income and claimable USDT rewards.",
-      image: logx,
-      isActive: true,
-      button: "Go to LogX",
-      link: "https://app.logx.trade/liquidity",
-      imageHeight: "h-[100px]"
     },
   ])
 
@@ -859,10 +673,7 @@ const Dashboard = () => {
       </div>
       <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
         <p className="text-3xl xl:text-2xl text-white font-semibold">
-          {NEXT_PUBLIC_ENVIRONMENT === "staging" ?
-            'Follow Fuse on socials' :
-            'Explore Fuse and ecosystem projects'
-          }
+          Follow Fuse on socials
         </p>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
           {quests.map((quest) => {
@@ -888,10 +699,7 @@ const Dashboard = () => {
           }
           <div className="flex md:flex-col items-end md:items-start gap-x-9">
             <p className="text-3xl xl:text-2xl text-white font-semibold">
-              {NEXT_PUBLIC_ENVIRONMENT === "staging" ?
-                'Explore Fuse ecosystem projects & multiply your points' :
-                'Multiply your points!'
-              }
+              Explore Fuse ecosystem projects & multiply your points
             </p>
             {(NEXT_PUBLIC_ENVIRONMENT === "staging" && isMultiplyPointNotice) &&
               <p className="text-lg text-buff">
@@ -900,7 +708,6 @@ const Dashboard = () => {
             }
           </div>
         </div>
-        {NEXT_PUBLIC_ENVIRONMENT === "staging" ?
           <div className="grid grid-cols-2 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
             {ecosystemApps.map((ecosystemApp, i) => {
               if (ecosystemApp.isHidden) {
@@ -917,18 +724,7 @@ const Dashboard = () => {
                 />
               )
             })}
-          </div> :
-          <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
-            {multiplyQuests.map((multiplyQuest) => {
-              if (multiplyQuest.isHidden) {
-                return
-              }
-              return (
-                <Quest key={multiplyQuest.title} quest={multiplyQuest} />
-              )
-            })}
           </div>
-        }
       </div>
     </motion.div>
   )
