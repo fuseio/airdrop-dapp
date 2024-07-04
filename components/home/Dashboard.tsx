@@ -487,14 +487,6 @@ const Dashboard = () => {
       ]
     },
     {
-      name: "Shoebill",
-      description: "Trade, invest, and earn with just a few clicks",
-      image: shoebillFinanceColor,
-      background: "bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
-      beforeBackground: "before:bg-[url('/vectors/multiply-quest-blue-gradient.svg')]",
-      quests: []
-    },
-    {
       name: "Demented Games",
       description: "Play, win WFUSE and get unlimited points",
       image: dementedGamesColor,
