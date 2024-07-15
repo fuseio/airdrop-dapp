@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
-import { IS_SERVER, convertTimestampToUTC, currentDate, daysInYear, eclipseAddress, isFloat, path, screenWidth, season2ClaimLaunchDate, season2LaunchDate } from "@/lib/helpers";
+import { IS_SERVER, convertTimestampToUTC, currentDate, daysInYear, eclipseAddress, isFloat, path, screenWidth, season2ClaimLaunchDate, season2LaunchDate, sortEvenFirst } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { retrieve, selectUserSlice, setIsQuestModalOpen, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
 import Image from "next/image";
@@ -59,6 +59,7 @@ import mirakleColor from "@/public/mirakle-color.png";
 import EcosystemAppItem from "./EcosystemApp";
 
 const isMultiplyPointNotice = false;
+const isNextUpdateInfo = false;
 const ecosystemAppBackgrounds = {
   green: {
     background: "bg-[url('/vectors/multiply-quest-green-gradient.svg')]",
@@ -440,13 +441,13 @@ const Dashboard = () => {
       }}
     >
       <div className="flex justify-between items-center">
-        <h1 className="text-5xl xl:text-4xl md:text-3xl text-white font-semibold md:max-w-[198px] md:break-all md:truncate">
-          Hey, {eclipseAddress(user.walletAddress)}
+        <h1 className="text-5xl xl:text-3xl text-white font-semibold md:max-w-[198px] md:break-all md:truncate">
+          Hey, {matches ? eclipseAddress(user.walletAddress) : eclipseAddress(user.walletAddress, 4, 2)}
         </h1>
         <AirdropLive />
       </div>
-      <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row lg:flex-col justify-between items-center lg:items-start lg:gap-[74px] bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
-        <div className="flex flex-row justify-between items-center w-1/2 lg:w-auto">
+      <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row lg:flex-col justify-between items-center lg:items-start lg:gap-9 bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+        <div className="flex flex-row lg:flex-col justify-between items-center lg:gap-9 w-1/2 lg:w-auto">
           <div className="flex flex-row items-center gap-10">
             <div className="relative">
               <Avatar size={matches ? 95 : 77} />
@@ -467,7 +468,7 @@ const Dashboard = () => {
               }
             </div>
             <div>
-              <p className="text-lg xl:text-base leading-none text-pale-slate font-medium">
+              <p className="text-lg leading-none text-pale-slate font-medium">
                 Your points
               </p>
               <div className="flex items-center gap-1.5 mt-6 xl:mt-2 mb-2">
@@ -483,10 +484,10 @@ const Dashboard = () => {
                 </p>
               </div>
               <div className="flex md:flex-col items-center md:items-start gap-2">
-                <p className="text-sm xl:text-xs leading-none text-pale-slate font-medium xl:max-w-28">
+                <p className="text-sm text-pale-slate font-medium">
                   Last update {convertTimestampToUTC(user.pointsLastUpdatedAt)}
                 </p>
-                {NEXT_PUBLIC_ENVIRONMENT === "staging" &&
+                {isNextUpdateInfo &&
                   <div className="group relative cursor-pointer flex justify-center items-center mb-1">
                     <Image
                       src={questionMarkCircle}
@@ -502,29 +503,32 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="lg:hidden">
-            <p className="text-lg xl:text-base leading-none text-pale-slate font-medium">
-              Your Rank
-            </p>
-            <p className="text-5xl xl:text-4xl leading-none text-white font-bold mt-6 xl:mt-2 mb-2">
-              {user.leaderboardPosition}
-            </p>
-            <Link
-              href={path.LEADERBOARD}
-              className="group flex items-center gap-1 text-sm xl:text-xs leading-none text-pale-slate font-medium"
-            >
-              View Leaderboard
-              <Image
-                src={rightCaret}
-                alt="right caret"
-                width={7}
-                height={13}
-                className="transition ease-in-out group-hover:translate-x-0.5"
-              />
-            </Link>
+          <div className="lg:flex lg:w-full lg:gap-10">
+            <div className="hidden lg:block w-[77px] h-1"></div>
+            <div>
+              <p className="text-lg xl:text-base leading-none text-pale-slate font-medium">
+                Your Rank
+              </p>
+              <p className="text-5xl xl:text-4xl leading-none text-white font-bold mt-6 xl:mt-2 mb-2 lg:m-0">
+                {user.leaderboardPosition}
+              </p>
+              <Link
+                href={path.LEADERBOARD}
+                className="group flex items-center gap-1 text-sm xl:text-xs leading-none text-pale-slate font-medium"
+              >
+                View Leaderboard
+                <Image
+                  src={rightCaret}
+                  alt="right caret"
+                  width={7}
+                  height={13}
+                  className="transition ease-in-out group-hover:translate-x-0.5"
+                />
+              </Link>
+            </div>
           </div>
         </div>
-        <div className="flex flex-row items-center gap-[42px] md:gap-9">
+        <div className="flex flex-row items-center gap-[42px] md:gap-10">
           <Image
             src={airdrop}
             alt="airdrop"
@@ -564,7 +568,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex flex-col gap-8 xl:gap-6">
-        <p className="text-3xl xl:text-2xl text-white font-semibold">
+        <p className="text-3xl text-white font-semibold">
           Start earning points
         </p>
         <div ref={earningSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col gap-[30px] xl:gap-5 ${isEarningSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
@@ -672,7 +676,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
-        <p className="text-3xl xl:text-2xl text-white font-semibold">
+        <p className="text-3xl text-white font-semibold">
           Follow Fuse on socials
         </p>
         <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
@@ -698,7 +702,7 @@ const Dashboard = () => {
             />
           }
           <div className="flex md:flex-col items-end md:items-start gap-x-9">
-            <p className="text-3xl xl:text-2xl text-white font-semibold">
+            <p className="text-3xl text-white font-semibold">
               Explore Fuse ecosystem projects & multiply your points
             </p>
             {(NEXT_PUBLIC_ENVIRONMENT === "staging" && isMultiplyPointNotice) &&
@@ -708,8 +712,9 @@ const Dashboard = () => {
             }
           </div>
         </div>
-          <div className="grid grid-cols-2 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
-            {ecosystemApps.map((ecosystemApp, i) => {
+        <div className="grid grid-cols-2 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-6">
+          {(matches ? ecosystemApps : sortEvenFirst(ecosystemApps))
+            .map((ecosystemApp, i) => {
               if (ecosystemApp.isHidden) {
                 return
               }
@@ -717,14 +722,14 @@ const Dashboard = () => {
                 <EcosystemAppItem
                   key={ecosystemApp.name}
                   ecosystemApp={{
-                    background: i % 2 === 0 ? ecosystemAppBackgrounds.green.background : ecosystemAppBackgrounds.blue.background,
-                    beforeBackground: i % 2 === 0 ? ecosystemAppBackgrounds.blue.beforeBackground : ecosystemAppBackgrounds.blue.beforeBackground,
+                    background: (matches ? i % 2 === 0 : i < Math.ceil(ecosystemApps.length / 2)) ? ecosystemAppBackgrounds.green.background : ecosystemAppBackgrounds.blue.background,
+                    beforeBackground: (matches ? i % 2 === 0 : i < Math.ceil(ecosystemApps.length / 2)) ? ecosystemAppBackgrounds.green.beforeBackground : ecosystemAppBackgrounds.blue.beforeBackground,
                     ...ecosystemApp
                   }}
                 />
               )
             })}
-          </div>
+        </div>
       </div>
     </motion.div>
   )

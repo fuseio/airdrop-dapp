@@ -85,7 +85,7 @@ function QuestItem({ quest }: QuestProps) {
             <CardItem
               translateZ="50"
               as="p"
-              className="text-start text-lg xl:text-base leading-none text-white font-bold"
+              className="text-start text-lg xl:text-base md:text-2xl leading-none text-white font-bold"
             >
               {quest.title}
             </CardItem>
@@ -97,14 +97,14 @@ function QuestItem({ quest }: QuestProps) {
                 <Image
                   src={quest.isActive ? pointHexagon : hourglass}
                   alt={quest.isActive ? "point hexagon" : "hourglass"}
-                  width={matches ? 12 : 10}
-                  height={matches ? 14 : 12}
+                  width={matches ? 12 : 17}
+                  height={matches ? 14 : 20}
                 />
               </CardItem>
               <CardItem
                 translateZ="20"
                 as="p"
-                className={`text-left text-lg xl:text-base leading-none ${quest.isActive ? "text-success" : "text-white/50"}`}
+                className={`text-left text-lg xl:text-base md:text-2xl leading-none ${quest.isActive ? "text-success" : "text-white/50"}`}
               >
                 {quest.isActive ? quest.point : "Coming Soon"}
               </CardItem>
