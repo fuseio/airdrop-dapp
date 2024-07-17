@@ -75,7 +75,8 @@ export interface UserStateType {
   retrieveTime: string;
   isSubmittedComingSoonSubscribe: boolean;
   isErrorSubmittingComingSoonSubscribe: boolean;
-  }
+  isBoostModalOpen: boolean;
+}
 
 const INIT_STATE: UserStateType = {
   isAuthenticating: false,
@@ -104,7 +105,8 @@ const INIT_STATE: UserStateType = {
   retrieveTime: new Date(0).toString(),
   isSubmittedComingSoonSubscribe: false,
   isErrorSubmittingComingSoonSubscribe: false,
-  };
+  isBoostModalOpen: false,
+};
 
 export const authenticate = createAsyncThunk(
   "USER/AUTHENTICATE",
@@ -345,6 +347,9 @@ const userSlice = createSlice({
       state.retrieveTime = date;
       localStorage.setItem('airdrop-retrieveTime', date);
     },
+    setIsBoostModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isBoostModalOpen = action.payload
+    },
     setLogout: (state) => {
       state.inviteCode = "";
       state.accessToken = "";
@@ -472,7 +477,7 @@ const userSlice = createSlice({
       })
       .addCase(verifyQuest.rejected, (state, action) => {
         state.selectedQuest.isLoadingTwo = false;
-        if(action.error.message === "409") {
+        if (action.error.message === "409") {
           state.selectedQuest.buttonTwo = "Already Verified";
           state.isQuestModalOpen = false;
         } else {
@@ -495,6 +500,7 @@ export const {
   setTotalSignupStepCompleted,
   setLeaderboardUsers,
   setRetrieveTime,
+  setIsBoostModalOpen,
   setLogout,
   setHydrate
 } = userSlice.actions;
