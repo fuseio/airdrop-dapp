@@ -44,21 +44,11 @@
 .boost-modal-checkbox:checked::before {
   content: '';
   position: absolute;
-  top: 4px;
-  left: 8px;
-  width: 7px;
-  height: 14px;
+  top: 3px;
+  left: 6px;
+  width: 4px;
+  height: 8px;
   border: solid #B4F9BA;
-  border-width: 0 3px 3px 0;
+  border-width: 0 2px 2px 0;
   transform: rotate(45deg);
-}
-
-@media screen and (max-width: 1750px) {
-  .boost-modal-checkbox:checked::before {
-    top: 7px;
-    left: 6px;
-    width: 4px;
-    height: 8px;
-    border-width: 0 2px 2px 0;
-  }
 }
