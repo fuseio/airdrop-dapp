@@ -128,7 +128,7 @@ const EcosystemAppModal = (): JSX.Element => {
                                 </div>
                               </div>
                               {ecosystemAppQuest.isBoosted &&
-                                <p className="line-through text-secondary opacity-70">
+                                <p className="line-through text-base md:text-xs text-secondary opacity-70 ml-5 md:ml-[18px]">
                                   {ecosystemAppQuest.unBoostedPoint}
                                 </p>
                               }
@@ -167,7 +167,7 @@ const EcosystemAppModal = (): JSX.Element => {
                               exit={{ opacity: 0 }}
                               className="flex flex-col items-start gap-10 pt-6 px-8 pb-8 xl:p-6"
                             >
-                              <div className={`text-lg xl:text-base leading-6 ${ecosystemAppQuest.isBoosted ? "text-secondary" : "text-pale-slate"} font-medium whitespace-pre-wrap`}>
+                              <div className={`text-lg xl:text-base leading-6 ${ecosystemAppQuest.isBoosted ? "text-secondary" : "text-pale-slate"} font-medium whitespace-pre-wrap ml-5 md:ml-0`}>
                                 <Markdown>{selectedQuest.description}</Markdown>
                               </div>
                               <div className="flex items-center gap-[26px] md:gap-4">
