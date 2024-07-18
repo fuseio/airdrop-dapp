@@ -24,7 +24,7 @@ function EcosystemAppItem({ ecosystemApp }: EcosystemAppProps) {
         <CardItem
           as="button"
           translateZ="40"
-          className="relative flex justify-between items-center gap-2 w-full min-h-[228px] xl:min-h-[182px] pt-10 pr-[38px] pb-[37px] pl-[37px] md:p-8"
+          className="relative flex justify-between items-center gap-2 w-full min-h-[228px] xl:min-h-[182px] pt-10 pr-[38px] pb-[37px] pl-[37px] md:p-[26px]"
           onClick={() => {
             dispatch(setIsEcosystemAppModalOpen(true));
             dispatch(setSelectedEcosystemApp(ecosystemApp));
@@ -38,10 +38,10 @@ function EcosystemAppItem({ ecosystemApp }: EcosystemAppProps) {
             <p className="text-2xl xl:text-xl text-success font-bold">
               {ecosystemApp.name}
             </p>
-            <p className="text-lg xl:text-base text-pale-slate font-medium mt-[19px] xl:mt-4 max-w-[278px]">
+            <p className="text-lg xl:text-base md:text-sm text-pale-slate font-medium mt-[19px] xl:mt-3.5 max-w-[278px]">
               {ecosystemApp.description}
             </p>
-            <div className="rounded-full border border-gray-goose text-base xl:text-sm leading-none text-white mt-6 xl:mt-5 px-3 py-2">
+            <div className="rounded-full border border-gray-goose text-base xl:text-sm md:text-xs leading-none text-white mt-6 xl:mt-3.5 px-[8.5px] py-1.5">
               {ecosystemApp.quests.length} Quests
             </div>
           </CardItem>

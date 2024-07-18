@@ -11,6 +11,9 @@ import Spinner from "../ui/Spinner";
 import Markdown from "react-markdown";
 import plus from "@/assets/plus.svg";
 import minus from "@/assets/minus.svg";
+import plusBlack from "@/assets/plus-black.svg";
+import minusBlack from "@/assets/minus-black.svg";
+import fire from "@/assets/fire.svg";
 
 const EcosystemAppModal = (): JSX.Element => {
   const { isEcosystemAppModalOpen, selectedEcosystemApp, selectedQuest } = useAppSelector(selectUserSlice);
@@ -48,9 +51,9 @@ const EcosystemAppModal = (): JSX.Element => {
             transition={{
               duration: 0.3,
             }}
-            className={`bg-tertiary w-full max-w-[880px] md:max-w-[95%] max-h-[90%] overflow-auto z-[80] absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rounded-2xl before:content-[''] before:absolute before:w-full before:h-full before:-z-[1] before:bg-no-repeat before:rotate-180 before:bg-cover before:bg-left-top ${selectedEcosystemApp.beforeBackground}`}
+            className={`bg-tertiary w-full max-w-[880px] max-h-[90%] overflow-auto z-[80] absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rounded-2xl before:content-[''] before:absolute before:w-full before:h-full before:-z-[1] before:bg-no-repeat before:rotate-180 before:bg-cover before:bg-bottom ${selectedEcosystemApp.beforeBackground}`}
           >
-            <div className="flex flex-col p-12 xl:p-10">
+            <div className="flex flex-col p-12 xl:p-10 md:px-4 md:py-9">
               <div className="flex justify-between items-start">
                 <Image
                   src={selectedEcosystemApp.image}
@@ -59,16 +62,16 @@ const EcosystemAppModal = (): JSX.Element => {
                 <Image
                   src={closeWhite}
                   alt="close"
-                  width={25}
-                  height={25}
+                  width={matches ? 25 : 16}
+                  height={matches ? 25 : 16}
                   className="cursor-pointer hover:opacity-60"
                   onClick={() => dispatch(setIsEcosystemAppModalOpen(false))}
                 />
               </div>
-              <p className="text-lg xl:text-base text-white/70 font-medium mt-[29px] xl:mt-5">
+              <p className="text-lg xl:text-base text-white/70 font-medium mt-[29px] xl:mt-5 md:mt-3">
                 {selectedEcosystemApp.description}
               </p>
-              <div className="flex flex-col gap-[22px] mt-[54px] xl:mt-11">
+              <div className="flex flex-col gap-[22px] mt-[54px] xl:mt-11 md:mt-8">
                 <p className="text-2xl xl:text-xl text-white font-bold">
                   {selectedEcosystemApp.quests.length} quests
                 </p>
@@ -82,37 +85,53 @@ const EcosystemAppModal = (): JSX.Element => {
                         key={ecosystemAppQuest.id}
                       >
                         <div
-                          className="bg-oslo-gray/[0.22] rounded-[20px]"
+                          className={`${ecosystemAppQuest.isBoosted ? "bg-white bg-linear-gradient-white-to-green" : "bg-oslo-gray/[0.22]"} rounded-[20px] md:rounded-xl`}
                         >
                           <button
-                            className="flex justify-between items-center w-full pt-8 px-8 pb-6 xl:p-6 hover:opacity-90"
+                            className="flex justify-between items-center w-full pt-8 px-8 pb-6 xl:p-6 md:px-[26px] md:py-[18px] hover:opacity-90"
                             onClick={() => dispatch(setSelectedQuest(
                               selectedQuest.id === ecosystemAppQuest.id ?
                                 initQuest :
                                 ecosystemAppQuest
                             ))}
                           >
-                            <div className="flex flex-col items-start text-start gap-5">
-                              <p className="text-lg xl:text-base text-white font-semibold">
+                            <div className={`flex flex-col items-start text-start ${ecosystemAppQuest.isBoosted ? "gap-1.5" : "gap-5 md:gap-3.5"}`}>
+                              <p className={`text-lg xl:text-base ${ecosystemAppQuest.isBoosted ? "text-tertiary" : "text-white"} font-semibold`}>
                                 {selectedQuest.id === ecosystemAppQuest.id ?
                                   selectedQuest.heading ?? selectedQuest.title :
                                   ecosystemAppQuest.title
                                 }
                               </p>
-                              <div className="flex items-center gap-2">
+                              <div className={`flex items-center gap-2 ${ecosystemAppQuest.isBoosted ? "mt-1.5" : ""}`}>
                                 <Image
                                   src={pointHexagon}
                                   alt="point hexagon"
                                   width={matches ? 12 : 10}
                                   height={matches ? 14 : 12}
                                 />
-                                <p className="text-lg xl:text-base text-success font-bold">
-                                  {selectedQuest.id === ecosystemAppQuest.id ?
-                                    ecosystemAppQuest.pointModal ?? ecosystemAppQuest.point :
-                                    ecosystemAppQuest.point
+                                <div className="relative flex">
+                                  <p className={`text-lg xl:text-base md:text-xs ${ecosystemAppQuest.isBoosted ? "text-light-green" : "text-success"} font-bold`}>
+                                    {selectedQuest.id === ecosystemAppQuest.id ?
+                                      ecosystemAppQuest.pointModal ?? ecosystemAppQuest.point :
+                                      ecosystemAppQuest.point
+                                    }
+                                  </p>
+                                  {ecosystemAppQuest.isBoosted &&
+                                    <Image
+                                      src={fire}
+                                      alt="fire"
+                                      width={10}
+                                      height={13}
+                                      className="absolute top-0 -right-3"
+                                    />
                                   }
-                                </p>
+                                </div>
                               </div>
+                              {ecosystemAppQuest.isBoosted &&
+                                <p className="line-through text-base md:text-xs text-secondary opacity-70 ml-5 md:ml-[18px]">
+                                  {ecosystemAppQuest.unBoostedPoint}
+                                </p>
+                              }
                             </div>
                             {selectedQuest.id === ecosystemAppQuest.id ?
                               <motion.div
@@ -122,7 +141,7 @@ const EcosystemAppModal = (): JSX.Element => {
                                 className="flex items-center"
                               >
                                 <Image
-                                  src={minus}
+                                  src={ecosystemAppQuest.isBoosted ? minusBlack : minus}
                                   alt="minus"
                                 />
                               </motion.div>
@@ -134,7 +153,7 @@ const EcosystemAppModal = (): JSX.Element => {
                                 className="flex items-center"
                               >
                                 <Image
-                                  src={plus}
+                                  src={ecosystemAppQuest.isBoosted ? plusBlack : plus}
                                   alt="plus"
                                 />
                               </motion.div>
@@ -148,13 +167,13 @@ const EcosystemAppModal = (): JSX.Element => {
                               exit={{ opacity: 0 }}
                               className="flex flex-col items-start gap-10 pt-6 px-8 pb-8 xl:p-6"
                             >
-                              <div className="text-lg xl:text-base leading-6 text-pale-slate font-medium whitespace-pre-wrap">
+                              <div className={`text-lg xl:text-base leading-6 ${ecosystemAppQuest.isBoosted ? "text-secondary" : "text-pale-slate"} font-medium whitespace-pre-wrap ml-5 md:ml-0`}>
                                 <Markdown>{selectedQuest.description}</Markdown>
                               </div>
-                              <div className="flex md:flex-col items-center md:items-start gap-[26px] md:gap-4">
+                              <div className="flex items-center gap-[26px] md:gap-4">
                                 {selectedQuest.button &&
                                   <button
-                                    className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-transparent hover:text-primary"
+                                    className="transition ease-in-out bg-primary flex justify-center items-center gap-2 border border-primary rounded-full text-black leading-none font-semibold px-9 py-4 xl:px-5 xl:py-2.5 hover:bg-transparent hover:text-primary"
                                     onClick={() => {
                                       if (selectedQuest.isFunction) {
                                         handleClick(selectedQuest.id);
