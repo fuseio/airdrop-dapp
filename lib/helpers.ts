@@ -4,11 +4,11 @@ import { twMerge } from "tailwind-merge";
 import { NEXT_PUBLIC_SEASON_2_CLAIM_LAUNCH_TIME, NEXT_PUBLIC_SEASON_2_LAUNCH_TIME, NEXT_PUBLIC_SEASON_2_TWITTER_LAUNCH_TIME } from "./config";
 import { Address } from "viem";
 
-export const eclipseAddress = (address: string): string => {
+export const eclipseAddress = (address: string, firstEnd = 6, secondStart = 4): string => {
   return (
-    address.substring(0, 6) +
+    address.substring(0, firstEnd) +
     "..." +
-    address.substring(address.length - 4, address.length)
+    address.substring(address.length - secondStart, address.length)
   );
 };
 
@@ -146,3 +146,18 @@ export const isEligibleToClaimSeason1Reward = (user: User): boolean => {
 
   return true;
 };
+
+export const sortEvenFirst = <T>(arr: T[]): T[] => {
+  const evenIndexedItems: T[] = [];
+  const oddIndexedItems: T[] = [];
+
+  arr.forEach((item, index) => {
+    if (index % 2 === 0) {
+      evenIndexedItems.push(item);
+    } else {
+      oddIndexedItems.push(item);
+    }
+  });
+
+  return evenIndexedItems.concat(oddIndexedItems);
+}

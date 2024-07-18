@@ -41,7 +41,7 @@ export default function Airdrop() {
 
   return (
     <div className={`w-full font-mona bg-secondary ${currentComponent === "landing" ? "h-screen" : "min-h-screen bg-radial-gradient-green"}`}>
-      <div className={`flex-col flex justify-start items-center bg-cover bg-no-repeat bg-bottom ${currentComponent === "landing" ? "h-screen" : "min-h-screen bg-[url('/vectors/grid.svg')]"}`}>
+      <div className={`flex-col flex justify-start items-center bg-cover bg-no-repeat bg-bottom ${currentComponent === "landing" ? "h-screen" : "min-h-screen bg-[url('/vectors/grid.svg')] md:bg-none"}`}>
         {currentComponent === "landing" &&
           <div className="absolute w-full h-full z-0 min-h-[800px] bg-secondary overflow-hidden">
             <div className="absolute w-full h-full z-[4] min-h-[800px] overflow-hidden bg-[url('/vectors/bg-layer1.svg')] bg-no-repeat bg-[center_bottom] bg-100% animate-slide-in-bg-layer1"></div>

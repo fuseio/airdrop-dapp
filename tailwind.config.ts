@@ -37,6 +37,7 @@ const config: Config = {
         "cactus": "#566A57",
         "dune": "#333333",
         "buff": "#F3F5A3",
+        "light-green": "#92EF90",
       },
       fontFamily: {
         mona: ["var(--font-mona-sans)"],
@@ -85,6 +86,7 @@ const config: Config = {
       },
       backgroundImage: {
         'radial-gradient-green': "radial-gradient(50% 50% at 50% 50%, rgba(163, 245, 170, 0.15) 0%, rgba(163, 245, 170, 0.00) 100%)",
+        'linear-gradient-white-to-green': "linear-gradient(295deg, rgba(180, 249, 186, 0.31) 14.76%, rgba(255, 255, 255, 0.00) 63.47%)",
       },
       backgroundSize: {
         '100%': '100%',

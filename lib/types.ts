@@ -78,9 +78,11 @@ export type Quest = {
   heading?: string;
   point?: string;
   pointModal?: string;
+  unBoostedPoint?: string;
   description?: string;
   isActive?: boolean;
   isHidden?: boolean;
+  isBoosted?: boolean;
   completed?: boolean;
   button?: string;
   link?: string;
