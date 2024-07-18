@@ -40,3 +40,15 @@
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
+
+.boost-modal-checkbox:checked::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  width: 4px;
+  height: 8px;
+  border: solid #B4F9BA;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
