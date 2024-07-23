@@ -90,7 +90,7 @@ const Dashboard = () => {
   const [quests, setQuests] = useState<Quests>([
     {
       id: "followFuseOnTwitter",
-      title: "Follow Fuse on X",
+      title: "Follow @Fuse_network on X",
       point: "50 points",
       description: "Get 50 point for following an official Fuse Network X account",
       image: followXColor,
