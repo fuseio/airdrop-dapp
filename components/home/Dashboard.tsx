@@ -90,7 +90,7 @@ const Dashboard = () => {
   const [quests, setQuests] = useState<Quests>([
     {
       id: "followFuseOnTwitter",
-      title: "Follow Fuse on X",
+      title: "Follow @Fuse_network on X",
       point: "50 points",
       description: "Get 50 point for following an official Fuse Network X account",
       image: followXColor,
@@ -458,7 +458,7 @@ const Dashboard = () => {
         }}
       >
         <div className="flex justify-between items-center">
-          <h1 className="text-5xl xl:text-3xl text-white font-semibold md:max-w-[198px] md:break-all md:truncate">
+          <h1 className="text-5xl xl:text-3xl text-white font-semibold md:max-w-[198px] md:break-all">
             Hey, {matches ? eclipseAddress(user.walletAddress) : eclipseAddress(user.walletAddress, 4, 2)}
           </h1>
           <AirdropLive />
