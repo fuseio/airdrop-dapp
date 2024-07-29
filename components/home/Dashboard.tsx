@@ -18,31 +18,10 @@ import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
 import crownCircle from "@/assets/crown-circle.svg";
 import Quest from "./Quest";
 import fireTransparent from "@/assets/fire-transparent.svg";
-import followX from "@/assets/follow-x.svg";
-import holdTokens from "@/assets/hold-tokens.svg";
-import ogWallet from "@/assets/og-wallet.svg";
-import joinDiscord from "@/assets/join-discord.svg";
-import stakeSfuse from "@/assets/stake-sfuse.svg";
-import stakeVolt from "@/assets/stake-volt.svg";
-import liquidityVoltage from "@/assets/liquidity-voltage.svg";
-import sayGm from "@/assets/say-gm.svg";
-import meridian from "@/assets/meridian.svg";
-import logx from "@/assets/logx.svg";
-import bitazza from "@/assets/bitazza.svg";
-import zneakrz from "@/assets/zneakrz.svg";
-import mirakle from "@/assets/mirakle.svg";
-import joinTelegram from "@/assets/join-telegram.svg";
-import voltApp from "@/assets/volt-app.svg";
-import goodDollar from "@/public/gooddollar.png";
-import goodDollarCircle from "@/assets/gooddollar-circle.svg";
-import voltWallet from "@/assets/volt-wallet.svg";
-import voltWalletTwoLines from "@/assets/volt-wallet-two-lines.svg";
-import dementedRoulette from "@/assets/demented-roulette.svg";
 import { EcosystemApps, Quests } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
 import questionMarkCircle from "@/assets/question-mark-circle.svg";
-import voltage from "@/assets/voltage.svg";
 import dementedGamesColor from "@/assets/demented-games-color.svg";
 import followXColor from "@/assets/follow-x-color.svg";
 import holdTokensColor from "@/assets/hold-tokens-color.svg";
@@ -303,6 +282,26 @@ const Dashboard = () => {
           buttonTwo: "Verify Quest",
           isFunctionTwo: true,
           endpointTwo: "mirakle",
+        },
+      ]
+    },
+    {
+      name: "Shoebill",
+      description: "Trade, invest, and earn with just a few clicks",
+      image: shoebillFinanceColor,
+      quests: [
+        {
+          id: "exploreShoebillOnFuse",
+          title: "Explore Shoebill on Fuse",
+          heading: "Explore Shoebill Finance on Fuse Network",
+          point: "200 points per claim",
+          description: "Explore Shoebill Finance capabilities and get 200 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
+          isActive: true,
+          button: "Go to Quest",
+          link: "https://app.layer3.xyz/quests/explore-shoebill-finance-on-fuse-network",
+          buttonTwo: "Verify Quest",
+          isFunctionTwo: true,
+          endpointTwo: "explore-shoebill-on-fuse",
         },
       ]
     },
