@@ -303,6 +303,16 @@ const Dashboard = () => {
           isFunctionTwo: true,
           endpointTwo: "explore-shoebill-on-fuse",
         },
+        {
+          id: "lendOnShoebill",
+          title: "Lend on Shoebill Finance",
+          heading: "Multiply your points by supplying your funds on Shoebill Finance",
+          point: "12 points per $1 in pool daily",
+          description: "To multiply you points you need to take 3 simple steps:  \n**Step 1**\nBridge funds to the Fuse Network using Fuse bridge = 4 points per $1, available once per day.  \n**Step 2**\nGo to Shoebill Finance on Fuse Network  \n**Step 3**\nDouble your points by supplying FUSE or sFUSE tokens = 12 points per $1 of the bridged funds, available once per day.",
+          isActive: true,
+          button: "Go to Shoebill Finance",
+          link: "https://fuse-fuse.shoebill.finance/#/",
+        },
       ]
     },
     {
