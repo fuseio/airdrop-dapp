@@ -38,7 +38,7 @@ function EcosystemAppItem({ ecosystemApp }: EcosystemAppProps) {
             <p className="text-2xl xl:text-xl text-success font-bold">
               {ecosystemApp.name}
             </p>
-            <p className="text-lg xl:text-base md:text-sm text-pale-slate font-medium mt-[19px] xl:mt-3.5 max-w-[278px]">
+            <p className={`text-lg xl:text-base md:text-sm text-pale-slate font-medium mt-[19px] xl:mt-3.5 ${ecosystemApp.descriptionMaxWidth ?? "max-w-[278px]"}`}>
               {ecosystemApp.description}
             </p>
             <div className="rounded-full border border-gray-goose text-base xl:text-sm md:text-xs leading-none text-white mt-6 xl:mt-3.5 px-[8.5px] py-1.5">

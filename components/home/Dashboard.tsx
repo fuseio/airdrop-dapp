@@ -37,6 +37,7 @@ import meridianColor from "@/public/meridian-color.png";
 import mirakleColor from "@/public/mirakle-color.png";
 import EcosystemAppItem from "./EcosystemApp";
 import BoostModal from "./BoostModal";
+import artrific from "@/assets/artrific.svg";
 
 const isMultiplyPointNotice = false;
 const isNextUpdateInfo = false;
@@ -353,6 +354,26 @@ const Dashboard = () => {
           buttonTwo: "Verify Quest",
           isFunctionTwo: true,
           endpointTwo: "gooddollar",
+        },
+      ]
+    },
+    {
+      name: "Artrific",
+      description: "Create or buy NFTs with the leading NFT marketplace on the Fuse network",
+      image: artrific,
+      descriptionMaxWidth: "max-w-none",
+      quests: [
+        {
+          id: "exploreArtrific",
+          title: "Explore Artrific NFT marketplace",
+          point: "500 points",
+          description: "Explore the leading NFT marketplace on Fuse Network and get 500 points  \n**Verify the quest 1 hour after completing it on Layer3**\n",
+          isActive: true,
+          button: "Go to Quest",
+          link: "https://app.layer3.xyz/quests/draft-explore-artrific-nft-marketplace-on-fuse-network",
+          buttonTwo: "Verify Quest",
+          isFunctionTwo: true,
+          endpointTwo: "explore-artrific",
         },
       ]
     },
