@@ -364,7 +364,7 @@ const Dashboard = () => {
       descriptionMaxWidth: "max-w-none",
       quests: [
         {
-          id: "exploreArtrific",
+          id: "exploreArtrificOnFuse",
           title: "Explore Artrific NFT marketplace",
           point: "500 points",
           description: "Explore the leading NFT marketplace on Fuse Network and get 500 points  \n**Verify the quest 1 hour after completing it on Layer3**",
