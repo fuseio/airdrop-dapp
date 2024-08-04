@@ -373,7 +373,7 @@ const Dashboard = () => {
           link: "https://app.layer3.xyz/quests/draft-explore-artrific-nft-marketplace-on-fuse-network",
           buttonTwo: "Verify Quest",
           isFunctionTwo: true,
-          endpointTwo: "explore-artrific",
+          endpointTwo: "explore-artrific-on-fuse",
         },
       ]
     },
