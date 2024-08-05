@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { selectUserSlice, setIsBoostModalOpen } from "@/store/userSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import boostedQuests from "@/assets/boosted-quests.svg";
+import boostedQuests from "@/assets/boosted-quests.gif";
 
 const BoostModal = (): JSX.Element => {
   const { isBoostModalOpen } = useAppSelector(selectUserSlice);
@@ -43,26 +43,14 @@ const BoostModal = (): JSX.Element => {
                 alt="boosted quests"
                 width={600}
                 height={600}
+                className="cursor-pointer"
+                onClick={() => {
+                  if (checked) {
+                    localStorage.setItem("airdrop-isBoostedModalHidden", "true");
+                  }
+                  dispatch(setIsBoostModalOpen(false))
+                }}
               />
-              <div className="absolute bottom-[14%] left-1/2 -translate-x-1/2 w-full max-w-md text-center">
-                <p className="md:text-sm leading-5 text-white">
-                  You can now earn even more points by providing liquidity
-                  on the Fuse network through boosted quests. Get{" "}
-                  <span className="font-bold">12 points</span>{" "}
-                  instead of 8 for every $1 bridged.
-                </p>
-                <button
-                  className="transition ease-in-out bg-primary border border-primary rounded-full text-lg xl:text-sm text-black leading-none font-bold mt-2 md:mt-1 px-7 py-2 xl:px-4 xl:py-1.5 md:py-1 hover:bg-transparent hover:text-primary"
-                  onClick={() => {
-                    if (checked) {
-                      localStorage.setItem("airdrop-isBoostedModalHidden", "true");
-                    }
-                    dispatch(setIsBoostModalOpen(false))
-                  }}
-                >
-                  Got it
-                </button>
-              </div>
               <label htmlFor="hide-boost-modal" className="flex items-center gap-2.5 relative mt-6 text-white leading-none">
                 <input
                   type="checkbox"
