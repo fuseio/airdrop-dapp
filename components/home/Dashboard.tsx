@@ -370,8 +370,8 @@ const Dashboard = () => {
         {
           id: "exploreArtrificOnFuse",
           title: "Explore Artrific NFT marketplace",
-          point: "500 points",
-          description: "Explore the leading NFT marketplace on Fuse Network and get 500 points  \n**Verify the quest 1 hour after completing it on Layer3**",
+          point: "300 points",
+          description: "Explore the leading NFT marketplace on Fuse Network and get 300 points  \n**Verify the quest 1 hour after completing it on Layer3**",
           isActive: true,
           button: "Go to Quest",
           link: "https://app.layer3.xyz/quests/explore-artrific-nft-marketplace-on-fuse-network",
