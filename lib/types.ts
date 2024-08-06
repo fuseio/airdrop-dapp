@@ -65,6 +65,7 @@ export type EcosystemApp = {
   image: string | StaticImageData;
   background?: string;
   beforeBackground?: string;
+  descriptionMaxWidth?: string;
   quests: Quests;
   isHidden?: boolean;
 }
