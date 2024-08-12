@@ -38,6 +38,7 @@ import mirakleColor from "@/public/mirakle-color.png";
 import EcosystemAppItem from "./EcosystemApp";
 import BoostModal from "./BoostModal";
 import artrific from "@/assets/artrific.svg";
+import season2RewardComingSoon from "@/assets/season-2-reward-coming-soon.svg";
 
 const isMultiplyPointNotice = false;
 const isNextUpdateInfo = false;
@@ -579,43 +580,13 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row items-center gap-[42px] md:gap-10">
+          <div className="h-[135px] md:h-auto">
             <Image
-              src={airdrop}
-              alt="airdrop"
-              width={matches ? 94 : 75}
-              height={matches ? 128 : 102}
+              src={season2RewardComingSoon}
+              alt="season2RewardComingSoon"
+              width={462}
+              height={135}
             />
-            {currentDate >= season2ClaimLaunchDate ?
-              <div className="flex flex-col justify-between items-start gap-2.5">
-                <p className="text-2xl xl:text-xl leading-none text-white font-bold">
-                  Claim reward for Season 1
-                </p>
-                <p className="text-sm text-pale-slate font-medium max-w-[254px]">
-                  You can claim your tokens now!
-                </p>
-                <button
-                  className="transition ease-in-out bg-primary border border-primary rounded-full xl:text-sm text-black leading-none font-semibold mt-[5px] px-9 py-4 xl:px-7 xl:py-2.5 md:px-5 hover:bg-transparent hover:text-primary"
-                  onClick={() => router.push(path.CLAIM)}
-                >
-                  Claim your tokens
-                </button>
-              </div> :
-              <div className="flex flex-col justify-between items-start gap-2.5">
-                <p className="text-2xl xl:text-xl leading-none text-white font-bold">
-                  Reward for the Season 1 is coming
-                </p>
-                <p className="text-sm text-pale-slate font-medium max-w-[254px]">
-                  Claiming will be available very soon, we are calculating your rewards
-                </p>
-                <button
-                  className="transition ease-in-out bg-transparent border border-primary rounded-full xl:text-sm text-primary leading-none font-semibold mt-[5px] px-9 py-4 xl:px-7 xl:py-2.5 md:px-5"
-                  disabled
-                >
-                  Coming Soon
-                </button>
-              </div>
-            }
           </div>
         </div>
         <div className="flex flex-col gap-8 xl:gap-6">
