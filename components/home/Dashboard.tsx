@@ -245,19 +245,6 @@ const Dashboard = () => {
       image: logxColor,
       quests: [
         {
-          id: "exploreLogXOnFuse",
-          title: "Explore LogX on Fuse",
-          heading: "Explore LogX on Fuse Network",
-          point: "200 points",
-          description: "Explore the earning and trading capabilities of LogX DEX and get 200 points.  \n**Verify the quest 1 hour after completing it on Layer3**",
-          isActive: true,
-          button: "Go to Quest",
-          link: "https://app.layer3.xyz/quests/logx-on-fuse",
-          buttonTwo: "Verify Quest",
-          isFunctionTwo: true,
-          endpointTwo: "explore-logx-on-fuse",
-        },
-        {
           id: "provideLogXLiquidity",
           title: "Provide Liquidity on LogX",
           heading: "Multiply your points by providing Liquidity on LogX",
