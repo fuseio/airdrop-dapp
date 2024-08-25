@@ -1,6 +1,6 @@
-import { currentDate, defaultReferralCode, path, season2TwitterLaunchDate } from "@/lib/helpers";
+import { path, season2TwitterLaunchDate } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { retrieve, selectUserSlice, setCurrentComponent, setHydrate, setInviteCode } from "@/store/userSlice";
+import { retrieve, selectUserSlice, setCurrentComponent, setHydrate } from "@/store/userSlice";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react"
 import { useAccount } from "wagmi";
@@ -8,7 +8,7 @@ import { useAccount } from "wagmi";
 const Init = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { currentComponent,isAuthenticating, isRetrieving, isCreating, isUser, user } = useAppSelector(selectUserSlice);
+  const { currentComponent, isAuthenticating, isRetrieving, isCreating, isUser, user } = useAppSelector(selectUserSlice);
   const { isConnected } = useAccount();
   const searchParams = useSearchParams();
   const twitterConnectedKey = 'twitter-connected';

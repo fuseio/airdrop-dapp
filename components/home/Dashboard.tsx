@@ -11,14 +11,13 @@ import AirdropLive from "./AirdropLive";
 import Avatar from "@/components/ui/Avatar";
 import star from "@/assets/star.svg";
 import rightCaret from "@/assets/right-caret.svg";
-import airdrop from "@/assets/airdrop.svg";
 import bridgeFuse from "@/assets/bridge-fuse.svg";
 import { useIntersectionObserver, useMediaQuery } from "usehooks-ts";
 import { CardBody, CardContainer, CardItem } from "../ui/Card3D";
 import crownCircle from "@/assets/crown-circle.svg";
 import Quest from "./Quest";
 import fireTransparent from "@/assets/fire-transparent.svg";
-import { EcosystemApps, Quests } from "@/lib/types";
+import { EcosystemApps, Quests, Socials } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { NEXT_PUBLIC_ENVIRONMENT } from "@/lib/config";
 import questionMarkCircle from "@/assets/question-mark-circle.svg";
@@ -38,7 +37,9 @@ import mirakleColor from "@/public/mirakle-color.png";
 import EcosystemAppItem from "./EcosystemApp";
 import BoostModal from "./BoostModal";
 import artrific from "@/assets/artrific.svg";
-import season2RewardComingSoon from "@/assets/season-2-reward-coming-soon.svg";
+import season2IsOver from "@/assets/season-2-is-over.svg";
+import blog from "@/assets/blog.svg";
+import Social from "./Social";
 
 const isMultiplyPointNotice = false;
 const isNextUpdateInfo = false;
@@ -65,6 +66,9 @@ const Dashboard = () => {
     freezeOnceVisible: true,
   });
   const { isIntersecting: isEarningSectionIntersecting, ref: earningSection } = useIntersectionObserver({
+    freezeOnceVisible: true,
+  });
+  const { isIntersecting: isClaimSectionIntersecting, ref: claimSection } = useIntersectionObserver({
     freezeOnceVisible: true,
   });
 
@@ -371,6 +375,29 @@ const Dashboard = () => {
     },
   ])
 
+  const [socials] = useState<Socials>([
+    {
+      title: "Follow us on X",
+      image: followXColor,
+      link: "https://twitter.com/intent/user?screen_name=Fuse_network"
+    },
+    {
+      title: "Join our Telegram",
+      image: joinTelegramColor,
+      link: "https://t.me/fuseio"
+    },
+    {
+      title: "Join us on Discord",
+      image: joinDiscordColor,
+      link: "https://discord.com/invite/jpPMeSZ"
+    },
+    {
+      title: "Check out our Blog post",
+      image: blog,
+      link: "https://news.fuse.io/"
+    },
+  ])
+
   function referralLink() {
     const host = !IS_SERVER ? window?.location?.host : ""
     return `${host}?ref=${user.referralCode}`
@@ -454,7 +481,7 @@ const Dashboard = () => {
     if (isUser) {
       let isBoostedModalHidden = localStorage.getItem("airdrop-isBoostedModalHidden");
       isBoostedModalHidden = isBoostedModalHidden ? JSON.parse(isBoostedModalHidden) : false;
-      if (!isBoostedModalHidden) {
+      if (currentDate < season2ClaimLaunchDate && !isBoostedModalHidden) {
         dispatch(setIsBoostModalOpen(true));
       }
     }
@@ -483,10 +510,12 @@ const Dashboard = () => {
           <h1 className="text-5xl xl:text-3xl text-white font-semibold md:max-w-[198px] md:break-all">
             Hey, {matches ? eclipseAddress(user.walletAddress) : eclipseAddress(user.walletAddress, 4, 2)}
           </h1>
-          <AirdropLive />
+          {currentDate < season2ClaimLaunchDate &&
+            <AirdropLive />
+          }
         </div>
-        <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row lg:flex-col justify-between items-center lg:items-start lg:gap-9 bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 p-[42px] xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
-          <div className="flex flex-row lg:flex-col justify-between items-center lg:gap-9 w-1/2 lg:w-auto">
+        <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row lg:flex-col justify-between items-end lg:items-start lg:gap-9 bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 pt-0 px-[42px] pb-7 xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+          <div className="flex flex-row lg:flex-col justify-between items-center pb-2.5 md:pb-0 lg:gap-9 w-1/2 lg:w-auto">
             <div className="flex flex-row items-center gap-10">
               <div className="relative">
                 <Avatar size={matches ? 95 : 77} />
@@ -567,179 +596,205 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="h-[135px] md:h-auto">
+          <div className="h-[153px] md:h-auto">
             <Image
-              src={season2RewardComingSoon}
-              alt="season2RewardComingSoon"
-              width={462}
-              height={135}
+              src={season2IsOver}
+              alt="season2IsOver"
+              width={468}
+              height={153}
             />
           </div>
         </div>
-        <div className="flex flex-col gap-8 xl:gap-6">
-          <p className="text-3xl text-white font-semibold">
-            Start earning points
-          </p>
-          <div ref={earningSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col gap-[30px] xl:gap-5 ${isEarningSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
-            <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56" className="block h-full">
-              <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex md:flex-col justify-between md:gap-4 p-10 xl:p-[30px] w-auto h-full">
-                <div className="flex flex-col justify-between md:gap-2">
-                  <div className="flex flex-col gap-4 xl:gap-3 md:gap-2">
+        {currentDate > season2ClaimLaunchDate ?
+          <>
+            <div className="flex justify-center items-center mt-5 mb-16 md:mb-5">
+              <button
+                ref={claimSection}
+                className={`bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90 ${isClaimSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+                onClick={() => router.push(path.CLAIM)}
+              >
+                Claim Your Reward
+              </button>
+            </div>
+            <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
+              <p className="text-3xl text-white font-semibold">
+                Stay tuned! Season 3 may be closer than you think.
+              </p>
+              <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
+                {socials.map((social) => (
+                  <Social key={social.title} social={social} />
+                ))}
+              </div>
+            </div>
+          </> :
+          <>
+            <div className="flex flex-col gap-8 xl:gap-6">
+              <p className="text-3xl text-white font-semibold">
+                Start earning points
+              </p>
+              <div ref={earningSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row md:flex-col gap-[30px] xl:gap-5 ${isEarningSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
+                <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56" className="block h-full">
+                  <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex md:flex-col justify-between md:gap-4 p-10 xl:p-[30px] w-auto h-full">
+                    <div className="flex flex-col justify-between md:gap-2">
+                      <div className="flex flex-col gap-4 xl:gap-3 md:gap-2">
+                        <CardItem
+                          as="p"
+                          translateZ="50"
+                          className="text-2xl xl:text-xl text-primary font-bold"
+                        >
+                          Bridge FUSE
+                        </CardItem>
+                        <CardItem
+                          as="p"
+                          translateZ="60"
+                          className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
+                        >
+                          Get 4 points daily on every $1 you bridge to Fuse
+                        </CardItem>
+                      </div>
+                      <div>
+                        <CardItem translateZ="80">
+                          <button
+                            className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-primary hover:text-black"
+                            onClick={() => {
+                              dispatch(setIsQuestModalOpen(true));
+                              dispatch(setSelectedQuest({
+                                id: "bridge",
+                                title: "Bridge FUSE",
+                                heading: "Bridge to Fuse Network",
+                                point: "4 point per 1 USD bridged",
+                                image: bridgeFuse,
+                                isActive: true,
+                                button: "Go to the Bridge",
+                                link: "https://console.fuse.io/bridge",
+                              }));
+                            }}
+                          >
+                            Learn More
+                          </button>
+                        </CardItem>
+                      </div>
+                    </div>
                     <CardItem
-                      as="p"
-                      translateZ="50"
-                      className="text-2xl xl:text-xl text-primary font-bold"
+                      translateZ="40"
+                      className="md:m-auto"
                     >
-                      Bridge FUSE
-                    </CardItem>
-                    <CardItem
-                      as="p"
-                      translateZ="60"
-                      className="text-lg xl:text-base text-pale-slate font-medium max-w-[200px] md:max-w-[243px]"
-                    >
-                      Get 4 points daily on every $1 you bridge to Fuse
-                    </CardItem>
-                  </div>
-                  <div>
-                    <CardItem translateZ="80">
-                      <button
-                        className="transition ease-in-out border border-primary rounded-full text-primary leading-none font-semibold px-9 py-4 xl:px-7 xl:py-2.5 hover:bg-primary hover:text-black"
-                        onClick={() => {
-                          dispatch(setIsQuestModalOpen(true));
-                          dispatch(setSelectedQuest({
-                            id: "bridge",
-                            title: "Bridge FUSE",
-                            heading: "Bridge to Fuse Network",
-                            point: "4 point per 1 USD bridged",
-                            image: bridgeFuse,
-                            isActive: true,
-                            button: "Go to the Bridge",
-                            link: "https://console.fuse.io/bridge",
-                          }));
-                        }}
-                      >
-                        Learn More
-                      </button>
-                    </CardItem>
-                  </div>
-                </div>
-                <CardItem
-                  translateZ="40"
-                  className="md:m-auto"
-                >
-                  <Image
-                    src={bridgeFuse}
-                    alt="bridge Fuse"
-                    width={matches ? 284 : 227}
-                    height={matches ? 209 : 167}
-                  />
-                </CardItem>
-              </CardBody>
-            </CardContainer>
-            <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56 md:min-h-[430px]" className="block h-full md:min-h-[430px]">
-              <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex flex-col justify-between md:justify-start xl:gap-2 md:gap-12 p-10 xl:p-[30px] w-auto h-full md:min-h-[430px] bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom xl:bg-contain">
-                <div className="flex flex-col gap-4 xl:gap-3">
-                  <CardItem
-                    as="p"
-                    translateZ="50"
-                    className="text-2xl xl:text-xl text-primary font-bold"
-                  >
-                    Invite friends
-                  </CardItem>
-                  <CardItem
-                    as="p"
-                    translateZ="60"
-                    className="text-lg xl:text-base text-pale-slate font-medium max-w-[243px]"
-                  >
-                    Get 20% of your friend&apos;s total points
-                  </CardItem>
-                </div>
-                <div className="flex flex-col gap-2.5 xl:gap-2">
-                  <CardItem
-                    as="p"
-                    translateZ="40"
-                    className="text-sm xl:text-xs text-pale-slate font-medium"
-                  >
-                    Invite link
-                  </CardItem>
-                  <div className="flex items-center gap-1.5 xl:gap-1">
-                    <CardItem
-                      as="p"
-                      translateZ="70"
-                      className="text-2xl xl:text-xl text-white font-bold md:max-w-[243px]"
-                    >
-                      {referralLink()}
-                    </CardItem>
-                    <CardItem translateZ="80">
-                      <Copy
-                        src={copyIcon}
-                        text={referralLink()}
-                        tooltipText="Referral link copied"
-                        className="transition ease-in-out cursor-pointer hover:opacity-60"
+                      <Image
+                        src={bridgeFuse}
+                        alt="bridge Fuse"
+                        width={matches ? 284 : 227}
+                        height={matches ? 209 : 167}
                       />
                     </CardItem>
-                  </div>
-                </div>
-              </CardBody>
-            </CardContainer>
-          </div>
-        </div>
-        <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
-          <p className="text-3xl text-white font-semibold">
-            Follow Fuse on socials
-          </p>
-          <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
-            {quests.map((quest) => {
-              if (quest.id === "walletAge" && !quest.completed) {
-                return
-              }
-              if (quest.isHidden) {
-                return
-              }
-              return (
-                <Quest key={quest.title} quest={quest} />
-              )
-            })}
-          </div>
-        </div>
-        <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
-          <div className="flex items-center gap-2.5">
-            {currentDate < season2LaunchDate &&
-              <Image
-                src={fireTransparent}
-                alt="fire"
-              />
-            }
-            <div className="flex md:flex-col items-end md:items-start gap-x-9">
-              <p className="text-3xl text-white font-semibold">
-                Explore Fuse ecosystem projects & multiply your points
-              </p>
-              {(NEXT_PUBLIC_ENVIRONMENT === "staging" && isMultiplyPointNotice) &&
-                <p className="text-lg text-buff">
-                  <span className="font-bold">Notice</span> you have 0 points to multiply! Please bridge to receive points.
-                </p>
-              }
+                  </CardBody>
+                </CardContainer>
+                <CardContainer containerClassName="block p-0 w-1/2 md:w-auto min-h-[283px] xl:min-h-56 md:min-h-[430px]" className="block h-full md:min-h-[430px]">
+                  <CardBody className="bg-oslo-gray/[.22] rounded-[20px] flex flex-col justify-between md:justify-start xl:gap-2 md:gap-12 p-10 xl:p-[30px] w-auto h-full md:min-h-[430px] bg-[url('/vectors/globe.svg')] md:bg-[url('/vectors/globe-mobile.svg')] bg-no-repeat bg-right-bottom md:bg-bottom xl:bg-contain">
+                    <div className="flex flex-col gap-4 xl:gap-3">
+                      <CardItem
+                        as="p"
+                        translateZ="50"
+                        className="text-2xl xl:text-xl text-primary font-bold"
+                      >
+                        Invite friends
+                      </CardItem>
+                      <CardItem
+                        as="p"
+                        translateZ="60"
+                        className="text-lg xl:text-base text-pale-slate font-medium max-w-[243px]"
+                      >
+                        Get 20% of your friend&apos;s total points
+                      </CardItem>
+                    </div>
+                    <div className="flex flex-col gap-2.5 xl:gap-2">
+                      <CardItem
+                        as="p"
+                        translateZ="40"
+                        className="text-sm xl:text-xs text-pale-slate font-medium"
+                      >
+                        Invite link
+                      </CardItem>
+                      <div className="flex items-center gap-1.5 xl:gap-1">
+                        <CardItem
+                          as="p"
+                          translateZ="70"
+                          className="text-2xl xl:text-xl text-white font-bold md:max-w-[243px]"
+                        >
+                          {referralLink()}
+                        </CardItem>
+                        <CardItem translateZ="80">
+                          <Copy
+                            src={copyIcon}
+                            text={referralLink()}
+                            tooltipText="Referral link copied"
+                            className="transition ease-in-out cursor-pointer hover:opacity-60"
+                          />
+                        </CardItem>
+                      </div>
+                    </div>
+                  </CardBody>
+                </CardContainer>
+              </div>
             </div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-6">
-            {(matches ? ecosystemApps : sortEvenFirst(ecosystemApps))
-              .map((ecosystemApp, i) => {
-                if (ecosystemApp.isHidden) {
-                  return
-                }
-                return (
-                  <EcosystemAppItem
-                    key={ecosystemApp.name}
-                    ecosystemApp={{
-                      background: (matches ? i % 2 === 0 : i < Math.ceil(ecosystemApps.length / 2)) ? ecosystemAppBackgrounds.green.background : ecosystemAppBackgrounds.blue.background,
-                      beforeBackground: (matches ? i % 2 === 0 : i < Math.ceil(ecosystemApps.length / 2)) ? ecosystemAppBackgrounds.green.beforeBackground : ecosystemAppBackgrounds.blue.beforeBackground,
-                      ...ecosystemApp
-                    }}
+            <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
+              <p className="text-3xl text-white font-semibold">
+                Follow Fuse on socials
+              </p>
+              <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
+                {quests.map((quest) => {
+                  if (quest.id === "walletAge" && !quest.completed) {
+                    return
+                  }
+                  if (quest.isHidden) {
+                    return
+                  }
+                  return (
+                    <Quest key={quest.title} quest={quest} />
+                  )
+                })}
+              </div>
+            </div>
+            <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
+              <div className="flex items-center gap-2.5">
+                {currentDate < season2LaunchDate &&
+                  <Image
+                    src={fireTransparent}
+                    alt="fire"
                   />
-                )
-              })}
-          </div>
-        </div>
+                }
+                <div className="flex md:flex-col items-end md:items-start gap-x-9">
+                  <p className="text-3xl text-white font-semibold">
+                    Explore Fuse ecosystem projects & multiply your points
+                  </p>
+                  {(NEXT_PUBLIC_ENVIRONMENT === "staging" && isMultiplyPointNotice) &&
+                    <p className="text-lg text-buff">
+                      <span className="font-bold">Notice</span> you have 0 points to multiply! Please bridge to receive points.
+                    </p>
+                  }
+                </div>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-6">
+                {(matches ? ecosystemApps : sortEvenFirst(ecosystemApps))
+                  .map((ecosystemApp, i) => {
+                    if (ecosystemApp.isHidden) {
+                      return
+                    }
+                    return (
+                      <EcosystemAppItem
+                        key={ecosystemApp.name}
+                        ecosystemApp={{
+                          background: (matches ? i % 2 === 0 : i < Math.ceil(ecosystemApps.length / 2)) ? ecosystemAppBackgrounds.green.background : ecosystemAppBackgrounds.blue.background,
+                          beforeBackground: (matches ? i % 2 === 0 : i < Math.ceil(ecosystemApps.length / 2)) ? ecosystemAppBackgrounds.green.beforeBackground : ecosystemAppBackgrounds.blue.beforeBackground,
+                          ...ecosystemApp
+                        }}
+                      />
+                    )
+                  })}
+              </div>
+            </div>
+          </>
+        }
+
       </motion.div>
     </>
   )

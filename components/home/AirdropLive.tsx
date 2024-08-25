@@ -1,4 +1,4 @@
-import { currentDate, screenWidth, season2LaunchDate } from "@/lib/helpers";
+import { screenWidth } from "@/lib/helpers";
 import { useMediaQuery } from "usehooks-ts";
 
 const AirdropLive = () => {
