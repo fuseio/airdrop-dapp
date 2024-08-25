@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { selectUserSlice } from "@/store/userSlice";
 import Footer from "@/components/Footer";
 import Eligible from "@/components/claim/Eligible";
-import { isEligibleToClaimSeason1Reward } from "@/lib/helpers";
+import { isEligibleToClaimSeason2Reward } from "@/lib/helpers";
 import NotEligible from "@/components/claim/NotEligible";
 
 export default function ClaimPage() {
@@ -22,7 +22,7 @@ export default function ClaimPage() {
     <div className="w-full font-mona justify-end min-h-screen bg-secondary bg-radial-gradient-green">
       <div className={`flex flex-col justify-between items-center relative min-h-screen bg-[url('/vectors/grid.svg')] bg-no-repeat bg-top`}>
         <Topbar />
-        {isEligibleToClaimSeason1Reward(user) ?
+        {isEligibleToClaimSeason2Reward(user) ?
           <Eligible /> :
           <NotEligible />
         }
