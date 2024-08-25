@@ -610,10 +610,11 @@ const Dashboard = () => {
             <div className="flex justify-center items-center mt-5 mb-16 md:mb-5">
               <button
                 ref={claimSection}
-                className={`bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90 ${isClaimSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+                className={`bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90 disabled:opacity-40 ${isClaimSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
                 onClick={() => router.push(path.CLAIM)}
+                disabled={true}
               >
-                Claim Your Reward
+                Claim Reward - Soon
               </button>
             </div>
             <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
