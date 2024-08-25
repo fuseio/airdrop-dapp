@@ -92,7 +92,10 @@ const config: Config = {
         '100%': '100%',
         '80%': '80%',
         'auto-100%': 'auto 100%',
-      }
+      },
+      boxShadow: {
+        'green': "0px 19px 50px 0px rgba(163, 245, 170, 0.15)"
+      },
     },
   },
   plugins: [],

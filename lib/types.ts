@@ -37,6 +37,7 @@ export interface User {
   completedQuests: CompletedQuests;
   walletAgeInDays?: number;
   seasonOnePoints: number;
+  seasonTwoPoints: number;
   nextRewardDistributionTime: string;
 }
 
@@ -102,3 +103,11 @@ export type Quest = {
 }
 
 export type Quests = Quest[];
+
+export type Social = {
+  title: string;
+  image: string;
+  link: string;
+}
+
+export type Socials = Social[];

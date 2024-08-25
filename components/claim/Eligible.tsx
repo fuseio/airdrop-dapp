@@ -1,4 +1,4 @@
-import { path, screenWidth, season1Tier } from "@/lib/helpers";
+import { path, screenWidth, season2Tier } from "@/lib/helpers";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useMediaQuery } from "usehooks-ts";
@@ -41,7 +41,7 @@ const Eligible = () => {
       <div className="bg-oslo-gray/[0.22] rounded-[20px] flex flex-col items-center gap-12 xl:gap-10 w-full max-w-[457px] mt-[75px] xl:mt-16 pt-[47px] pb-[50px] xl:pt-10 xl:pb-11">
         <div className="flex flex-col items-center">
           <p className="text-lg xl:text-base text-pale-slate font-medium">
-            Season 1 points
+            Season 2 points
           </p>
           <div className="flex items-center gap-2 xl:gap-1.5 mt-5 xl:mt-4">
             <Image
@@ -51,7 +51,7 @@ const Eligible = () => {
               height={matches ? 30 : 24}
             />
             <p className="text-5xl xl:text-4xl text-white font-bold">
-              {user.seasonOnePoints}
+              {user.seasonTwoPoints}
             </p>
           </div>
         </div>
@@ -61,7 +61,7 @@ const Eligible = () => {
           </p>
           <div className="mt-5 xl:mt-4">
             <p className="text-5xl xl:text-4xl text-white font-bold">
-              {season1Tier(user.seasonOnePoints)}
+              {season2Tier(user.seasonTwoPoints)}
             </p>
           </div>
         </div>
