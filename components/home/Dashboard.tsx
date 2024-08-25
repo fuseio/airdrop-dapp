@@ -68,6 +68,9 @@ const Dashboard = () => {
   const { isIntersecting: isEarningSectionIntersecting, ref: earningSection } = useIntersectionObserver({
     freezeOnceVisible: true,
   });
+  const { isIntersecting: isClaimSectionIntersecting, ref: claimSection } = useIntersectionObserver({
+    freezeOnceVisible: true,
+  });
 
   const [quests, setQuests] = useState<Quests>([
     {
@@ -606,7 +609,8 @@ const Dashboard = () => {
           <>
             <div className="flex justify-center items-center mt-5 mb-16 md:mb-5">
               <button
-                className="bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90"
+                ref={claimSection}
+                className={`bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90 ${isClaimSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
                 onClick={() => router.push(path.CLAIM)}
               >
                 Claim Your Reward
