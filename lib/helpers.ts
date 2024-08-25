@@ -131,6 +131,14 @@ export const season1Tier = (points: number) => {
   }
 }
 
+export const season2Tier = (points: number) => {
+  if (points >= 151) {
+    return 1
+  } else {
+    return -1
+  }
+}
+
 export const isEligibleToClaimSeason1Reward = (user: User): boolean => {
   if (isVoltagePoolBannedUser(user.walletAddress)) {
     return false;
@@ -141,6 +149,18 @@ export const isEligibleToClaimSeason1Reward = (user: User): boolean => {
   }
 
   if (season1Tier(user.seasonOnePoints) === -1) {
+    return false
+  }
+
+  return true;
+};
+
+export const isEligibleToClaimSeason2Reward = (user: User): boolean => {
+  if (isVoltagePoolBannedUser(user.walletAddress)) {
+    return false;
+  }
+
+  if (season2Tier(user.seasonTwoPoints) === -1) {
     return false
   }
 
