@@ -37,6 +37,7 @@ import mirakleColor from "@/public/mirakle-color.png";
 import EcosystemAppItem from "./EcosystemApp";
 import BoostModal from "./BoostModal";
 import artrific from "@/assets/artrific.svg";
+import season2RewardComingSoon from "@/assets/season-2-reward-coming-soon.svg";
 import season2IsOver from "@/assets/season-2-is-over.svg";
 import blog from "@/assets/blog.svg";
 import Social from "./Social";
@@ -514,8 +515,8 @@ const Dashboard = () => {
             <AirdropLive />
           }
         </div>
-        <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row lg:flex-col justify-between items-end lg:items-start lg:gap-9 bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 pt-0 px-[42px] pb-7 xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}>
-          <div className="flex flex-row lg:flex-col justify-between items-center pb-2.5 md:pb-0 lg:gap-9 w-1/2 lg:w-auto">
+        <div ref={userSection} className={`transition-all ease-in-out duration-300 delay-200 flex flex-row lg:flex-col justify-between lg:items-start lg:gap-9 bg-oslo-gray/[.22] rounded-[20px] mt-11 mb-[100px] xl:mb-11 xl:p-9 ${isUserSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"} ${currentDate >= season2ClaimLaunchDate ? "items-end pt-0 px-[42px] pb-7" : "items-center p-[42px]"}`}>
+          <div className={`flex flex-row lg:flex-col justify-between items-center pb-2.5 md:pb-0 lg:gap-9 w-1/2 lg:w-auto ${currentDate >= season2ClaimLaunchDate ? "pb-2.5 md:pb-0" : ""}`}>
             <div className="flex flex-row items-center gap-10">
               <div className="relative">
                 <Avatar size={matches ? 95 : 77} />
@@ -596,24 +597,25 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="h-[153px] md:h-auto">
+          <div className={`${currentDate >= season2ClaimLaunchDate ? "h-[153px]" : "h-[135px]"} md:h-auto`}>
             <Image
-              src={season2IsOver}
-              alt="season2IsOver"
-              width={468}
-              height={153}
+              src={currentDate >= season2ClaimLaunchDate ? season2IsOver : season2RewardComingSoon}
+              alt={currentDate >= season2ClaimLaunchDate ? "season2IsOver" : "season2RewardComingSoon"}
+              width={currentDate >= season2ClaimLaunchDate ? 468 : 462}
+              height={currentDate >= season2ClaimLaunchDate ? 153 : 135}
             />
           </div>
         </div>
-        {currentDate > season2ClaimLaunchDate ?
+        {currentDate >= season2ClaimLaunchDate ?
           <>
             <div className="flex justify-center items-center mt-5 mb-16 md:mb-5">
               <button
                 ref={claimSection}
-                className={`bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90 ${isClaimSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+                className={`bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90 disabled:opacity-40 ${isClaimSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
                 onClick={() => router.push(path.CLAIM)}
+                disabled={true}
               >
-                Claim Your Reward
+                Claim Reward - Soon
               </button>
             </div>
             <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
