@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { fetchLeaderboardUsers, selectUserSlice, setLeaderboardUsers } from "@/store/userSlice";
+import { fetchLeaderboardUsers, selectUserSlice } from "@/store/userSlice";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import star from "@/assets/star.svg";
