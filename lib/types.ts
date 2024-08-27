@@ -37,7 +37,6 @@ export interface User {
   completedQuests: CompletedQuests;
   walletAgeInDays?: number;
   seasonOnePoints: number;
-  seasonTwoPoints: number;
   nextRewardDistributionTime: string;
 }
 
