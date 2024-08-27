@@ -132,8 +132,18 @@ export const season1Tier = (points: number) => {
 }
 
 export const season2Tier = (points: number) => {
-  if (points >= 151) {
+  if (points >= 1_000_000 && points <= 30_000_000) {
     return 1
+  } else if (points >= 500_000 && points <= 999_999) {
+    return 2
+  } else if (points >= 100_000 && points <= 499_999) {
+    return 3
+  } else if (points >= 10_000 && points <= 99_999) {
+    return 4
+  } else if (points >= 1_000 && points <= 9_999) {
+    return 5
+  } else if (points >= 151 && points <= 999) {
+    return 6
   } else {
     return -1
   }
@@ -160,7 +170,7 @@ export const isEligibleToClaimSeason2Reward = (user: User): boolean => {
     return false;
   }
 
-  if (season2Tier(user.seasonTwoPoints) === -1) {
+  if (season2Tier(user.seasonOnePoints) === -1) {
     return false
   }
 

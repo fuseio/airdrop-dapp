@@ -51,7 +51,7 @@ const Eligible = () => {
               height={matches ? 30 : 24}
             />
             <p className="text-5xl xl:text-4xl text-white font-bold">
-              {user.seasonTwoPoints}
+              {user.seasonOnePoints}
             </p>
           </div>
         </div>
@@ -61,7 +61,7 @@ const Eligible = () => {
           </p>
           <div className="mt-5 xl:mt-4">
             <p className="text-5xl xl:text-4xl text-white font-bold">
-              {season2Tier(user.seasonTwoPoints)}
+              {season2Tier(user.seasonOnePoints)}
             </p>
           </div>
         </div>
