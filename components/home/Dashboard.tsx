@@ -613,9 +613,8 @@ const Dashboard = () => {
                 ref={claimSection}
                 className={`bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90 disabled:opacity-40 ${isClaimSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
                 onClick={() => router.push(path.CLAIM)}
-                disabled={true}
               >
-                Claim Reward - Soon
+                Claim Reward
               </button>
             </div>
             <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
