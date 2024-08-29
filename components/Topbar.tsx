@@ -64,7 +64,7 @@ const Topbar = () => {
 
   useEffect(() => {
     if (isUser && (new Date(user.createdAt) >= season2TwitterLaunchDate ? user.twitterAccountId : true)) {
-      setMenuItems(userMenuItems);
+      setMenuItems(currentDate > season2ClaimLaunchDate ? userSeason2MenuItems : userMenuItems);
     } else {
       setMenuItems(visitorMenuItems);
     }
