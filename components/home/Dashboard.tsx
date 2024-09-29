@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Copy from "../ui/Copy";
 import copyIcon from "@/assets/copy-gray.svg";
 import Link from "next/link";
-import { IS_SERVER, convertTimestampToUTC, currentDate, daysInYear, eclipseAddress, isFloat, path, screenWidth, season2ClaimLaunchDate, season2LaunchDate, sortEvenFirst } from "@/lib/helpers";
+import { IS_SERVER, convertTimestampToUTC, currentDate, daysInYear, eclipseAddress, isFloat, path, screenWidth, season2ClaimEndDate, season2ClaimLaunchDate, season2LaunchDate, sortEvenFirst } from "@/lib/helpers";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { retrieve, selectUserSlice, setIsBoostModalOpen, setIsQuestModalOpen, setRetrieveTime, setSelectedQuest } from "@/store/userSlice";
 import Image from "next/image";
@@ -609,18 +609,25 @@ const Dashboard = () => {
         {currentDate >= season2ClaimLaunchDate ?
           <>
             <div className="flex justify-center items-center mt-5 mb-16 md:mb-5">
-              <button
-                ref={claimSection}
-                className={`bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90 disabled:opacity-40 ${isClaimSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
-                onClick={() => router.push(path.CLAIM)}
-              >
-                Claim Reward
-              </button>
+              {currentDate >= season2ClaimEndDate ?
+                <p className="text-3xl text-white font-semibold text-center max-w-6xl">
+                  Reward distribution for Season 2 is now complete. Thank you for participating! Stay tuned! Season 3 may be closer than you think.
+                </p> :
+                <button
+                  ref={claimSection}
+                  className={`bg-primary shadow-green rounded-full px-12 py-5 md:px-6 md:py-4 text-center text-xl leading-none font-semibold hover:opacity-90 disabled:opacity-40 ${isClaimSectionIntersecting ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+                  onClick={() => router.push(path.CLAIM)}
+                >
+                  Claim Reward
+                </button>
+              }
             </div>
             <div className="flex flex-col gap-8 xl:gap-6 mt-24 xl:mt-16">
-              <p className="text-3xl text-white font-semibold">
-                Stay tuned! Season 3 may be closer than you think.
-              </p>
+              {currentDate < season2ClaimEndDate && (
+                <p className="text-3xl text-white font-semibold">
+                  Stay tuned! Season 3 may be closer than you think.
+                </p>
+              )}
               <div className="grid grid-cols-4 xl:grid-cols-3 md:grid-cols-1 auto-rows-min gap-[30px] xl:gap-5">
                 {socials.map((social) => (
                   <Social key={social.title} social={social} />

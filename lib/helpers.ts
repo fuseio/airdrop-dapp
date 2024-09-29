@@ -1,7 +1,7 @@
 import { User, WalletType } from "./types";
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { NEXT_PUBLIC_SEASON_2_CLAIM_LAUNCH_TIME, NEXT_PUBLIC_SEASON_2_LAUNCH_TIME, NEXT_PUBLIC_SEASON_2_TWITTER_LAUNCH_TIME } from "./config";
+import { NEXT_PUBLIC_SEASON_2_CLAIM_END_TIME, NEXT_PUBLIC_SEASON_2_CLAIM_LAUNCH_TIME, NEXT_PUBLIC_SEASON_2_LAUNCH_TIME, NEXT_PUBLIC_SEASON_2_TWITTER_LAUNCH_TIME } from "./config";
 import { Address } from "viem";
 
 export const eclipseAddress = (address: string, firstEnd = 6, secondStart = 4): string => {
@@ -86,6 +86,7 @@ export const currentDate = new Date();
 export const season2LaunchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_LAUNCH_TIME));
 export const season2TwitterLaunchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_TWITTER_LAUNCH_TIME));
 export const season2ClaimLaunchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_CLAIM_LAUNCH_TIME));
+export const season2ClaimEndDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_CLAIM_END_TIME));
 
 export const signUpSteps = {
   WALLET: 1,
