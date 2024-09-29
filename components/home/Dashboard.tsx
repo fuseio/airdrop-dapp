@@ -492,7 +492,7 @@ const Dashboard = () => {
     <>
       <BoostModal />
       <motion.div
-        className="w-8/9 flex flex-col mt-[65px] mb-[187px] xl:mt-[52px] xl:mb-[150px] xl:w-9/12 md:w-9/10 max-w-7xl"
+        className="w-8/9 flex flex-col my-16 xl:my-14 xl:w-9/12 md:w-9/10 max-w-7xl"
         key="dashboard"
         initial={{
           y: 300,
@@ -608,7 +608,7 @@ const Dashboard = () => {
         </div>
         {currentDate >= season2ClaimLaunchDate ?
           <>
-            <div className="flex justify-center items-center mt-5 mb-16 md:mb-5">
+            <div className="flex justify-center items-center">
               {currentDate >= season2ClaimEndDate ?
                 <p className="text-3xl text-white font-semibold text-center max-w-6xl">
                   Reward distribution for Season 2 is now complete. Thank you for participating! Stay tuned! Season 3 may be closer than you think.
